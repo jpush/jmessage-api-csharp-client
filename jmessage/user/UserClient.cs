@@ -36,7 +36,24 @@ namespace jmessage.user
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
 
             String url = HOST_NAME_SSL;
-            url += PUSH_PATH;
+            url += USER_PATH;
+            ResponseWrapper result = sendPost(url, Authorization(), payloadString);
+            return result;
+        }
+
+        public ResponseWrapper registAdmin(UserPayload payload)
+        {
+            Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
+            payload.Check();
+            String payloadJson = payload.ToJson(payload);
+            return registAdmin(payloadJson);
+        }
+        public ResponseWrapper registAdmin(string payloadString)
+        {
+            Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
+
+            String url = HOST_NAME_SSL;
+            url += ADMIN_PATH;
             ResponseWrapper result = sendPost(url, Authorization(), payloadString);
             return result;
         }
