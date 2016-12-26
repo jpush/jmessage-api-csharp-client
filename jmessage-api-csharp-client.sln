@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "example", "example\example.csproj", "{F1B9EC60-8B06-464F-B748-A33D149902EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jmessage", "jmessage\jmessage.csproj", "{D7FABBE7-6509-432C-A871-27EBD281FE59}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1B9EC60-8B06-464F-B748-A33D149902EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1B9EC60-8B06-464F-B748-A33D149902EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1B9EC60-8B06-464F-B748-A33D149902EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1B9EC60-8B06-464F-B748-A33D149902EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7FABBE7-6509-432C-A871-27EBD281FE59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7FABBE7-6509-432C-A871-27EBD281FE59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7FABBE7-6509-432C-A871-27EBD281FE59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7FABBE7-6509-432C-A871-27EBD281FE59}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
