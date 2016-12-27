@@ -28,9 +28,9 @@ namespace jmessage.user
             this.username = username;
             this.password = password;
         }
-        public UserPayload()
+        public UserPayload(string username)
         {
-            this.username = null;
+            this.username = username;
             this.password = null;
             this.appkey = null;
             this.nickname = null;

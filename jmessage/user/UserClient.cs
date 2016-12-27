@@ -82,6 +82,24 @@ namespace jmessage.user
             return result;
         }
 
+
+        public ResponseWrapper putUser(UserPayload payload)
+        {
+            Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
+            //payload.Check();
+            String payloadJson = payload.ToString();
+            return registUser(payloadJson);
+        }
+        public ResponseWrapper putUser(string payloadString)
+        {
+            Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
+            Console.WriteLine(payloadString);
+            String url = HOST_NAME_SSL;
+            url += USER_PATH;
+            ResponseWrapper result = sendPost(url, Authorization(), payloadString);
+            return result;
+        }
+
         public string ToString(List<UserPayload> payload)
         {
             return JsonConvert.SerializeObject(payload,
