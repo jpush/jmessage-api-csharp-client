@@ -5,6 +5,7 @@ using System.Text;
 using jmessage.util;
 using jmessage.common;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace jmessage.user
 {
@@ -24,17 +25,22 @@ namespace jmessage.user
             this.appKey = appKey;
             this.masterSecret = masterSecret;
         }
-        public ResponseWrapper registUser(UserPayload payload)
+        public ResponseWrapper registUser(List <UserPayload> payload)
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
-            payload.Check();
-            String payloadJson = payload.ToJson(payload);
+            //payload.Check();
+            String payloadJson = JsonConvert.SerializeObject(payload,
+                            Newtonsoft.Json.Formatting.None,
+                            new JsonSerializerSettings
+                            {
+                                NullValueHandling = NullValueHandling.Ignore
+                            });
             return registUser(payloadJson);
         }
         public ResponseWrapper registUser(string payloadString)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
-
+            Console.WriteLine(payloadString);
             String url = HOST_NAME_SSL;
             url += USER_PATH;
             ResponseWrapper result = sendPost(url, Authorization(), payloadString);

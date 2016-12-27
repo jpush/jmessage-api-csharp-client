@@ -20,9 +20,8 @@ namespace example
             Console.WriteLine("*****开始发送******");
             JMessageClient client = new JMessageClient(app_key, master_secret);
             UserPayload user = new UserPayload("jintianshigehaorizi", "password");
-            String userjson = user.ToJson(user);
-            Console.WriteLine(userjson);
-            client._messageClient.sendPost("https://api.im.jpush.cn/v1/admins/", client._messageClient.Authorization(), userjson);
+            List<UserPayload> users = new List<UserPayload> {user};
+            client._messageClient.registUser(users);
             Console.ReadLine();
         }
     }
