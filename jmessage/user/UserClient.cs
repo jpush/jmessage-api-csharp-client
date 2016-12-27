@@ -13,6 +13,7 @@ namespace jmessage.user
     {
         private const String HOST_NAME_SSL = "https://api.im.jpush.cn";
         private const String ADMIN_PATH = "/v1/admins/";
+        private const String GET_ADMIN_PATH = "/v1/admins?start=";
         private const String USER_PATH = "/v1/users/";
         private const String PUSH_PATH = "/v3/push";
 
@@ -49,6 +50,7 @@ namespace jmessage.user
             String payloadJson = payload.ToString(payload);
             return registAdmin(payloadJson);
         }
+
         public ResponseWrapper registAdmin(string payloadString)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
@@ -56,6 +58,18 @@ namespace jmessage.user
             String url = HOST_NAME_SSL;
             url += ADMIN_PATH;
             ResponseWrapper result = sendPost(url, Authorization(), payloadString);
+            return result;
+        }
+
+        public ResponseWrapper getAdmin(int start ,int count)
+        {
+            String url = HOST_NAME_SSL;
+            url += GET_ADMIN_PATH;
+            url += start.ToString();
+            url += "&count=";
+            url += count.ToString();
+            //GET /v1/admins?start={start}&count={count}
+            ResponseWrapper result = sendGet(url, Authorization(),null);
             return result;
         }
 
