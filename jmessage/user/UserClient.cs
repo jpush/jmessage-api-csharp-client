@@ -29,12 +29,7 @@ namespace jmessage.user
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
             //payload.Check();
-            String payloadJson = JsonConvert.SerializeObject(payload,
-                            Newtonsoft.Json.Formatting.None,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            });
+            String payloadJson = this.ToString(payload);
             return registUser(payloadJson);
         }
         public ResponseWrapper registUser(string payloadString)
@@ -51,7 +46,7 @@ namespace jmessage.user
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
             payload.Check();
-            String payloadJson = payload.ToJson(payload);
+            String payloadJson = payload.ToString(payload);
             return registAdmin(payloadJson);
         }
         public ResponseWrapper registAdmin(string payloadString)
@@ -62,6 +57,16 @@ namespace jmessage.user
             url += ADMIN_PATH;
             ResponseWrapper result = sendPost(url, Authorization(), payloadString);
             return result;
+        }
+
+        public string ToString(List<UserPayload> payload)
+        {
+            return JsonConvert.SerializeObject(payload,
+                            Newtonsoft.Json.Formatting.None,
+                            new JsonSerializerSettings
+                            {
+                                NullValueHandling = NullValueHandling.Ignore
+                            });
         }
 
         public  String Authorization()

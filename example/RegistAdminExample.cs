@@ -9,7 +9,7 @@ using jmessage;
 
 namespace example
 {
-    class Program
+    class RegistAdminExample
     {
 
         public static String app_key = "6be9204c30b9473e87bad4dc";
@@ -17,13 +17,8 @@ namespace example
 
         public static void Main(string[] args)
         {
-            Console.WriteLine("*****开始注册用户******");
-            JMessageClient client = new JMessageClient(app_key, master_secret);
-            UserPayload user = new UserPayload("jintian", "password");
-            List<UserPayload> users = new List<UserPayload> {user};
-            client._messageClient.registUser(users);
-
             Console.WriteLine("*****开始注册管理员******");
+            JMessageClient client = new JMessageClient(app_key, master_secret);
             UserPayload admin = new UserPayload("jmessage", "password");
             client._messageClient.registAdmin(admin);
             Console.ReadLine();

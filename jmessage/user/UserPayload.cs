@@ -44,7 +44,7 @@ namespace jmessage.user
         }
 
 
-        public string ToJson(UserPayload user)
+        public string ToString(UserPayload user)
         {
             return JsonConvert.SerializeObject(user,
                             Newtonsoft.Json.Formatting.None,
