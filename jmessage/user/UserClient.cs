@@ -73,6 +73,15 @@ namespace jmessage.user
             return result;
         }
 
+        public ResponseWrapper getUser(string username)
+        {
+            String url = HOST_NAME_SSL;
+            url += USER_PATH;
+            url += username;
+            ResponseWrapper result = sendGet(url, Authorization(), null);
+            return result;
+        }
+
         public string ToString(List<UserPayload> payload)
         {
             return JsonConvert.SerializeObject(payload,
