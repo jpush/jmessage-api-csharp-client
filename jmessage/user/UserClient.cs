@@ -104,6 +104,25 @@ namespace jmessage.user
             return result;
         }
 
+        public ResponseWrapper putUserPassword(UserPayload payload)
+        {
+            Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
+            //payload.Check();
+            String username = payload.username;
+            payload.username = null;
+            String payloadJson = payload.ToString(payload);
+            return putUserPassword(payloadJson, username);
+        }
+
+        public ResponseWrapper putUserPassword(string payloadString, string username)
+        {
+            Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
+            Console.WriteLine(payloadString);
+            String url = HOST_NAME_SSL+ USER_PATH+ username+ "/password";
+            ResponseWrapper result = sendPut(url, Authorization(), payloadString);
+            return result;
+        }
+
         public ResponseWrapper getUserStat(UserPayload payload)
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");

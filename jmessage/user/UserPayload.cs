@@ -12,6 +12,7 @@ namespace jmessage.user
     {
         public string username;
         public string password;
+        public string new_password;
         public string appkey;
         public string nickname;
         public string birthday;
@@ -32,6 +33,7 @@ namespace jmessage.user
         {
             this.username = username;
             this.password = null;
+            this.new_password = null;
             this.appkey = null;
             this.nickname = null;
             this.birthday = null;
