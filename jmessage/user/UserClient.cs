@@ -87,16 +87,21 @@ namespace jmessage.user
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
             //payload.Check();
-            String payloadJson = payload.ToString();
-            return registUser(payloadJson);
+            string username = payload.username;
+            payload.username = null;
+            String payloadJson = payload.ToString(payload);
+            return putUser(payloadJson,username);
         }
-        public ResponseWrapper putUser(string payloadString)
+
+        public ResponseWrapper putUser(string payloadString,string username)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
             Console.WriteLine(payloadString);
             String url = HOST_NAME_SSL;
             url += USER_PATH;
-            ResponseWrapper result = sendPost(url, Authorization(), payloadString);
+            url += username;
+            Console.WriteLine(payloadString);
+            ResponseWrapper result = sendPut(url, Authorization(), payloadString);
             return result;
         }
 

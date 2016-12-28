@@ -21,10 +21,6 @@ namespace example
             UserPayload user = new UserPayload("jintian", "password");
             List<UserPayload> users = new List<UserPayload> { user };
             client._messageClient.registUser(users);
-
-            Console.WriteLine("*****开始注册管理员******");
-            UserPayload admin = new UserPayload("jmessage", "password");
-            client._messageClient.registAdmin(admin);
             Console.ReadLine();
         }
     }

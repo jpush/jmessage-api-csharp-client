@@ -19,6 +19,7 @@ namespace example
         {
             Console.WriteLine("*****开始注册管理员******");
             JMessageClient client = new JMessageClient(app_key, master_secret);
+            client._messageClient.getUser("jintian");
             Console.ReadLine();
         }
     }
