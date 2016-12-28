@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DeleteUserExample.cs" />
     <Compile Include="GetUserExample.cs" />
     <Compile Include="GetUserStatExample.cs" />
     <Compile Include="JMessageExampleBase.cs" />

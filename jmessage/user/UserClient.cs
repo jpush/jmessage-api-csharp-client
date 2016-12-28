@@ -123,6 +123,23 @@ namespace jmessage.user
             return result;
         }
 
+
+        public ResponseWrapper deleteUser(UserPayload payload)
+        {
+            Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
+            //payload.Check();
+            String username = payload.username;
+            return deleteUser( username);
+        }
+
+        public ResponseWrapper deleteUser(string username)
+        {
+            Preconditions.checkArgument(!string.IsNullOrEmpty(username), "payloadString should not be empty");
+            String url = HOST_NAME_SSL + USER_PATH + username;
+            ResponseWrapper result = sendDelete(url, Authorization(), null);
+            return result;
+        }
+
         public ResponseWrapper getUserStat(UserPayload payload)
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
