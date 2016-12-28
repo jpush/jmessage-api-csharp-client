@@ -9,17 +9,14 @@ using jmessage;
 
 namespace example
 {
-    class GetAdminExample
+    class GetUserStatExample: JMessageExampleBase
     {
-
-        public static String app_key = "6be9204c30b9473e87bad4dc";
-        public static String master_secret = "a564b268ba23631a8a34e687";
-
         public static void Main(string[] args)
         {
-            Console.WriteLine("*****开始获取管理员******");
+            Console.WriteLine("*****开始修改用户信息******");
             JMessageClient client = new JMessageClient(app_key, master_secret);
-            client._messageClient.getAdmin(1,2);
+            UserPayload user = new UserPayload("jintian");
+            client._messageClient.getUserStat(user);
             Console.ReadLine();
         }
     }

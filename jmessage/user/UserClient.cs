@@ -100,8 +100,26 @@ namespace jmessage.user
             String url = HOST_NAME_SSL;
             url += USER_PATH;
             url += username;
-            Console.WriteLine(payloadString);
             ResponseWrapper result = sendPut(url, Authorization(), payloadString);
+            return result;
+        }
+
+        public ResponseWrapper getUserStat(UserPayload payload)
+        {
+            Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
+            //payload.Check();
+            string username = payload.username;
+            return getUserStat(username);
+        }
+
+        public ResponseWrapper getUserStat(string username)
+        {
+            Preconditions.checkArgument(!string.IsNullOrEmpty(username), "payloadString should not be empty");
+            String url = HOST_NAME_SSL;
+            url += USER_PATH;
+            url += username;
+            url += "/userstat";
+            ResponseWrapper result = sendGet(url, Authorization(), null);
             return result;
         }
 

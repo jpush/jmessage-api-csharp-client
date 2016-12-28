@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>example.PutUserExample</StartupObject>
+    <StartupObject>example.GetUserStatExample</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="jmessage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GetUserExample.cs" />
+    <Compile Include="GetUserStatExample.cs" />
+    <Compile Include="JMessageExampleBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GetAdminExample.cs" />

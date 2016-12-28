@@ -16,9 +16,11 @@ namespace example
 
         public static void Main(string[] args)
         {
-            Console.WriteLine("*****开始注册管理员******");
+            Console.WriteLine("*****开始修改用户信息******");
             JMessageClient client = new JMessageClient(app_key, master_secret);
+            //需要修改的用户的用户名
             UserPayload user = new UserPayload("jintian");
+            //需要修改的字段
             user.nickname = "nickname";
             client._messageClient.putUser(user);
             Console.ReadLine();
