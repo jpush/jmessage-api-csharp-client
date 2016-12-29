@@ -168,6 +168,13 @@ namespace jmessage.user
             return result;
         }
 
+        public ResponseWrapper getUserBlacklist(string username)
+        {
+            Preconditions.checkArgument(!string.IsNullOrEmpty(username), "payloadString should not be empty");
+            String url = HOST_NAME_SSL + USER_PATH + username + "/blacklist";
+            ResponseWrapper result = sendGet(url, Authorization(), null);
+            return result;
+        }
 
         public ResponseWrapper deleteUserBlacklist(string username, List<string> users)
         {
