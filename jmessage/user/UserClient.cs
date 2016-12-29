@@ -159,6 +159,35 @@ namespace jmessage.user
             return result;
         }
 
+        public ResponseWrapper putUserBlacklist(string username,List<string> users)
+        {
+            Preconditions.checkArgument(!string.IsNullOrEmpty(username), "payloadString should not be empty");
+            String url = HOST_NAME_SSL + USER_PATH + username + "/blacklist";
+            string userslist = ToString(users);
+            ResponseWrapper result = sendPut(url, Authorization(), userslist);
+            return result;
+        }
+
+
+        public ResponseWrapper deleteUserBlacklist(string username, List<string> users)
+        {
+            Preconditions.checkArgument(!string.IsNullOrEmpty(username), "payloadString should not be empty");
+            String url = HOST_NAME_SSL + USER_PATH + username + "/blacklist";
+            string userslist = ToString(users);
+            ResponseWrapper result = sendDelete(url, Authorization(), userslist);
+            return result;
+        }
+
+        public string ToString(List<string> payload)
+        {
+            return JsonConvert.SerializeObject(payload,
+                            Newtonsoft.Json.Formatting.None,
+                            new JsonSerializerSettings
+                            {
+                                NullValueHandling = NullValueHandling.Ignore
+                            });
+        }
+
         public string ToString(List<UserPayload> payload)
         {
             return JsonConvert.SerializeObject(payload,
