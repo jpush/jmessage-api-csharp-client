@@ -14,6 +14,7 @@ namespace jmessage.user
         private const String HOST_NAME_SSL = "https://api.im.jpush.cn";
         private const String ADMIN_PATH = "/v1/admins/";
         private const String GET_ADMIN_PATH = "/v1/admins?start=";
+        private const String GET_USERS_PATH = "/v1/users/?start=";
         private const String USER_PATH = "/v1/users/";
         private const String PUSH_PATH = "/v3/push";
 
@@ -82,6 +83,16 @@ namespace jmessage.user
             return result;
         }
 
+        public ResponseWrapper getUsers(int start, int count)
+        {
+            String url = HOST_NAME_SSL;
+            url += GET_USERS_PATH;
+            url += start.ToString();
+            url += "&count=";
+            url += count.ToString();
+            ResponseWrapper result = sendGet(url, Authorization(), null);
+            return result;
+        }
 
         public ResponseWrapper putUser(UserPayload payload)
         {
