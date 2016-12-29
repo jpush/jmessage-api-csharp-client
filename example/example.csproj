@@ -32,7 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>example.PutUserPasswordExample</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="jmessage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -53,6 +52,10 @@
   <ItemGroup>
     <Compile Include="DeleteUserExample.cs" />
     <Compile Include="GetUserExample.cs" />
+    <Compile Include="GetUserBlacklistExample.cs" />
+    <Compile Include="DeleteUserBlacklistExample.cs" />
+    <Compile Include="PutUserBlacklistExample.cs" />
+    <Compile Include="GetUsersExample.cs" />
     <Compile Include="GetUserStatExample.cs" />
     <Compile Include="JMessageExampleBase.cs" />
     <Compile Include="Program.cs" />

@@ -192,6 +192,7 @@ namespace jmessage.user
             Preconditions.checkArgument(!string.IsNullOrEmpty(username), "payloadString should not be empty");
             String url = HOST_NAME_SSL + USER_PATH + username + "/blacklist";
             string userslist = ToString(users);
+
             ResponseWrapper result = sendDelete(url, Authorization(), userslist);
             return result;
         }

@@ -87,7 +87,31 @@ namespace jmessage.common
                     }
                 }
 
+                if (method == "GET")
+                {
+                    //utf8编码
+                    byte[] bs = UTF8Encoding.UTF8.GetBytes(reqParams);
+                    myReq.ContentLength = bs.Length;
+                    using (Stream reqStream = myReq.GetRequestStream())
+                    {
+                        reqStream.Write(bs, 0, bs.Length);
+                        reqStream.Close();
+                    }
+                }
+
                 if (method == "PUT")
+                {
+                    //utf8编码
+                    byte[] bs = UTF8Encoding.UTF8.GetBytes(reqParams);
+                    myReq.ContentLength = bs.Length;
+                    using (Stream reqStream = myReq.GetRequestStream())
+                    {
+                        reqStream.Write(bs, 0, bs.Length);
+                        reqStream.Close();
+                    }
+                }
+
+                if (method == "DELETE")
                 {
                     //utf8编码
                     byte[] bs = UTF8Encoding.UTF8.GetBytes(reqParams);
