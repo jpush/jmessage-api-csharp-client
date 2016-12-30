@@ -9,6 +9,7 @@ using jmessage;
 
 namespace example
 {
+    class PutUserBlackListExample:JMessageExampleBase
     {
         public static void Main(string[] args)
         {
