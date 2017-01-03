@@ -8,13 +8,13 @@ using jmessage.user;
 using jmessage;
 
 
-namespace example.UserExamples
+namespace example
 {
     class AddSingleNodisturbExample:JMessageExampleBase
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("*****开始注册用户******");
+            Console.WriteLine("*****免打扰设置******");
             JMessageClient client = new JMessageClient(app_key, master_secret);
             String user = "jintian";
             List<String> users = new List<String> { "jintian1234" };
