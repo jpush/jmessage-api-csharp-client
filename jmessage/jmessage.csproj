@@ -48,6 +48,8 @@
     <Compile Include="common\ResponseWrapper.cs" />
     <Compile Include="common\TimeUnit.cs" />
     <Compile Include="JMessageClient.cs" />
+    <Compile Include="message\MessageClient.cs" />
+    <Compile Include="message\MessagePayload.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="user\UserClient.cs" />
     <Compile Include="user\UserPayload.cs" />
