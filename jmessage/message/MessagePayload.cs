@@ -31,7 +31,6 @@ namespace jmessage.message
             this.target_name = null;
         }
 
-
         public string ToString(MessagePayload message)
         {
             return JsonConvert.SerializeObject(message,
@@ -50,24 +49,127 @@ namespace jmessage.message
 
     public class ImageMessagePayload : MessagePayload
     {
-        public string media_id;
-        public long media_crc32;
-        public int width;
-        public int height;
-        public string format;
-        public int fsize;
-        public string extras;
+        private string media_id;
+        private long media_crc32;
+        private int width;
+        private int height;
+        private string format;
+        private int fsize;
+        private string extras;
+
+        public string Media_id
+        {
+            get
+            {
+                return media_id;
+            }
+
+            set
+            {
+                media_id = value;
+            }
+        }
+
+        public long Media_crc32
+        {
+            get
+            {
+                return media_crc32;
+            }
+
+            set
+            {
+                media_crc32 = value;
+            }
+        }
+
+        public int Width
+        {
+            get
+            {
+                return width;
+            }
+
+            set
+            {
+                width = value;
+            }
+        }
+
+        public int Height
+        {
+            get
+            {
+                return height;
+            }
+
+            set
+            {
+                height = value;
+            }
+        }
+
+        public string Format
+        {
+            get
+            {
+                return format;
+            }
+
+            set
+            {
+                format = value;
+            }
+        }
+
+        public int Fsize
+        {
+            get
+            {
+                return fsize;
+            }
+
+            set
+            {
+                fsize = value;
+            }
+        }
+
+        public string Extras
+        {
+            get
+            {
+                return extras;
+            }
+
+            set
+            {
+                extras = value;
+            }
+        }
+
+        public ImageMessagePayload(string version, string target_type, string from_type, string msg_type,
+            string target_id, string from_id, string from_name, string target_name)
+        {
+            this.version = version;
+            this.target_type = target_type;
+            this.from_type = from_type;
+            this.msg_type = msg_type;
+            this.target_id = target_id;
+            this.from_id = from_id;
+            this.from_name = from_name;
+            this.target_name = target_name;
+        }
 
         public ImageMessagePayload()
         {
-            this.media_id = null;
-            this.media_crc32 = 0;
-            this.width = 0;
-            this.height = 0;
-            this.format = null;
-            this.fsize = 0;
-            this.extras = null;
-
+            this.Media_id = null;
+            this.Media_crc32 = 0;
+            this.Width = 0;
+            this.Height = 0;
+            this.Format = null;
+            this.Fsize = 0;
+            this.Extras = null;
         }
 
 
@@ -96,9 +198,20 @@ namespace jmessage.message
         {
             this.text = null;
             this.extras = null;
-
         }
 
+        public TextMessagePayload(string version, string target_type, string from_type, string msg_type,
+            string target_id, string from_id, string from_name, string target_name)
+        {
+            this.version = version;
+            this.target_type = target_type;
+            this.from_type = from_type;
+            this.msg_type = msg_type;
+            this.target_id = target_id;
+            this.from_id = from_id;
+            this.from_name = from_name;
+            this.target_name = target_name;
+        }
 
         public string ToString(TextMessagePayload message)
         {
