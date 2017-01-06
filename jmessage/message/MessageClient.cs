@@ -24,7 +24,7 @@ namespace jmessage.message
             this.appKey = appKey;
             this.masterSecret = masterSecret;
         }
-        public ResponseWrapper sendImageMessage(ImageMessagePayload payload)
+        public ResponseWrapper sendMessage(MessagePayload payload)
         {
             Preconditions.checkArgument(payload != null, "message Payload should not be empty");
             String payloadString = this.ToString(payload);
@@ -35,19 +35,9 @@ namespace jmessage.message
             return result;
         }
 
-        public ResponseWrapper sendTextMessage(TextMessagePayload payload)
-        {
-            Preconditions.checkArgument(payload != null, "message Payload should not be empty");
-            String payloadString = this.ToString(payload);
-            Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payload String should not be empty");
-            String url = HOST_NAME_SSL;
-            url += MESSAGE_PATH;
-            ResponseWrapper result = sendPost(url, Authorization(), payloadString);
-            return result;
-        }
 
         
-        public string ToString(ImageMessagePayload payload)
+        public string ToString(MessagePayload payload)
         {
             return JsonConvert.SerializeObject(payload,
                             Newtonsoft.Json.Formatting.None,
@@ -57,15 +47,6 @@ namespace jmessage.message
                             });
         }
 
-        public string ToString(TextMessagePayload payload)
-        {
-            return JsonConvert.SerializeObject(payload,
-                            Newtonsoft.Json.Formatting.None,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            });
-        }
 
 
         public String Authorization()

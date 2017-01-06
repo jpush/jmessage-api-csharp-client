@@ -18,6 +18,7 @@ namespace jmessage.message
         public string from_id;
         public string from_name;
         public string target_name;
+        public Msg_body msg_body;
 
         public MessagePayload()
         {
@@ -29,6 +30,32 @@ namespace jmessage.message
             this.from_id = null;
             this.from_name = null;
             this.target_name = null;
+            this.msg_body = null;
+        }
+
+        public MessagePayload(string version, string target_type, string from_type, string msg_type,
+            string target_id, string from_id, string from_name, string target_name, Msg_body msg_body)
+        {
+            this.version = version;
+            this.target_type = target_type;
+            this.from_type = from_type;
+            this.msg_type = msg_type;
+            this.target_id = target_id;
+            this.from_id = from_id;
+            this.from_name = from_name;
+            this.target_name = target_name;
+            this.msg_body = msg_body;
+        }
+        public MessagePayload(string version, string target_type, string from_type, string msg_type,
+            string target_id, string from_id, Msg_body msg_body)
+        {
+            this.version = version;
+            this.target_type = target_type;
+            this.from_type = from_type;
+            this.msg_type = msg_type;
+            this.target_id = target_id;
+            this.from_id = from_id;
+            this.msg_body = msg_body;
         }
 
         public string ToString(MessagePayload message)
@@ -47,184 +74,36 @@ namespace jmessage.message
     }
 
 
-    public class ImageMessagePayload : MessagePayload
+    public class Msg_body
     {
-        private string media_id;
-        private long media_crc32;
-        private int width;
-        private int height;
-        private string format;
-        private int fsize;
-        private string extras;
-
-        public string Media_id
-        {
-            get
-            {
-                return media_id;
-            }
-
-            set
-            {
-                media_id = value;
-            }
-        }
-
-        public long Media_crc32
-        {
-            get
-            {
-                return media_crc32;
-            }
-
-            set
-            {
-                media_crc32 = value;
-            }
-        }
-
-        public int Width
-        {
-            get
-            {
-                return width;
-            }
-
-            set
-            {
-                width = value;
-            }
-        }
-
-        public int Height
-        {
-            get
-            {
-                return height;
-            }
-
-            set
-            {
-                height = value;
-            }
-        }
-
-        public string Format
-        {
-            get
-            {
-                return format;
-            }
-
-            set
-            {
-                format = value;
-            }
-        }
-
-        public int Fsize
-        {
-            get
-            {
-                return fsize;
-            }
-
-            set
-            {
-                fsize = value;
-            }
-        }
-
-        public string Extras
-        {
-            get
-            {
-                return extras;
-            }
-
-            set
-            {
-                extras = value;
-            }
-        }
-
-        public ImageMessagePayload(string version, string target_type, string from_type, string msg_type,
-            string target_id, string from_id, string from_name, string target_name)
-        {
-            this.version = version;
-            this.target_type = target_type;
-            this.from_type = from_type;
-            this.msg_type = msg_type;
-            this.target_id = target_id;
-            this.from_id = from_id;
-            this.from_name = from_name;
-            this.target_name = target_name;
-        }
-
-        public ImageMessagePayload()
-        {
-            this.Media_id = null;
-            this.Media_crc32 = 0;
-            this.Width = 0;
-            this.Height = 0;
-            this.Format = null;
-            this.Fsize = 0;
-            this.Extras = null;
-        }
-
-
-        public string ToString(ImageMessagePayload message)
-        {
-            return JsonConvert.SerializeObject(message,
-                            Newtonsoft.Json.Formatting.None,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            });
-        }
-        public ImageMessagePayload Check()
-        {
-            return this;
-        }
-    }
-
-
-    public class TextMessagePayload : MessagePayload
-    {
-        public string text;
+        public string media_id;
+        public long media_crc32;
+        public int width;
+        public int height;
+        public string format;
+        public int fsize;
         public string extras;
 
-        public TextMessagePayload()
+        public Msg_body()
         {
-            this.text = null;
+            this.media_id = null;
+            this.media_crc32 = 0;
+            this.width = 0;
+            this.height = 0;
+            this.format = null;
+            this.fsize = 0;
             this.extras = null;
         }
 
-        public TextMessagePayload(string version, string target_type, string from_type, string msg_type,
-            string target_id, string from_id, string from_name, string target_name)
+        public Msg_body(string media_id, long media_crc32, int width, int height, string format, int fsize, string extras)
         {
-            this.version = version;
-            this.target_type = target_type;
-            this.from_type = from_type;
-            this.msg_type = msg_type;
-            this.target_id = target_id;
-            this.from_id = from_id;
-            this.from_name = from_name;
-            this.target_name = target_name;
-        }
-
-        public string ToString(TextMessagePayload message)
-        {
-            return JsonConvert.SerializeObject(message,
-                            Newtonsoft.Json.Formatting.None,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            });
-        }
-        public TextMessagePayload Check()
-        {
-            return this;
+            this.media_id = media_id;
+            this.media_crc32 = media_crc32;
+            this.width = width;
+            this.height = height;
+            this.format = format;
+            this.fsize = fsize;
+            this.extras = extras;
         }
     }
 }

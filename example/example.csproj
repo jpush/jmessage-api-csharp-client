@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>example.RemoveSingleNodisturbExample</StartupObject>
+    <StartupObject>example.MessageExamples.SendImageMessageExample</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="jmessage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MessageExamples\SendImageMessageExample.cs" />
     <Compile Include="UserExamples\AddSingleNodisturbExample.cs" />
     <Compile Include="UserExamples\DeleteUserExample.cs" />
     <Compile Include="UserExamples\GetUserExample.cs" />
