@@ -89,19 +89,23 @@ namespace jmessage.common
 
                 if (method == "GET")
                 {
-                    //utf8编码
-                    byte[] bs = UTF8Encoding.UTF8.GetBytes(reqParams);
+                    if (reqParams != null)
+                    {
+                        //utf8编码
+                        byte[] bs = UTF8Encoding.UTF8.GetBytes(reqParams);
                     myReq.ContentLength = bs.Length;
                     using (Stream reqStream = myReq.GetRequestStream())
                     {
                         reqStream.Write(bs, 0, bs.Length);
                         reqStream.Close();
+                    }
                     }
                 }
 
                 if (method == "PUT")
                 {
-                    //utf8编码
+                    
+                        //utf8编码
                     byte[] bs = UTF8Encoding.UTF8.GetBytes(reqParams);
                     myReq.ContentLength = bs.Length;
                     using (Stream reqStream = myReq.GetRequestStream())
@@ -109,6 +113,8 @@ namespace jmessage.common
                         reqStream.Write(bs, 0, bs.Length);
                         reqStream.Close();
                     }
+                   
+                    
                 }
 
                 if (method == "DELETE")

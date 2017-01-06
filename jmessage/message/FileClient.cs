@@ -8,35 +8,32 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 
 namespace jmessage.message
-
 {
-    public class MessageClient : BaseHttpClient
+    public class FileClient : BaseHttpClient
     {
         private const String HOST_NAME_SSL = "https://api.im.jpush.cn";
-        private const String MESSAGE_PATH = "/v1/messages/";
+        private const String MESSAGE_PATH = "/v1/resource";
 
         private String appKey;
         private String masterSecret;
-        public MessageClient(String appKey, String masterSecret)
+        public FileClient(String appKey, String masterSecret)
         {
             Preconditions.checkArgument(!String.IsNullOrEmpty(appKey), "appKey should be set");
             Preconditions.checkArgument(!String.IsNullOrEmpty(masterSecret), "masterSecret should be set");
             this.appKey = appKey;
             this.masterSecret = masterSecret;
         }
-        public ResponseWrapper sendMessage(MessagePayload payload)
+        public ResponseWrapper getMedia(string mediaId)
         {
-            Preconditions.checkArgument(payload != null, "message Payload should not be empty");
-            String payloadString = this.ToString(payload);
-            Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
+            Preconditions.checkArgument(mediaId != null, "mediaId should not be empty");
             String url = HOST_NAME_SSL;
             url += MESSAGE_PATH;
-            ResponseWrapper result = sendPost(url, Authorization(), payloadString);
+            url += "?mediaId=";
+            url += mediaId;
+            ResponseWrapper result = sendGet(url, Authorization(), null);
             return result;
         }
 
-
-        
         public string ToString(MessagePayload payload)
         {
             return JsonConvert.SerializeObject(payload,
