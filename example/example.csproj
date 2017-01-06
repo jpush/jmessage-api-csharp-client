@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MessageExamples\SendTextMessageExample.cs" />
     <Compile Include="MessageExamples\SendImageMessageExample.cs" />
     <Compile Include="UserExamples\AddSingleNodisturbExample.cs" />
     <Compile Include="UserExamples\DeleteUserExample.cs" />

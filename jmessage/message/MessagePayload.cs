@@ -142,7 +142,7 @@ namespace jmessage.message
             this.msg_body = msg_body;
         }
 
-        public string ToString(TextMsg_body message)
+        public string ToString(TextMessagePayload message)
         {
             return JsonConvert.SerializeObject(message,
                             Newtonsoft.Json.Formatting.None,
@@ -151,7 +151,7 @@ namespace jmessage.message
                                 NullValueHandling = NullValueHandling.Ignore
                             });
         }
-        public MessagePayload Check()
+        public TextMessagePayload Check()
         {
             return this;
         }
