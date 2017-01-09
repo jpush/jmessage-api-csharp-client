@@ -81,12 +81,15 @@ namespace jmessage.message
                                    "\r\n\r\n{1}\r\n";
 
             foreach (byte[] formitembytes in from string key in stringDict.Keys
-                                             select string.Format(stringKeyHeader, key, stringDict[key])
+                                                 select string.Format(stringKeyHeader, key, stringDict[key])
                                                  into formitem
-                                             select Encoding.UTF8.GetBytes(formitem))
-            {
-                memStream.Write(formitembytes, 0, formitembytes.Length);
-            }
+                                                 select Encoding.UTF8.GetBytes(formitem))
+                {
+                    memStream.Write(formitembytes, 0, formitembytes.Length);
+                }
+
+            
+            
 
             // 写入最后的结束边界符
             memStream.Write(endBoundary, 0, endBoundary.Length);

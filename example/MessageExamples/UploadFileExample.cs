@@ -20,9 +20,8 @@ namespace example.MessageExamples
         {
             FileClient client = new FileClient(app_key, master_secret);
             NameValueCollection nvc = new NameValueCollection();
-            nvc.Add("id", "TTR");
-            nvc.Add("btn-submit-photo", "Upload");
-            String content=client.HttpPostData("https://api.im.jpush.cn/v1/resource?type=image",600000, "touch-icon-iphone.png",
+            nvc.Add("type", "image");
+            String content=client.HttpPostData("https://api.im.jpush.cn/v1/resource?type=image",600, "touch-icon-iphone.png",
                  @"C:\Users\fendouai\Desktop\touch-icon-iphone.png", nvc);
             Console.WriteLine(content);
             Console.ReadLine();
