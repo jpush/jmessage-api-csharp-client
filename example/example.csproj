@@ -32,12 +32,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>example.MessageExamples.SendImageMessageExample</StartupObject>
+    <StartupObject>example.MessageExamples.GetMediaExample</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="jmessage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\jmessage\bin\Debug\jmessage.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.7.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.7\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\jmessage-api-csharp-client\bin\Debug\Newtonsoft.Json.dll</HintPath>
@@ -51,8 +55,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MessageExamples\GetMediaExample.cs" />
     <Compile Include="MessageExamples\SendTextMessageExample.cs" />
     <Compile Include="MessageExamples\SendImageMessageExample.cs" />
+    <Compile Include="MessageExamples\UploadFileExample.cs" />
     <Compile Include="UserExamples\AddSingleNodisturbExample.cs" />
     <Compile Include="UserExamples\DeleteUserExample.cs" />
     <Compile Include="UserExamples\GetUserExample.cs" />
@@ -70,6 +76,9 @@
     <Compile Include="UserExamples\RegistAdminExample.cs" />
     <Compile Include="UserExamples\RegistUserExample.cs" />
     <Compile Include="UserExamples\RemoveSingleNodisturbExample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
