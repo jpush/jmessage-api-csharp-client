@@ -15,7 +15,7 @@ namespace jmessage.group
         private const String GROUP_PATH = "/v1/groups/";
         private const String USER_PATH = "/v1/users/";
         
-        private const String GET_ADMIN_PATH = "/v1/admins?start=";
+        private const String GET_GROUPS = "/v1/groups/?start=";
         private const String GET_USERS_PATH = "/v1/users/?start=";
 
         private String appKey;
@@ -129,9 +129,20 @@ namespace jmessage.group
         public ResponseWrapper getMemberGroups(string username)
         {
             String url = HOST_NAME_SSL;
-            url += GROUP_PATH;
+            url += USER_PATH;
             url += username;
             url += "/groups/";
+            ResponseWrapper result = sendGet(url, Authorization(), null);
+            return result;
+        }
+
+        public ResponseWrapper getGroupsList(int start,int count)
+        {
+            String url = HOST_NAME_SSL;
+            url += GET_GROUPS;
+            url += start.ToString();
+            url += "&count=";
+            url += count.ToString();
             ResponseWrapper result = sendGet(url, Authorization(), null);
             return result;
         }
