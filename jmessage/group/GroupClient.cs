@@ -13,6 +13,8 @@ namespace jmessage.group
     {
         private const String HOST_NAME_SSL = "https://api.im.jpush.cn";
         private const String GROUP_PATH = "/v1/groups/";
+        private const String USER_PATH = "/v1/users/";
+        
         private const String GET_ADMIN_PATH = "/v1/admins?start=";
         private const String GET_USERS_PATH = "/v1/users/?start=";
 
@@ -111,6 +113,26 @@ namespace jmessage.group
             url += groupId.ToString();
             url += "/members";
             ResponseWrapper result = sendPost(url, Authorization(), payloadString);
+            return result;
+        }
+
+        public ResponseWrapper getGroupMembers(int groupId)
+        {
+            String url = HOST_NAME_SSL;
+            url += GROUP_PATH;
+            url += groupId.ToString();
+            url += "members/";
+            ResponseWrapper result = sendGet(url, Authorization(), null);
+            return result;
+        }
+
+        public ResponseWrapper getMemberGroups(string username)
+        {
+            String url = HOST_NAME_SSL;
+            url += GROUP_PATH;
+            url += username;
+            url += "/groups/";
+            ResponseWrapper result = sendGet(url, Authorization(), null);
             return result;
         }
 
