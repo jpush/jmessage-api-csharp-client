@@ -148,6 +148,19 @@ namespace jmessage.common
                     Console.WriteLine("Succeed to get response - 200 OK" +" "+ DateTime.Now);
                     Console.WriteLine("Response Content - {0}", result.responseContent +" "+ DateTime.Now);
                 }
+
+                if (Equals(response.StatusCode, HttpStatusCode.Created))
+                {
+                    using (StreamReader reader = new StreamReader(response.GetResponseStream(), System.Text.Encoding.UTF8))
+                    {
+                        result.responseContent = reader.ReadToEnd();
+                    }
+                    String limitQuota = response.GetResponseHeader(RATE_LIMIT_QUOTA);
+                    String limitRemaining = response.GetResponseHeader(RATE_LIMIT_Remaining);
+                    String limitReset = response.GetResponseHeader(RATE_LIMIT_Reset);
+                    Console.WriteLine("Succeed to get response - 200 OK" + " " + DateTime.Now);
+                    Console.WriteLine("Response Content - {0}", result.responseContent + " " + DateTime.Now);
+                }
             }
             //异常处理
             catch (WebException e)

@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>example.GroupExamples.CreateGroupExample</StartupObject>
+    <StartupObject>example.GroupExamples.AddGroupMembersExample</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="jmessage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GroupExamples\AddGroupMembersExample.cs" />
     <Compile Include="GroupExamples\CreateGroupExample.cs" />
     <Compile Include="MessageExamples\GetMediaExample.cs" />
     <Compile Include="MessageExamples\SendTextMessageExample.cs" />

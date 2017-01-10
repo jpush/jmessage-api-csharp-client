@@ -9,18 +9,20 @@ using Newtonsoft.Json;
 using jmessage.message;
 using jmessage.group;
 using jmessage;
+
 namespace example.GroupExamples
 {
-    class CreateGroupExample
+    class AddGroupMembersExample
     {
         public static String app_key = "6be9204c30b9473e87bad4dc";
         public static String master_secret = "a19bef7870c55d7e51f4c4f0";
         public static void Main(string[] args)
         {
             GroupClient client = new GroupClient(app_key, master_secret);
-            List<string> members_username = new List<string> { "xiaohuihui","jintian" };
-            GroupPayload payload = new GroupPayload( "toms", "xiaohuihui", members_username, "jmessage");
-            client.createGroup(payload);
+            List<string> members_username = new List<string> { "jmessage" };
+            Dictionary<string, List<string>> payload = new Dictionary<string, List<string>> { };
+            payload["add"] = members_username;
+            client.addGroupMembers(19150325,payload);
             Console.ReadLine();
         }
     }

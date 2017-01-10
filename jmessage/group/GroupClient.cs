@@ -15,8 +15,6 @@ namespace jmessage.group
         private const String GROUP_PATH = "/v1/groups/";
         private const String GET_ADMIN_PATH = "/v1/admins?start=";
         private const String GET_USERS_PATH = "/v1/users/?start=";
-        private const String USER_PATH = "/v1/users/";
-        private const String PUSH_PATH = "/v3/push";
 
         private String appKey;
         private String masterSecret;
@@ -78,6 +76,43 @@ namespace jmessage.group
             return result;
         }
 
+        public ResponseWrapper addGroupMembers(int groupId, Dictionary<string, List<string>>  payload)
+        {
+            Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
+            String payloadJson = this.ToString(payload);
+            return addGroupMembers(groupId,payloadJson);
+        }
+
+        public ResponseWrapper addGroupMembers(int groupId,string payloadString)
+        {
+            Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
+            Console.WriteLine(payloadString);
+            String url = HOST_NAME_SSL;
+            url += GROUP_PATH;
+            url += groupId.ToString();
+            url += "/members";
+            ResponseWrapper result = sendPost(url, Authorization(), payloadString);
+            return result;
+        }
+
+        public ResponseWrapper removeGroupMembers(int groupId, Dictionary<string, List<string>> payload)
+        {
+            Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
+            String payloadJson = this.ToString(payload);
+            return removeGroupMembers(groupId, payloadJson);
+        }
+
+        public ResponseWrapper removeGroupMembers(int groupId, string payloadString)
+        {
+            Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
+            Console.WriteLine(payloadString);
+            String url = HOST_NAME_SSL;
+            url += GROUP_PATH;
+            url += groupId.ToString();
+            url += "/members";
+            ResponseWrapper result = sendPost(url, Authorization(), payloadString);
+            return result;
+        }
 
         public string ToString(GroupPayload payload)
         {
@@ -89,7 +124,18 @@ namespace jmessage.group
                             });
         }
 
-        public  String Authorization()
+        public string ToString(Dictionary<string, List<string>> payload)
+        {
+            return JsonConvert.SerializeObject(payload,
+                            Newtonsoft.Json.Formatting.None,
+                            new JsonSerializerSettings
+                            {
+                                NullValueHandling = NullValueHandling.Ignore
+                            });
+        }
+
+
+        public String Authorization()
         {
 
             Debug.Assert(!string.IsNullOrEmpty(this.appKey));
