@@ -24,11 +24,10 @@ namespace jmessage.cross
             this.appKey = appKey;
             this.masterSecret = masterSecret;
         }
-        public ResponseWrapper crossAddMembers(string appkey,string gid, List<Dictionary<string, string>> payload)
+        public ResponseWrapper crossAddMembers(string appkey,string gid, List<CrossMembersPayload> payloads)
         {
-            Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
-            //payload.Check();
-            String payloadJson = this.ToString(payload);
+            Preconditions.checkArgument(payloads != null, "Payload should not be empty");
+            String payloadJson = this.ToString(payloads);
             return crossAddMembers(appkey, gid , payloadJson);
         }
         public ResponseWrapper crossAddMembers(string appkey, string gid, string payloadString)
@@ -43,11 +42,11 @@ namespace jmessage.cross
             return result;
         }
 
-        public ResponseWrapper crossRemoveMembers(string appkey, string gid, List<Dictionary<string, string>> payload)
+        public ResponseWrapper crossRemoveMembers(string appkey, string gid, List<CrossMembersPayload> payloads)
         {
-            Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
+            Preconditions.checkArgument(payloads != null, "pushPayload should not be empty");
             //payload.Check();
-            String payloadJson = this.ToString(payload);
+            String payloadJson = this.ToString(payloads);
             return crossRemoveMembers(appkey, gid, payloadJson);
         }
         public ResponseWrapper crossRemoveMembers(string appkey, string gid, string payloadString)
@@ -259,9 +258,19 @@ namespace jmessage.cross
                                 NullValueHandling = NullValueHandling.Ignore
                             });
         }
+        public string ToString(List<CrossMembersPayload> payloads)
+        {
+            return JsonConvert.SerializeObject(payloads,
+                            Newtonsoft.Json.Formatting.None,
+                            new JsonSerializerSettings
+                            {
+                                NullValueHandling = NullValueHandling.Ignore
+                            });
+        }
 
 
-        public  String Authorization()
+
+        public String Authorization()
         {
 
             Debug.Assert(!string.IsNullOrEmpty(this.appKey));
