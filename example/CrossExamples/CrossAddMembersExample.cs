@@ -13,7 +13,7 @@ using jmessage.cross;
 using jmessage;
 namespace example.CrossExamples
 {
-    class CrossExample
+    class CrossAddMembersExample
     {
         public static String app_key = "6be9204c30b9473e87bad4dc";
         public static String master_secret = "a19bef7870c55d7e51f4c4f0";

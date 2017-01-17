@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>example.CrossExamples.CrossExample</StartupObject>
+    <StartupObject>example.CrossExamples.CrossAddMembersExample</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="jmessage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -55,7 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrossExamples\CrossExample.cs" />
+    <Compile Include="CrossExamples\CrossAddMembersExample.cs" />
     <Compile Include="FriendExamples\AddFriendsExample.cs" />
     <Compile Include="GroupExamples\AddGroupMembersExample.cs" />
     <Compile Include="GroupExamples\CreateGroupExample.cs" />

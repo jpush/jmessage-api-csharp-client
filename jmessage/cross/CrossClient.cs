@@ -25,8 +25,13 @@ namespace jmessage.cross
             this.appKey = appKey;
             this.masterSecret = masterSecret;
         }
-        public ResponseWrapper crossAddMembers(string appkey,string gid, List<Hashtable> payloads)
+        public ResponseWrapper crossAddMembers(string appkey,string gid, List<string> add)
         {
+            Hashtable payload = new Hashtable();
+            payload.Add("appkey", appkey);
+            payload.Add("add", add);
+            List<Hashtable> payloads = new List<Hashtable> { };
+            payloads.Add(payload);
             Preconditions.checkArgument(payloads != null, "Payload should not be empty");
             String payloadJson = this.ToString(payloads);
             return crossAddMembers(appkey, gid , payloadJson);
@@ -43,13 +48,18 @@ namespace jmessage.cross
             return result;
         }
 
-        public ResponseWrapper crossRemoveMembers(string appkey, string gid, List<Hashtable> payloads)
+        public ResponseWrapper crossRemoveMembers(string appkey, string gid, List<string> remove)
         {
+            Hashtable payload = new Hashtable();
+            payload.Add("appkey", appkey);
+            payload.Add("remove", remove);
+            List<Hashtable> payloads = new List<Hashtable> { };
+            payloads.Add(payload);
             Preconditions.checkArgument(payloads != null, "Payload should not be empty");
-            //payload.Check();
             String payloadJson = this.ToString(payloads);
             return crossRemoveMembers(appkey, gid, payloadJson);
         }
+
         public ResponseWrapper crossRemoveMembers(string appkey, string gid, string payloadString)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payload String should not be empty");
@@ -75,11 +85,15 @@ namespace jmessage.cross
 
 
 
-        public ResponseWrapper crossAddBlacklist(string appkey, string username, List<Hashtable> payload)
+        public ResponseWrapper crossAddBlacklist(string appkey, string username, List<string> usernames)
         {
+            Hashtable payload = new Hashtable();
+            payload.Add("appkey", appkey);
+            payload.Add("usernames", usernames);
+            List<Hashtable> payloads = new List<Hashtable> { };
+            payloads.Add(payload);
             Preconditions.checkArgument(payload != null, "Payload should not be empty");
-            //payload.Check();
-            String payloadJson = this.ToString(payload);
+            String payloadJson = this.ToString(payloads);
             return crossAddBlacklist(appkey, username, payloadJson);
         }
         public ResponseWrapper crossAddBlacklist(string appkey, string username, string payloadString)
@@ -94,12 +108,16 @@ namespace jmessage.cross
             return result;
         }
 
-        public ResponseWrapper crossRemoveBlacklist(string appkey, string username, List<Hashtable> payload)
+        public ResponseWrapper crossRemoveBlacklist(string appkey, string username, List<string> usernames)
         {
-            Preconditions.checkArgument(payload != null, "push Payload should not be empty");
-            //payload.Check();
-            String payloadJson = this.ToString(payload);
-            return crossRemoveBlacklist(appkey, username, payloadJson);
+            Hashtable payload = new Hashtable();
+            payload.Add("appkey", appkey);
+            payload.Add("usernames", usernames);
+            List<Hashtable> payloads = new List<Hashtable> { };
+            payloads.Add(payload);
+            Preconditions.checkArgument(payload != null, "Payload should not be empty");
+            String payloadJson = this.ToString(payloads);
+            return crossAddBlacklist(appkey, username, payloadJson);
         }
         public ResponseWrapper crossRemoveBlacklist(string appkey, string username, string payloadString)
         {
@@ -123,30 +141,74 @@ namespace jmessage.cross
             return result;
         }
 
-        public ResponseWrapper crossSetSingleNodisturb(string appkey, string username, LinkedList<string> add, LinkedList<string> remove)
+        public ResponseWrapper crossAddSingleNodisturb(string appkey, string username, List<string> add)
         {
             String url = HOST_NAME_SSL;
             url += CROSS_USER_PATH;
             url += username;
             url += "/nodisturb";
-            SingleNodisturbPayload single = new SingleNodisturbPayload(appkey, add, remove);
-            NodisturbPayload nodisturb = new NodisturbPayload();
-            nodisturb.single = single;
-            string payloadString = this.ToString(nodisturb);
+            Hashtable payload = new Hashtable();
+            payload.Add("appkey", appkey);
+            Hashtable single = new Hashtable();
+            single.Add("add", add);
+            payload.Add("single", single);
+            List<Hashtable> payloads = new List<Hashtable> { };
+            payloads.Add(payload);
+            string payloadString = this.ToString(payloads);
             ResponseWrapper result = sendPost(url, Authorization(), payloadString);
             return result;
         }
 
-        public ResponseWrapper crossSetGroupNodisturb(string appkey, string username,  LinkedList<int> add, LinkedList<int> remove)
+        public ResponseWrapper crossRemoveSingleNodisturb(string appkey, string username, List<string> remove)
         {
             String url = HOST_NAME_SSL;
             url += CROSS_USER_PATH;
             url += username;
             url += "/nodisturb";
-            GroupNodisturbPayload group = new GroupNodisturbPayload(appkey, add, remove);
-            NodisturbPayload nodisturb = new NodisturbPayload();
-            nodisturb.group = group;
-            string payloadString = this.ToString(nodisturb);
+            Hashtable payload = new Hashtable();
+            payload.Add("appkey", appkey);
+            Hashtable single = new Hashtable();
+            single.Add("remove", remove);
+            payload.Add("single", single);
+            List<Hashtable> payloads = new List<Hashtable> { };
+            payloads.Add(payload);
+            string payloadString = this.ToString(payloads);
+            ResponseWrapper result = sendPost(url, Authorization(), payloadString);
+            return result;
+        }
+
+        public ResponseWrapper crossAddGroupNodisturb(string appkey, string username, List<string> add)
+        {
+            String url = HOST_NAME_SSL;
+            url += CROSS_USER_PATH;
+            url += username;
+            url += "/nodisturb";
+            Hashtable payload = new Hashtable();
+            payload.Add("appkey", appkey);
+            Hashtable group = new Hashtable();
+            group.Add("add", add);
+            payload.Add("group", group);
+            List<Hashtable> payloads = new List<Hashtable> { };
+            payloads.Add(payload);
+            string payloadString = this.ToString(payloads);
+            ResponseWrapper result = sendPost(url, Authorization(), payloadString);
+            return result;
+        }
+
+        public ResponseWrapper crossRemoveGroupNodisturb(string appkey, string username, List<string> remove)
+        {
+            String url = HOST_NAME_SSL;
+            url += CROSS_USER_PATH;
+            url += username;
+            url += "/nodisturb";
+            Hashtable payload = new Hashtable();
+            payload.Add("appkey", appkey);
+            Hashtable group = new Hashtable();
+            group.Add("remove", remove);
+            payload.Add("group", group);
+            List<Hashtable> payloads = new List<Hashtable> { };
+            payloads.Add(payload);
+            string payloadString = this.ToString(payloads);
             ResponseWrapper result = sendPost(url, Authorization(), payloadString);
             return result;
         }
@@ -155,7 +217,7 @@ namespace jmessage.cross
         {
             Preconditions.checkArgument(users != null, "Payload should not be empty");
             string usersString = ToString(users);
-            Dictionary<string, string> payload = new Dictionary<string, string> { };
+            Hashtable payload = new Hashtable();
             payload["appkey"] = appkey;
             payload["users"] = usersString;
             String payloadJson = this.ToString(payload);
@@ -174,17 +236,18 @@ namespace jmessage.cross
         }
 
 
-        public ResponseWrapper deleteFriends(string appkey, string username, List<string> users)
+        public ResponseWrapper crossDeleteFriends(string appkey, string username, List<string> users)
         {
             Preconditions.checkArgument(users != null, "Payload should not be empty");
             string usersString = ToString(users);
-            Dictionary<string, string> payload = new Dictionary<string, string> { };
+            Hashtable payload = new Hashtable();
             payload["appkey"] = appkey;
             payload["users"] = usersString;
             String payloadJson = this.ToString(payload);
-            return deleteFriends(username, payloadJson);
+            return crossDeleteFriends(username, payloadJson);
         }
-        public ResponseWrapper deleteFriends(string username, string payloadString)
+
+        public ResponseWrapper crossDeleteFriends(string username, string payloadString)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payload String should not be empty");
             Console.WriteLine(payloadString);
@@ -196,19 +259,14 @@ namespace jmessage.cross
             return result;
         }
 
-        public ResponseWrapper putFriends(string appkey, string username, List<Dictionary<string, string>> users)
+        public ResponseWrapper crossUpdateFriends(string appkey, string username, List<Hashtable> users)
         {
             Preconditions.checkArgument(users != null, "Payload should not be empty");
-            foreach (Dictionary<string, string> user in users)
-            {
-                user["appkey"] = appkey;
-            }
             String payloadJson = this.ToString(users);
-
-            return putFriends(username, payloadJson);
+            return crossUpdateFriends(username, payloadJson);
         }
 
-        public ResponseWrapper putFriends(string username, string payload)
+        public ResponseWrapper crossUpdateFriends(string username, string payload)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payload), "payload String should not be empty");
             Console.WriteLine(payload);
@@ -230,7 +288,7 @@ namespace jmessage.cross
                             });
         }
 
-        public string ToString(NodisturbPayload payload)
+        public string ToString(Hashtable payload)
         {
             return JsonConvert.SerializeObject(payload,
                             Newtonsoft.Json.Formatting.None,
