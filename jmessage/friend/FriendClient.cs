@@ -62,14 +62,14 @@ namespace jmessage.friend
             return result;
         }
 
-        public ResponseWrapper putFriends(string username, List<Dictionary<string, string>> payload)
+        public ResponseWrapper updateFriends(string username, List<Dictionary<string, string>> payload)
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
             String payloadJson = this.ToString(payload);
-            return putFriends(username, payloadJson);
+            return updateFriends(username, payloadJson);
         }
 
-        public ResponseWrapper putFriends(string username, string payload)
+        public ResponseWrapper updateFriends(string username, string payload)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payload), "payloadString should not be empty");
             Console.WriteLine(payload);

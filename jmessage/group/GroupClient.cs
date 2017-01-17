@@ -53,14 +53,14 @@ namespace jmessage.group
             return result;
         }
 
-        public ResponseWrapper putGroup(int groupId,GroupPayload payload)
+        public ResponseWrapper updateGroup(int groupId,GroupPayload payload)
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
             String payloadJson = payload.ToString(payload);
-            return putGroup(groupId, payloadJson);
+            return updateGroup(groupId, payloadJson);
         }
 
-        public ResponseWrapper putGroup(int groupId,string payloadJson)
+        public ResponseWrapper updateGroup(int groupId,string payloadJson)
         {
             String url = HOST_NAME_SSL;
             url += GROUP_PATH;

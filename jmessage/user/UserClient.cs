@@ -94,17 +94,17 @@ namespace jmessage.user
             return result;
         }
 
-        public ResponseWrapper putUser(UserPayload payload)
+        public ResponseWrapper updateUser(UserPayload payload)
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
             //payload.Check();
             string username = payload.username;
             payload.username = null;
             String payloadJson = payload.ToString(payload);
-            return putUser(payloadJson,username);
+            return updateUser(payloadJson,username);
         }
 
-        public ResponseWrapper putUser(string payloadString,string username)
+        public ResponseWrapper updateUser(string payloadString,string username)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
             Console.WriteLine(payloadString);
@@ -115,17 +115,17 @@ namespace jmessage.user
             return result;
         }
 
-        public ResponseWrapper putUserPassword(UserPayload payload)
+        public ResponseWrapper updateUserPassword(UserPayload payload)
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
             //payload.Check();
             String username = payload.username;
             payload.username = null;
             String payloadJson = payload.ToString(payload);
-            return putUserPassword(payloadJson, username);
+            return updateUserPassword(payloadJson, username);
         }
 
-        public ResponseWrapper putUserPassword(string payloadString, string username)
+        public ResponseWrapper updateUserPassword(string payloadString, string username)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
             Console.WriteLine(payloadString);
