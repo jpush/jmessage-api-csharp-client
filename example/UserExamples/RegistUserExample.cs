@@ -18,7 +18,7 @@ namespace example
         {
             Console.WriteLine("*****开始注册用户******");
             JMessageClient client = new JMessageClient(app_key, master_secret);
-            UserPayload user = new UserPayload("jmessage", "password");
+            UserPayload user = new UserPayload("jmessage123", "password");
             List<UserPayload> users = new List<UserPayload> { user };
             client._messageClient.registUser(users);
             Console.ReadLine();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,22 +12,15 @@ namespace example
 {
     class Program
     {
-
-        public static String app_key = "6be9204c30b9473e87bad4dc";
-        public static String master_secret = "a564b268ba23631a8a34e687";
-
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-            Console.WriteLine("*****开始注册用户******");
-            JMessageClient client = new JMessageClient(app_key, master_secret);
-            UserPayload user = new UserPayload("jintian", "password");
-            List<UserPayload> users = new List<UserPayload> {user};
-            client._messageClient.registUser(users);
-
-            Console.WriteLine("*****开始注册管理员******");
-            UserPayload admin = new UserPayload("jmessage", "password");
-            client._messageClient.registAdmin(admin);
-            Console.ReadLine();
+            Hashtable ht = new Hashtable();
+            ht.Add("1", "1111");
+            ht.Add("2", "2222");
+            ht.Add("3", "3333");
+            ht.Add("4", "4444");
+            List<string> add = new List<string> { "jmessage123" };
+            ht.Add("5", add);
         }
-    }
+        }
 }

@@ -52,7 +52,6 @@
     <Compile Include="common\ResponseWrapper.cs" />
     <Compile Include="common\TimeUnit.cs" />
     <Compile Include="cross\CrossClient.cs" />
-    <Compile Include="cross\CrossMembersPayload.cs" />
     <Compile Include="cross\NodisturbPayload.cs" />
     <Compile Include="friend\FriendClient.cs" />
     <Compile Include="group\GroupClient.cs" />
