@@ -21,9 +21,9 @@ namespace example.CrossExamples
             CrossClient client = new CrossClient(app_key, master_secret);
             CrossMembersPayload payload = new CrossMembersPayload();
             payload.appkey= "6be9204c30b9473e87bad4dc";
-            List<string> add = new List<string> { "jmessage" };
+            List<string> add = new List<string> { "jmessage123" };
             payload.add = add;
-            List<string> remove = new List<string> { "xiaohuihui" };
+            List<string> remove = new List<string> { "jmessage" };
             payload.remove = remove;
             List<CrossMembersPayload> payloads = new List<CrossMembersPayload> { };
             payloads.Add(payload);

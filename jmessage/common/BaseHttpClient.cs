@@ -22,9 +22,9 @@ namespace jmessage.common
 	    protected const int RESPONSE_OK = 200;
 	
 	    //设置连接超时时间
-	    private const int DEFAULT_CONNECTION_TIMEOUT = (20 * 1000); // milliseconds
+	    private const int DEFAULT_CONNECTION_TIMEOUT = (100* 1000); // milliseconds
 	    //设置读取超时时间
-	    private const int DEFAULT_SOCKET_TIMEOUT = (30 * 1000); // milliseconds
+	    private const int DEFAULT_SOCKET_TIMEOUT = (100* 1000); // milliseconds
 
         public ResponseWrapper sendPost(String url, String auth, String reqParams) 
         { 
