@@ -298,25 +298,6 @@ namespace jmessage.cross
                             });
         }
 
-        public string ToString(List<Dictionary<string,string>> payload)
-        {
-            return JsonConvert.SerializeObject(payload,
-                            Newtonsoft.Json.Formatting.None,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            });
-        }
-
-        public string ToString(Dictionary<string, string> payload)
-        {
-            return JsonConvert.SerializeObject(payload,
-                            Newtonsoft.Json.Formatting.None,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            });
-        }
         public string ToString(List<Hashtable> payloads)
         {
             return JsonConvert.SerializeObject(payloads,
@@ -326,8 +307,6 @@ namespace jmessage.cross
                                 NullValueHandling = NullValueHandling.Ignore
                             });
         }
-
-
 
         public String Authorization()
         {
