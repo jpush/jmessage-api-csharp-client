@@ -19,7 +19,7 @@ namespace example
             UserPayload user = new UserPayload("jintian");
             //需要修改的字段
             user.new_password = "newpassword";
-            client._messageClient.putUserPassword(user);
+            client._messageClient.updateUserPassword(user);
             Console.ReadLine();
         }
     }

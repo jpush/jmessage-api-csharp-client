@@ -22,7 +22,7 @@ namespace example
             UserPayload user = new UserPayload("jintian");
             //需要修改的字段
             user.nickname = "nickname";
-            client._messageClient.putUser(user);
+            client._messageClient.updateUser(user);
             Console.ReadLine();
         }
     }
