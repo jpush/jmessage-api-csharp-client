@@ -8,7 +8,6 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 using System.Net;
 using System.IO;
-using log4net;
 using System.Collections.Specialized;
 
 namespace jmessage.message
@@ -75,21 +74,34 @@ namespace jmessage.message
                 memStream.Write(buffer, 0, bytesRead);
             }
 
-            // 写入字符串的Key
-            var stringKeyHeader = "\r\n--" + boundary +
-                                   "\r\nContent-Disposition: form-data; name=\"{0}\"" +
-                                   "\r\n\r\n{1}\r\n";
+            if (stringDict != null)
+            {
+                // 写入字符串的Key
+                var stringKeyHeader = "\r\n--" + boundary +
+                                       "\r\nContent-Disposition: form-data; name=\"{0}\"" +
+                                       "\r\n\r\n{1}\r\n";
 
-            foreach (byte[] formitembytes in from string key in stringDict.Keys
+                foreach (byte[] formitembytes in from string key in stringDict.Keys
                                                  select string.Format(stringKeyHeader, key, stringDict[key])
-                                                 into formitem
+                                                     into formitem
                                                  select Encoding.UTF8.GetBytes(formitem))
                 {
                     memStream.Write(formitembytes, 0, formitembytes.Length);
                 }
+            }
+            else
+            {
+                // 写入字符串的Key
+                var stringKeyHeader = "\r\n--" + boundary +
+                                       "\r\nContent-Disposition: form-data; name=\"{0}\"" +
+                                       "\r\n\r\n{1}\r\n";
 
-            
-            
+                byte[] formitembytes =new byte[0];
+                formitembytes = null;
+                {
+                    memStream.Write(formitembytes, 0, formitembytes.Length);
+                }
+            }
 
             // 写入最后的结束边界符
             memStream.Write(endBoundary, 0, endBoundary.Length);
@@ -105,20 +117,43 @@ namespace jmessage.message
 
             requestStream.Write(tempBuffer, 0, tempBuffer.Length);
             requestStream.Close();
-
-            var httpWebResponse = (HttpWebResponse)webRequest.GetResponse();
-
-            using (var httpStreamReader = new StreamReader(httpWebResponse.GetResponseStream(),
-                                                            Encoding.GetEncoding("utf-8")))
+            try
             {
-                responseContent = httpStreamReader.ReadToEnd();
+                var httpWebResponse = (HttpWebResponse)webRequest.GetResponse();
+
+                using (var httpStreamReader = new StreamReader(httpWebResponse.GetResponseStream(),
+                                                                Encoding.GetEncoding("utf-8")))
+                {
+                    responseContent = httpStreamReader.ReadToEnd();
+                }
+
+                fileStream.Close();
+                httpWebResponse.Close();
+                webRequest.Abort();
+
+                return responseContent;
+            }
+            catch (WebException e)
+            {
+                if (e.Status == WebExceptionStatus.ProtocolError)
+                {
+                    HttpStatusCode errorCode = ((HttpWebResponse)e.Response).StatusCode;
+                    string statusDescription = ((HttpWebResponse)e.Response).StatusDescription;
+                    using (StreamReader sr = new StreamReader(((HttpWebResponse)e.Response).GetResponseStream(), System.Text.Encoding.UTF8))
+                    {
+                        responseContent = sr.ReadToEnd();
+                    }
+                    HttpStatusCode responseCode = errorCode;
+                    String exceptionString = e.Message;
+                    Debug.Print(e.Message);
+                    Console.WriteLine(responseContent);
+                    Console.WriteLine(string.Format("fail  to get response - {0}", errorCode) + " " + DateTime.Now);
+                    return responseContent;
+                }
+                else
+                    return "fail to get response";
             }
 
-            fileStream.Close();
-            httpWebResponse.Close();
-            webRequest.Abort();
-
-            return responseContent;
         }
 
         public string ToString(MessagePayload payload)

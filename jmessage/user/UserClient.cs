@@ -69,7 +69,6 @@ namespace jmessage.user
             url += start.ToString();
             url += "&count=";
             url += count.ToString();
-            //GET /v1/admins?start={start}&count={count}
             ResponseWrapper result = sendGet(url, Authorization(),null);
             return result;
         }
@@ -97,7 +96,6 @@ namespace jmessage.user
         public ResponseWrapper updateUser(UserPayload payload)
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
-            //payload.Check();
             string username = payload.username;
             payload.username = null;
             String payloadJson = payload.ToString(payload);
@@ -118,7 +116,6 @@ namespace jmessage.user
         public ResponseWrapper updateUserPassword(UserPayload payload)
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
-            //payload.Check();
             String username = payload.username;
             payload.username = null;
             String payloadJson = payload.ToString(payload);
@@ -138,7 +135,6 @@ namespace jmessage.user
         public ResponseWrapper deleteUser(UserPayload payload)
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
-            //payload.Check();
             String username = payload.username;
             return deleteUser( username);
         }
@@ -154,7 +150,6 @@ namespace jmessage.user
         public ResponseWrapper getUserStat(UserPayload payload)
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
-            //payload.Check();
             string username = payload.username;
             return getUserStat(username);
         }
