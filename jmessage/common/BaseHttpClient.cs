@@ -119,13 +119,16 @@ namespace jmessage.common
 
                 if (method == "DELETE")
                 {
-                    //utf8编码
-                    byte[] bs = UTF8Encoding.UTF8.GetBytes(reqParams);
-                    myReq.ContentLength = bs.Length;
-                    using (Stream reqStream = myReq.GetRequestStream())
+                    if (reqParams!=null)
                     {
-                        reqStream.Write(bs, 0, bs.Length);
-                        reqStream.Close();
+                        //utf8编码
+                        byte[] bs = UTF8Encoding.UTF8.GetBytes(reqParams);
+                        myReq.ContentLength = bs.Length;
+                        using (Stream reqStream = myReq.GetRequestStream())
+                        {
+                            reqStream.Write(bs, 0, bs.Length);
+                            reqStream.Close();
+                        }
                     }
                 }
 

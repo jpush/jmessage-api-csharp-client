@@ -121,7 +121,7 @@ namespace jmessage.group
             String url = HOST_NAME_SSL;
             url += GROUP_PATH;
             url += groupId.ToString();
-            url += "members/";
+            url += "/members/";
             ResponseWrapper result = sendGet(url, Authorization(), null);
             return result;
         }

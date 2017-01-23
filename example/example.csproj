@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>example.GroupExamples.DeleteGroupExample</StartupObject>
+    <StartupObject>example.GroupExamples.GetGroupsListExample</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="jmessage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -86,6 +86,10 @@
     <Compile Include="CrossExamples\CrossRemoveMembersExample.cs" />
     <Compile Include="CrossExamples\CrossAddMembersExample.cs" />
     <Compile Include="FriendExamples\AddFriendsExample.cs" />
+    <Compile Include="GroupExamples\GetGroupsListExample.cs" />
+    <Compile Include="GroupExamples\GetMemberGroupsExample.cs" />
+    <Compile Include="GroupExamples\GetGroupMembersExample.cs" />
+    <Compile Include="GroupExamples\RemoveGroupMembersExample.cs" />
     <Compile Include="GroupExamples\AddGroupMembersExample.cs" />
     <Compile Include="GroupExamples\DeleteGroupExample.cs" />
     <Compile Include="GroupExamples\UpdateGroupExample.cs" />
