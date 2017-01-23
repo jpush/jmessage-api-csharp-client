@@ -23,7 +23,7 @@ namespace example.MessageExamples
             TextMsg_body msg_body = new TextMsg_body();
             msg_body.text= "qiniu/image/CE0ACD035CBF71F8";
             msg_body.extras = null;
-            TextMessagePayload payload = new TextMessagePayload("1", "single", "admin", "image", "xiaohuihui", "admin",msg_body);
+            TextMessagePayload payload = new TextMessagePayload("1", "single", "admin", "text", "xiaohuihui", "admin",msg_body);
             string payloadstring = payload.ToString(payload);
             client.sendMessage(payload);
 

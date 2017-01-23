@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>example.MessageExamples.UploadFileExample</StartupObject>
+    <StartupObject>example.MessageExamples.SendTextMessageExample</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="jmessage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -98,15 +98,15 @@
     <Compile Include="UserExamples\GetUserExample.cs" />
     <Compile Include="UserExamples\GetUserBlacklistExample.cs" />
     <Compile Include="UserExamples\DeleteUserBlacklistExample.cs" />
-    <Compile Include="UserExamples\PutUserBlacklistExample.cs" />
+    <Compile Include="UserExamples\UpdateUserBlacklistExample.cs" />
     <Compile Include="UserExamples\GetUsersExample.cs" />
     <Compile Include="UserExamples\GetUserStatExample.cs" />
     <Compile Include="UserExamples\JMessageExampleBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserExamples\GetAdminExample.cs" />
-    <Compile Include="UserExamples\PutUserExample.cs" />
-    <Compile Include="UserExamples\PutUserPasswordExample.cs" />
+    <Compile Include="UserExamples\UpdateUserExample.cs" />
+    <Compile Include="UserExamples\UpdateUserPasswordExample.cs" />
     <Compile Include="UserExamples\RegistAdminExample.cs" />
     <Compile Include="UserExamples\RegistUserExample.cs" />
     <Compile Include="UserExamples\RemoveSingleNodisturbExample.cs" />

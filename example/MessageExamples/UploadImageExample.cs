@@ -20,7 +20,7 @@ namespace example.MessageExamples
         {
             FileClient client = new FileClient(app_key, master_secret);
             NameValueCollection nvc = new NameValueCollection();
-            nvc.Add("", "");
+            nvc.Add("","");
             string url = "https://api.im.jpush.cn/v1/resource?type=image";
             string filePath = @"C:\Users\fendouai\Desktop\book.jpg";
             String content=client.HttpPostData(url,600, "book.jpg",filePath, nvc);
