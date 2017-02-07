@@ -14,7 +14,7 @@ namespace jmessage.cross
     {
         private const String HOST_NAME_SSL = "https://api.im.jpush.cn";
         private const String CROSS_GROUP_PATH = "/v1/cross/groups/";
-        private const String CROSS_USER_PATH = "/v1/users/";
+        private const String CROSS_USER_PATH = "/v1/cross/users/";
 
         private String appKey;
         private String masterSecret;
@@ -101,10 +101,10 @@ namespace jmessage.cross
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payload String should not be empty");
             Console.WriteLine(payloadString);
             String url = HOST_NAME_SSL;
-            url += CROSS_GROUP_PATH;
+            url += CROSS_USER_PATH;
             url += username;
             url += "/blacklist";
-            ResponseWrapper result = sendPost(url, Authorization(), payloadString);
+            ResponseWrapper result = sendPut(url, Authorization(), payloadString);
             return result;
         }
 
@@ -124,10 +124,10 @@ namespace jmessage.cross
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payload String should not be empty");
             Console.WriteLine(payloadString);
             String url = HOST_NAME_SSL;
-            url += CROSS_GROUP_PATH;
+            url += CROSS_USER_PATH;
             url += username;
             url += "/members";
-            ResponseWrapper result = sendPost(url, Authorization(), payloadString);
+            ResponseWrapper result = sendDelete(url, Authorization(), payloadString);
             return result;
         }
 

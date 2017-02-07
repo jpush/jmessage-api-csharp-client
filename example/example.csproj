@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>example.FriendExamples.DeleteFriendsExample</StartupObject>
+    <StartupObject>example.CrossExamples.CrossRemoveBlacklistExample</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="jmessage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -83,6 +83,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrossExamples\CrossRemoveBlacklistExample.cs" />
+    <Compile Include="CrossExamples\CrossAddBlacklistExample.cs" />
+    <Compile Include="CrossExamples\CrossGetMembersExample.cs" />
     <Compile Include="CrossExamples\CrossRemoveMembersExample.cs" />
     <Compile Include="CrossExamples\CrossAddMembersExample.cs" />
     <Compile Include="FriendExamples\GetFriendsExample.cs" />
