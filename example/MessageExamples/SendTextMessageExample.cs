@@ -26,8 +26,6 @@ namespace example.MessageExamples
             TextMessagePayload payload = new TextMessagePayload("1", "single", "admin", "text", "xiaohuihui", "admin",msg_body);
             string payloadstring = payload.ToString(payload);
             client.sendMessage(payload);
-
-
             Console.WriteLine(payloadstring);
             Console.ReadLine();
         }

@@ -25,6 +25,27 @@ namespace jmessage.cross
             this.appKey = appKey;
             this.masterSecret = masterSecret;
         }
+
+        public ResponseWrapper crossAppsAddRemoveMembers(string gid, List<Hashtable> payload)
+        {
+            Preconditions.checkArgument(payload != null, "Payload should not be empty");
+            String payloadJson = this.ToString(payload);
+            return crossAppsAddRemoveMembers(gid, payloadJson);
+        }
+
+        public ResponseWrapper crossAppsAddRemoveMembers(string gid, string payloadString)
+        {
+            Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payload String should not be empty");
+            Console.WriteLine(payloadString);
+            String url = HOST_NAME_SSL;
+            url += CROSS_GROUP_PATH;
+            url += gid;
+            url += "/members";
+            ResponseWrapper result = sendPost(url, Authorization(), payloadString);
+            return result;
+        }
+
+
         public ResponseWrapper crossAddMembers(string appkey,string gid, List<string> add)
         {
             Hashtable payload = new Hashtable();
@@ -36,6 +57,7 @@ namespace jmessage.cross
             String payloadJson = this.ToString(payloads);
             return crossAddMembers(appkey, gid , payloadJson);
         }
+
         public ResponseWrapper crossAddMembers(string appkey, string gid, string payloadString)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payload String should not be empty");
@@ -83,6 +105,42 @@ namespace jmessage.cross
             return result;
         }
 
+
+        public ResponseWrapper crossAppsAddBlacklist(string username, List<Hashtable> payload)
+        {
+            Preconditions.checkArgument(payload != null, "Payload should not be empty");
+            String payloadJson = this.ToString(payload);
+            return crossAppsAddBlacklist(username, payloadJson);
+        }
+        public ResponseWrapper crossAppsAddBlacklist(string username, string payloadString)
+        {
+            Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payload String should not be empty");
+            Console.WriteLine(payloadString);
+            String url = HOST_NAME_SSL;
+            url += CROSS_USER_PATH;
+            url += username;
+            url += "/blacklist";
+            ResponseWrapper result = sendPut(url, Authorization(), payloadString);
+            return result;
+        }
+
+        public ResponseWrapper crossAppsRemoveBlacklist(string username, List<Hashtable> payload)
+        {
+            Preconditions.checkArgument(payload != null, "Payload should not be empty");
+            String payloadJson = this.ToString(payload);
+            return crossAppsRemoveBlacklist(username, payloadJson);
+        }
+        public ResponseWrapper crossAppsRemoveBlacklist(string username, string payloadString)
+        {
+            Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payload String should not be empty");
+            Console.WriteLine(payloadString);
+            String url = HOST_NAME_SSL;
+            url += CROSS_USER_PATH;
+            url += username;
+            url += "/blacklist";
+            ResponseWrapper result = sendDelete(url, Authorization(), payloadString);
+            return result;
+        }
 
 
         public ResponseWrapper crossAddBlacklist(string appkey, string username, List<string> usernames)
@@ -138,6 +196,17 @@ namespace jmessage.cross
             url += username;
             url += "/blacklist";
             ResponseWrapper result = sendGet(url, Authorization(), null);
+            return result;
+        }
+
+        public ResponseWrapper crossAppsSetNodisturb(string username, List<Hashtable> payload)
+        {
+            String url = HOST_NAME_SSL;
+            url += CROSS_USER_PATH;
+            url += username;
+            url += "/nodisturb";
+            string payloadString = this.ToString(payload);
+            ResponseWrapper result = sendPost(url, Authorization(), payloadString);
             return result;
         }
 
@@ -255,6 +324,13 @@ namespace jmessage.cross
             url += "/friends";
             ResponseWrapper result = sendDelete(url, Authorization(), payloadString);
             return result;
+        }
+
+        public ResponseWrapper crossAppsUpdateFriends(string appkey, string username,List<Hashtable> payload)
+        {
+            Preconditions.checkArgument(payload != null, "Payload should not be empty");
+            String payloadJson = this.ToString(payload);
+            return crossUpdateFriends(appkey, username, payloadJson);
         }
 
         public ResponseWrapper crossUpdateFriends(string appkey, string username, Hashtable users)
