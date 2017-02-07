@@ -23,7 +23,10 @@ namespace example.CrossExamples
 
             List<string> usernames = new List<string> { "jmessage123" };
 
-            client.crossRemoveBlacklist("6be9204c30b9473e87bad4dc", "19749893", usernames);
+            client.crossAddSingleNodisturb("6be9204c30b9473e87bad4dc", "xiaohuihui", usernames);
+            client.crossRemoveSingleNodisturb("6be9204c30b9473e87bad4dc", "xiaohuihui", usernames);
+            client.crossAddSingleNodisturb("6be9204c30b9473e87bad4dc", "xiaohuihui", usernames);
+            client.crossAddSingleNodisturb("6be9204c30b9473e87bad4dc", "xiaohuihui", usernames);
         }
     }
 }
