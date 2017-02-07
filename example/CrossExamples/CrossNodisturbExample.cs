@@ -11,9 +11,10 @@ using jmessage.message;
 using jmessage.group;
 using jmessage.cross;
 using jmessage;
+
 namespace example.CrossExamples
 {
-    class CrossRemoveMembersExample
+    class CrossNodisturbExample
     {
         public static String app_key = "6be9204c30b9473e87bad4dc";
         public static String master_secret = "a19bef7870c55d7e51f4c4f0";
@@ -21,9 +22,14 @@ namespace example.CrossExamples
         {
             CrossClient client = new CrossClient(app_key, master_secret);
 
-            List<string> remove = new List<string> { "jmessage123" };
+            List<string> usernames = new List<string> { "jmessage123" };
 
-            client.crossRemoveMembers("6be9204c30b9473e87bad4dc", "19749893", remove);
+            client.crossAddSingleNodisturb("6be9204c30b9473e87bad4dc", "xiaohuihui", usernames);
+            client.crossRemoveSingleNodisturb("6be9204c30b9473e87bad4dc", "xiaohuihui", usernames);
+
+            List<string> groups = new List<string> { "20292095" };
+            client.crossAddGroupNodisturb("6be9204c30b9473e87bad4dc", "xiaohuihui", groups);
+            client.crossRemoveGroupNodisturb("6be9204c30b9473e87bad4dc", "xiaohuihui", groups);
         }
     }
 }

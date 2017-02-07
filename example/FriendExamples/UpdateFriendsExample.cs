@@ -19,7 +19,6 @@ namespace example.FriendExamples
         public static void Main(string[] args)
         {
             FriendClient client = new FriendClient(app_key, master_secret);
-
             Dictionary<string, string> newinfo = new Dictionary<string, string>{};
             newinfo["note_name"] = "new note name";
             newinfo["username"] = "jintian";
