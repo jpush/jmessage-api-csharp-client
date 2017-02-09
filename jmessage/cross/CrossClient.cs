@@ -326,11 +326,22 @@ namespace jmessage.cross
             return result;
         }
 
-        public ResponseWrapper crossAppsUpdateFriends(string appkey, string username,List<Hashtable> payload)
+        public ResponseWrapper crossAppsUpdateFriends(string username,List<Hashtable> payload)
         {
             Preconditions.checkArgument(payload != null, "Payload should not be empty");
             String payloadJson = this.ToString(payload);
-            return crossUpdateFriends(appkey, username, payloadJson);
+            return crossAppsUpdateFriends(username, payloadJson);
+        }
+        public ResponseWrapper crossAppsUpdateFriends(string username, string payload)
+        {
+            Preconditions.checkArgument(!string.IsNullOrEmpty(payload), "payload String should not be empty");
+            Console.WriteLine(payload);
+            String url = HOST_NAME_SSL;
+            url += CROSS_USER_PATH;
+            url += username;
+            url += "/friends";
+            ResponseWrapper result = sendPut(url, Authorization(), payload);
+            return result;
         }
 
         public ResponseWrapper crossUpdateFriends(string appkey, string username, Hashtable users)

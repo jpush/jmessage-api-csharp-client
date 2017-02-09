@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>example.CrossExamples.CrossAppsRemoveBlacklistExample</StartupObject>
+    <StartupObject>example.CrossExamples.CrossAppsUpdateFriendsExample</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="jmessage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -83,8 +83,10 @@
     <Compile Include="CrossExamples\CrossAppsRemoveBlacklistExample.cs" />
     <Compile Include="CrossExamples\CrossAppsAddBlacklistExample.cs" />
     <Compile Include="CrossExamples\CrossAppsAddRemoveMembersExample.cs" />
+    <Compile Include="CrossExamples\CrossAppsUpdateFriendsExample.cs" />
     <Compile Include="CrossExamples\CrossFriendExample.cs" />
     <Compile Include="CrossExamples\CrossGetBlacklistExample.cs" />
+    <Compile Include="CrossExamples\CrossAppsSetNodisturbExample.cs" />
     <Compile Include="CrossExamples\CrossNodisturbExample.cs" />
     <Compile Include="CrossExamples\CrossRemoveBlacklistExample.cs" />
     <Compile Include="CrossExamples\CrossAddBlacklistExample.cs" />
