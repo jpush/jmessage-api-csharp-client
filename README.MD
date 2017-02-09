@@ -9,13 +9,14 @@ JMessage's officially supported CSharp client library for accessing JMessage API
 *   项目引用添加 jmessage.dll
 
 ### nuget 安装
-*   jmessage
+*   nuget 搜索并安装 Json.NET 
+*   nuget 搜索并安装 jmessage
 
 ## 使用
 
 ###  以用户注册为例
 
->一下代码节选自项目目录  /example/UserExamples/RegistUserExample.cs
+>一下代码节选自项目目录  example/UserExamples/RegistUserExample.cs
 
 ```
 JMessageClient client = new JMessageClient(app_key, master_secret);
