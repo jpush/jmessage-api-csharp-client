@@ -32,15 +32,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>example.CrossExamples.CrossFriendExample</StartupObject>
+    <StartupObject>example.CrossExamples.CrossAppsRemoveBlacklistExample</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="jmessage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\jmessage\bin\Debug\jmessage.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\jmessage-api-csharp-client\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -79,6 +80,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrossExamples\CrossAppsRemoveBlacklistExample.cs" />
+    <Compile Include="CrossExamples\CrossAppsAddBlacklistExample.cs" />
+    <Compile Include="CrossExamples\CrossAppsAddRemoveMembersExample.cs" />
     <Compile Include="CrossExamples\CrossFriendExample.cs" />
     <Compile Include="CrossExamples\CrossGetBlacklistExample.cs" />
     <Compile Include="CrossExamples\CrossNodisturbExample.cs" />
