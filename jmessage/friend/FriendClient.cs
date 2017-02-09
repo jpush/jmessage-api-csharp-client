@@ -25,8 +25,7 @@ namespace jmessage.friend
         }
         public ResponseWrapper addFriends(string username,List <string> payload)
         {
-            Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
-            //payload.Check();
+            Preconditions.checkArgument(payload != null, "Payload should not be empty");
             String payloadJson = this.ToString(payload);
             return addFriends(username,payloadJson);
         }
@@ -45,7 +44,7 @@ namespace jmessage.friend
 
         public ResponseWrapper deleteFriends(string username, List<string> payload)
         {
-            Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
+            Preconditions.checkArgument(payload != null, "Payload should not be empty");
             //payload.Check();
             String payloadJson = this.ToString(payload);
             return deleteFriends(username, payloadJson);
@@ -64,7 +63,7 @@ namespace jmessage.friend
 
         public ResponseWrapper updateFriends(string username, List<Dictionary<string, string>> payload)
         {
-            Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
+            Preconditions.checkArgument(payload != null, "Payload should not be empty");
             String payloadJson = this.ToString(payload);
             return updateFriends(username, payloadJson);
         }

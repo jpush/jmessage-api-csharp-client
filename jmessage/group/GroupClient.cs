@@ -29,7 +29,7 @@ namespace jmessage.group
         }
         public ResponseWrapper createGroup(GroupPayload payload)
         {
-            Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
+            Preconditions.checkArgument(payload != null, "Payload should not be empty");
             String payloadJson = this.ToString(payload);
             return createGroup(payloadJson);
         }
@@ -55,7 +55,7 @@ namespace jmessage.group
 
         public ResponseWrapper updateGroup(int groupId,GroupPayload payload)
         {
-            Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
+            Preconditions.checkArgument(payload != null, "Payload should not be empty");
             String payloadJson = payload.ToString(payload);
             return updateGroup(groupId, payloadJson);
         }
@@ -80,7 +80,7 @@ namespace jmessage.group
 
         public ResponseWrapper addGroupMembers(int groupId, Dictionary<string, List<string>>  payload)
         {
-            Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
+            Preconditions.checkArgument(payload != null, "Payload should not be empty");
             String payloadJson = this.ToString(payload);
             return addGroupMembers(groupId,payloadJson);
         }
@@ -99,7 +99,7 @@ namespace jmessage.group
 
         public ResponseWrapper removeGroupMembers(int groupId, Dictionary<string, List<string>> payload)
         {
-            Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
+            Preconditions.checkArgument(payload != null, "Payload should not be empty");
             String payloadJson = this.ToString(payload);
             return removeGroupMembers(groupId, payloadJson);
         }

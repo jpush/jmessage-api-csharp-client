@@ -18,10 +18,8 @@ namespace example.MessageExamples
         public static void Main(string[] args)
         {
             MessageClient client = new MessageClient(app_key, master_secret);
-            //ImageMessagePayload(string version, string target_type, string from_type, string msg_type,string target_id, string from_id)
-
             TextMsg_body msg_body = new TextMsg_body();
-            msg_body.text= "qiniu/image/CE0ACD035CBF71F8";
+            msg_body.text= "msg_type text";
             msg_body.extras = null;
             TextMessagePayload payload = new TextMessagePayload("1", "single", "admin", "text", "xiaohuihui", "admin",msg_body);
             string payloadstring = payload.ToString(payload);
