@@ -28,7 +28,6 @@ namespace example.CrossExamples
             newinfo["others"] = "others";
             newinfo["appkey"] = "6be9204c30b9473e87bad4dc";
             client.crossUpdateFriends("6be9204c30b9473e87bad4dc", "xiaohuihui", newinfo);
-
         }
     }
 }
