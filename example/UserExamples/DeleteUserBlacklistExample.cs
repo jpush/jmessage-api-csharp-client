@@ -14,10 +14,10 @@ namespace example
         public static void Main(string[] args)
         {
             Console.WriteLine("*****开始修改用户信息******");
-            JMessageClient client = new JMessageClient(app_key, master_secret);
+            UserClient client = new UserClient(app_key, master_secret);
             string user = "jintian";
             List<string> users = new List<string> { "jintian1234" };
-            client._messageClient.deleteUserBlacklist(user, users);
+            client.deleteUserBlacklist(user, users);
             Console.ReadLine();
         }
     }

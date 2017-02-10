@@ -27,7 +27,7 @@ namespace jmessage.user
             this.appKey = appKey;
             this.masterSecret = masterSecret;
         }
-        public ResponseWrapper registUser(List <UserPayload> payload)
+        public ResponseWrapper registUser(List<UserPayload> payload)
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
             //payload.Check();
@@ -62,14 +62,14 @@ namespace jmessage.user
             return result;
         }
 
-        public ResponseWrapper getAdmin(int start ,int count)
+        public ResponseWrapper getAdmin(int start, int count)
         {
             String url = HOST_NAME_SSL;
             url += GET_ADMIN_PATH;
             url += start.ToString();
             url += "&count=";
             url += count.ToString();
-            ResponseWrapper result = sendGet(url, Authorization(),null);
+            ResponseWrapper result = sendGet(url, Authorization(), null);
             return result;
         }
 
@@ -99,10 +99,10 @@ namespace jmessage.user
             string username = payload.username;
             payload.username = null;
             String payloadJson = payload.ToString(payload);
-            return updateUser(payloadJson,username);
+            return updateUser(payloadJson, username);
         }
 
-        public ResponseWrapper updateUser(string payloadString,string username)
+        public ResponseWrapper updateUser(string payloadString, string username)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
             Console.WriteLine(payloadString);
@@ -126,7 +126,7 @@ namespace jmessage.user
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
             Console.WriteLine(payloadString);
-            String url = HOST_NAME_SSL+ USER_PATH+ username+ "/password";
+            String url = HOST_NAME_SSL + USER_PATH + username + "/password";
             ResponseWrapper result = sendPut(url, Authorization(), payloadString);
             return result;
         }
@@ -136,7 +136,7 @@ namespace jmessage.user
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
             String username = payload.username;
-            return deleteUser( username);
+            return deleteUser(username);
         }
 
         public ResponseWrapper deleteUser(string username)
@@ -165,7 +165,7 @@ namespace jmessage.user
             return result;
         }
 
-        public ResponseWrapper putUserBlacklist(string username,List<string> users)
+        public ResponseWrapper putUserBlacklist(string username, List<string> users)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(username), "payloadString should not be empty");
             String url = HOST_NAME_SSL + USER_PATH + username + "/blacklist";
@@ -193,13 +193,13 @@ namespace jmessage.user
         }
 
 
-        public ResponseWrapper addSingleNodisturb(string username,List<String> users)
+        public ResponseWrapper addSingleNodisturb(string username, List<String> users)
         {
             String url = HOST_NAME_SSL;
             url += USER_PATH;
             url += username;
             url += "/nodisturb";
-            Dictionary<String, Dictionary<String,List<String>>> nodisturb = new Dictionary<String, Dictionary<String, List<String>>> { };
+            Dictionary<String, Dictionary<String, List<String>>> nodisturb = new Dictionary<String, Dictionary<String, List<String>>> { };
             Dictionary<String, List<String>> single = new Dictionary<string, List<string>> { };
             List<String> add = users;
             single["add"] = add;
@@ -326,9 +326,9 @@ namespace jmessage.user
                                 NullValueHandling = NullValueHandling.Ignore
                             });
         }
-        
 
-        public  String Authorization()
+
+        public String Authorization()
         {
 
             Debug.Assert(!string.IsNullOrEmpty(this.appKey));

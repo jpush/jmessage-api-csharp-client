@@ -9,7 +9,7 @@ JMessage's officially supported CSharp client library for accessing JMessage API
 *   项目引用添加 jmessage.dll
 
 ### nuget 安装
-*   nuget 搜索并安装 Json.NET 
+*   nuget 搜索并安装 Json.NET
 *   nuget 搜索并安装 jmessage
 
 ## 使用
@@ -30,12 +30,10 @@ client._messageClient.registUser(users);
 ```
 MessageClient client = new MessageClient(app_key, master_secret);
 TextMsg_body msg_body = new TextMsg_body();
-msg_body.text= "qiniu/image/CE0ACD035CBF71F8";
+msg_body.text= "msg_type text";
 msg_body.extras = null;
 TextMessagePayload payload = new TextMessagePayload("1", "single", "admin", "text", "xiaohuihui", "admin",msg_body);
-string payloadstring = payload.ToString(payload);
 client.sendMessage(payload);
-Console.WriteLine(payloadstring);
 ```
 ###  以创建群组为例
 >一下代码节选自项目目录  example\GroupExamples\CreateGroupExample.cs

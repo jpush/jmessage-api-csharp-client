@@ -14,10 +14,10 @@ namespace example
         public static void Main(string[] args)
         {
             Console.WriteLine("*****免打扰设置******");
-            JMessageClient client = new JMessageClient(app_key, master_secret);
+            UserClient client = new UserClient(app_key, master_secret);
             String user = "jintian";
             List<String> users = new List<String> { "jintian1234" };
-            client._messageClient.removeSingleNodisturb(user, users);
+            client.removeSingleNodisturb(user, users);
             Console.ReadLine();
         }
     }

@@ -18,8 +18,8 @@ namespace example
         public static void Main(string[] args)
         {
             Console.WriteLine("*****开始获取管理员******");
-            JMessageClient client = new JMessageClient(app_key, master_secret);
-            client._messageClient.getAdmin(1,2);
+            UserClient client = new UserClient(app_key, master_secret);
+            client.getAdmin(1,2);
             Console.ReadLine();
         }
     }

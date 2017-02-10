@@ -18,9 +18,9 @@ namespace example
         public static void Main(string[] args)
         {
             Console.WriteLine("*****开始注册管理员******");
-            JMessageClient client = new JMessageClient(app_key, master_secret);
+            UserClient client = new UserClient(app_key, master_secret);
             UserPayload admin = new UserPayload("jmessage", "password");
-            client._messageClient.registAdmin(admin);
+            client.registAdmin(admin);
             Console.ReadLine();
         }
     }
