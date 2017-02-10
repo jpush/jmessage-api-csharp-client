@@ -22,7 +22,7 @@ JMessage's officially supported CSharp client library for accessing JMessage API
 JMessageClient client = new JMessageClient(app_key, master_secret);
 UserPayload user = new UserPayload("jmessage123", "password");
 List<UserPayload> users = new List<UserPayload> { user };
-client._messageClient.registUser(users);
+client.registUser(users);
 ```
 ###  以文本消息发送为例
 >一下代码节选自项目目录  example\MessageExamples\SendTextMessageExample.cs
