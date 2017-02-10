@@ -14,9 +14,9 @@ namespace example
         public static void Main(string[] args)
         {
             Console.WriteLine("*****开始修改用户信息******");
-            JMessageClient client = new JMessageClient(app_key, master_secret);
+            UserClient client = new UserClient(app_key, master_secret);
             UserPayload user = new UserPayload("jintian");
-            client._messageClient.getUsers(1,1);
+            client.getUsers(1,1);
             Console.ReadLine();
         }
     }

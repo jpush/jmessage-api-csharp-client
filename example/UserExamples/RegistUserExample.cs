@@ -17,10 +17,10 @@ namespace example
         public static void Main(string[] args)
         {
             Console.WriteLine("*****开始注册用户******");
-            JMessageClient client = new JMessageClient(app_key, master_secret);
+            UserClient client = new UserClient(app_key, master_secret);
             UserPayload user = new UserPayload("jmessage123", "password");
             List<UserPayload> users = new List<UserPayload> { user };
-            client._messageClient.registUser(users);
+            client.registUser(users);
             Console.ReadLine();
         }
     }
