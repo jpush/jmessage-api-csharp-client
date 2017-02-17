@@ -29,7 +29,7 @@ namespace jmessage.group
             this.mtime = null;
         }
 
-        public GroupPayload(string name,string owner_username, List<string> members_username,string desc)
+        public GroupPayload(string name, string owner_username, List<string> members_username, string desc)
         {
             this.name = name;
             this.desc = desc;
