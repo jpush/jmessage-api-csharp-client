@@ -9,11 +9,12 @@ using System.IO;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using jmessage.common;
-
+using log4net;
 namespace jmessage.common
 {
     public class BaseHttpClient
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(BaseHttpClient));
         private const String CHARSET = "UTF-8";
 	    private const String RATE_LIMIT_QUOTA = "X-Rate-Limit-Limit";
 	    private const String RATE_LIMIT_Remaining = "X-Rate-Limit-Remaining";
@@ -51,10 +52,12 @@ namespace jmessage.common
          */
         public ResponseWrapper sendRequest(String method, String url, String auth,String reqParams)
         {
-            Console.WriteLine("Send request - " + method.ToString() + " " + url + " "+ DateTime.Now);
+            log.Debug("Send request - " + method.ToString() + " " + url + " "+ DateTime.Now);
+            Console.WriteLine("Send request - " + method.ToString() + " " + url + " " + DateTime.Now);
             if (null != reqParams)
             {
                 Console.WriteLine("Request Content - " + reqParams +" "+ DateTime.Now);
+                log.Debug("Request Content - " + reqParams + " " + DateTime.Now);
             }
             //结果wrap
             ResponseWrapper result = new ResponseWrapper();
@@ -139,6 +142,8 @@ namespace jmessage.common
                 result.responseCode = statusCode;
                 Console.WriteLine("Succeed to get response - 200 OK" + " " + DateTime.Now);
                 Console.WriteLine("Response Content - {0}", result.responseContent + " " + DateTime.Now);
+                log.Debug("Succeed to get response - 200 OK" + " " + DateTime.Now);
+                log.Debug(result.responseContent);
                 if (Equals(response.StatusCode, HttpStatusCode.OK))
                 {
                     using (StreamReader reader = new StreamReader(response.GetResponseStream(), System.Text.Encoding.UTF8))

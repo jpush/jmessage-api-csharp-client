@@ -7,14 +7,13 @@ using jmessage.util;
 using jmessage.user;
 using jmessage;
 using log4net;
-
 namespace example
 {
     class RegistUserExample
     {
         public static String app_key = "6be9204c30b9473e87bad4dc";
         public static String master_secret = "a19bef7870c55d7e51f4c4f0";
-        private static readonly ILog log = LogManager.GetLogger(typeof(Program));
+        private static readonly ILog log = LogManager.GetLogger(typeof(RegistUserExample));
         public static void Main(string[] args)
         {
             Console.WriteLine("*****开始注册用户******");
@@ -23,7 +22,6 @@ namespace example
             List<UserPayload> users = new List<UserPayload> { user };
             ResponseWrapper content =client.registUser(users);
             Console.WriteLine(content.responseContent);
-            log.Debug(content.responseContent);
         }
     }
 }
