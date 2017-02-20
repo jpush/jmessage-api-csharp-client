@@ -53,7 +53,14 @@
     <Compile Include="common\BaseResult.cs" />
     <Compile Include="common\ResponseWrapper.cs" />
     <Compile Include="common\TimeUnit.cs" />
-    <Compile Include="cross\CrossClient.cs" />
+    <Compile Include="cross\friend\CrossFriendInfoPayload.cs" />
+    <Compile Include="cross\friend\CrossFriendPayload.cs" />
+    <Compile Include="cross\friend\CrossFriendClient.cs" />
+    <Compile Include="cross\group\CrossGroupClient.cs" />
+    <Compile Include="cross\user\CrossBlacklistPayload.cs" />
+    <Compile Include="cross\group\CrossMemberPayload.cs" />
+    <Compile Include="cross\user\CrossNodisturbPayload.cs" />
+    <Compile Include="cross\user\CrossUserClient.cs" />
     <Compile Include="friend\FriendClient.cs" />
     <Compile Include="group\GroupClient.cs" />
     <Compile Include="group\GroupPayload.cs" />
@@ -74,6 +81,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

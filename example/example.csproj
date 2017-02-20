@@ -32,9 +32,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>example.RegistUserExample</StartupObject>
+    <StartupObject>example.CrossExamples.GroupExample</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="jmessage, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\jmessage\bin\Debug\jmessage.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.7.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.7\lib\net40-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -52,19 +56,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrossExamples\CrossAppsRemoveBlacklistExample.cs" />
-    <Compile Include="CrossExamples\CrossAppsAddBlacklistExample.cs" />
-    <Compile Include="CrossExamples\CrossAppsAddRemoveMembersExample.cs" />
-    <Compile Include="CrossExamples\CrossAppsUpdateFriendsExample.cs" />
-    <Compile Include="CrossExamples\CrossFriendExample.cs" />
-    <Compile Include="CrossExamples\CrossGetBlacklistExample.cs" />
-    <Compile Include="CrossExamples\CrossAppsSetNodisturbExample.cs" />
-    <Compile Include="CrossExamples\CrossNodisturbExample.cs" />
-    <Compile Include="CrossExamples\CrossRemoveBlacklistExample.cs" />
-    <Compile Include="CrossExamples\CrossAddBlacklistExample.cs" />
-    <Compile Include="CrossExamples\CrossGetMembersExample.cs" />
-    <Compile Include="CrossExamples\CrossRemoveMembersExample.cs" />
-    <Compile Include="CrossExamples\CrossAddMembersExample.cs" />
+    <Compile Include="CrossExamples\GroupExample.cs" />
+    <Compile Include="CrossExamples\UserExample.cs" />
     <Compile Include="FriendExamples\GetFriendsExample.cs" />
     <Compile Include="FriendExamples\UpdateFriendsExample.cs" />
     <Compile Include="FriendExamples\DeleteFriendsExample.cs" />
@@ -108,6 +101,7 @@
   <ItemGroup>
     <Analyzer Include="..\jmessage\bin\Debug\jmessage.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
