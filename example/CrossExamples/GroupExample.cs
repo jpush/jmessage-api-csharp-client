@@ -19,7 +19,8 @@ namespace example.CrossExamples
             CrossMemberPayload payload=new CrossMemberPayload(appkey,add,null);
             List<CrossMemberPayload> payloads=new List<CrossMemberPayload> { };
             payloads.Add(payload);
-            client.crossAppsAddRemoveMembers("19749893", payloads);
+            client.crossAddRemoveMembers("19749893", payloads);
+            client.crossGetMembers("19749893");
         }
     }
 }

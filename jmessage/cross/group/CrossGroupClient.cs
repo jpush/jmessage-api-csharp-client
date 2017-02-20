@@ -25,14 +25,14 @@ namespace jmessage.corss.group
             this.appKey = appKey;
             this.masterSecret = masterSecret;
         }
-        public ResponseWrapper crossAppsAddRemoveMembers(string gid, List<CrossMemberPayload> payload)
+        public ResponseWrapper crossAddRemoveMembers(string gid, List<CrossMemberPayload> payload)
         {
             Preconditions.checkArgument(payload != null, "Payload should not be empty");
             String payloadJson = this.ToString(payload);
-            return crossAppsAddRemoveMembers(gid, payloadJson);
+            return crossAddRemoveMembers(gid, payloadJson);
         }
 
-        public ResponseWrapper crossAppsAddRemoveMembers(string gid, string payloadString)
+        public ResponseWrapper crossAddRemoveMembers(string gid, string payloadString)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payload String should not be empty");
             Console.WriteLine(payloadString);

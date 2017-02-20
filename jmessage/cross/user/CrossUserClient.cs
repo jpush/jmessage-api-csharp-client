@@ -27,13 +27,13 @@ namespace jmessage.user
             this.masterSecret = masterSecret;
         }
 
-        public ResponseWrapper crossAppsAddBlacklist(string username, List<CrossBlacklistPayload> payload)
+        public ResponseWrapper crossAddBlacklist(string username, List<CrossBlacklistPayload> payload)
         {
             Preconditions.checkArgument(payload != null, "Payload should not be empty");
             String payloadJson = this.ToString(payload);
-            return crossAppsAddBlacklist(username, payloadJson);
+            return crossAddBlacklist(username, payloadJson);
         }
-        public ResponseWrapper crossAppsAddBlacklist(string username, string payloadString)
+        public ResponseWrapper crossAddBlacklist(string username, string payloadString)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payload String should not be empty");
             Console.WriteLine(payloadString);
@@ -45,13 +45,13 @@ namespace jmessage.user
             return result;
         }
 
-        public ResponseWrapper crossAppsRemoveBlacklist(string username, List<CrossBlacklistPayload> payload)
+        public ResponseWrapper crossRemoveBlacklist(string username, List<CrossBlacklistPayload> payload)
         {
             Preconditions.checkArgument(payload != null, "Payload should not be empty");
             String payloadJson = this.ToString(payload);
-            return crossAppsRemoveBlacklist(username, payloadJson);
+            return crossRemoveBlacklist(username, payloadJson);
         }
-        public ResponseWrapper crossAppsRemoveBlacklist(string username, string payloadString)
+        public ResponseWrapper crossRemoveBlacklist(string username, string payloadString)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payload String should not be empty");
             Console.WriteLine(payloadString);
@@ -73,7 +73,7 @@ namespace jmessage.user
             return result;
         }
 
-        public ResponseWrapper crossAppsSetNodisturb(string username, List<CrossNodisturbPayload> payload)
+        public ResponseWrapper crossSetNodisturb(string username, List<CrossNodisturbPayload> payload)
         {
             String url = HOST_NAME_SSL;
             url += CROSS_USER_PATH;
