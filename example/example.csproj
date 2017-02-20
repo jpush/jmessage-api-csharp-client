@@ -66,8 +66,7 @@
     <Compile Include="GroupExamples\GetGroupsListExample.cs" />
     <Compile Include="GroupExamples\GetMemberGroupsExample.cs" />
     <Compile Include="GroupExamples\GetGroupMembersExample.cs" />
-    <Compile Include="GroupExamples\RemoveGroupMembersExample.cs" />
-    <Compile Include="GroupExamples\AddGroupMembersExample.cs" />
+    <Compile Include="GroupExamples\GroupMembersExample.cs" />
     <Compile Include="GroupExamples\DeleteGroupExample.cs" />
     <Compile Include="GroupExamples\UpdateGroupExample.cs" />
     <Compile Include="GroupExamples\GetGroupExample.cs" />

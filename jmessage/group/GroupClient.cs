@@ -78,7 +78,7 @@ namespace jmessage.group
             return result;
         }
 
-        public ResponseWrapper addGroupMembers(int groupId, Dictionary<string, List<string>>  payload)
+        public ResponseWrapper addGroupMembers(int groupId, MemberPayload payload)
         {
             Preconditions.checkArgument(payload != null, "Payload should not be empty");
             String payloadJson = this.ToString(payload);
@@ -97,7 +97,7 @@ namespace jmessage.group
             return result;
         }
 
-        public ResponseWrapper removeGroupMembers(int groupId, Dictionary<string, List<string>> payload)
+        public ResponseWrapper removeGroupMembers(int groupId, MemberPayload payload)
         {
             Preconditions.checkArgument(payload != null, "Payload should not be empty");
             String payloadJson = this.ToString(payload);
@@ -157,7 +157,7 @@ namespace jmessage.group
                             });
         }
 
-        public string ToString(Dictionary<string, List<string>> payload)
+        public string ToString(MemberPayload payload)
         {
             return JsonConvert.SerializeObject(payload,
                             Newtonsoft.Json.Formatting.None,

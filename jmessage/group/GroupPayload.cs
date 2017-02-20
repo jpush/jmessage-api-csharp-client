@@ -42,9 +42,9 @@ namespace jmessage.group
         }
 
 
-        public string ToString(GroupPayload user)
+        public string ToString(GroupPayload group)
         {
-            return JsonConvert.SerializeObject(user,
+            return JsonConvert.SerializeObject(group,
                             Newtonsoft.Json.Formatting.None,
                             new JsonSerializerSettings
                             {

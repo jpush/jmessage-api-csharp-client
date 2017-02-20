@@ -62,6 +62,7 @@
     <Compile Include="cross\user\CrossNodisturbPayload.cs" />
     <Compile Include="cross\user\CrossUserClient.cs" />
     <Compile Include="friend\FriendClient.cs" />
+    <Compile Include="group\MemberPayload.cs" />
     <Compile Include="group\GroupClient.cs" />
     <Compile Include="group\GroupPayload.cs" />
     <Compile Include="message\FileClient.cs" />
