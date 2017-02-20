@@ -7,7 +7,12 @@ namespace jmessage.cross.friend
 {
     public class CrossFriendPayload
     {
-        string appkey;
-        List<string> users;
+        public string appkey;
+        public List<string> users;
+        public CrossFriendPayload(string appkey,List<string> users)
+        {
+            this.appkey = appkey;
+            this.users = users;
+        }
     }
 }

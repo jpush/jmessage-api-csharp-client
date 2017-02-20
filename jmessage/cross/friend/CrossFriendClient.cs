@@ -24,7 +24,7 @@ namespace jmessage.cross.friend
             this.appKey = appKey;
             this.masterSecret = masterSecret;
         }
-        public ResponseWrapper crossAddFriends(string appkey, string username, List<CrossFriendPayload> payload)
+        public ResponseWrapper crossAddFriends(string username, CrossFriendPayload payload)
         {
             Preconditions.checkArgument(payload != null, "Payload should not be empty");
             String payloadJson = this.ToString(payload);
@@ -43,7 +43,7 @@ namespace jmessage.cross.friend
         }
 
 
-        public ResponseWrapper crossDeleteFriends(string appkey, string username, List<CrossFriendPayload> payload)
+        public ResponseWrapper crossDeleteFriends(string username, CrossFriendPayload payload)
         {
             Preconditions.checkArgument(payload != null, "Payload should not be empty");
             String payloadJson = this.ToString(payload);
@@ -62,13 +62,13 @@ namespace jmessage.cross.friend
             return result;
         }
 
-        public ResponseWrapper crossAppsUpdateFriends(string username, List<CrossFriendInfoPayload> payload)
+        public ResponseWrapper crossUpdateFriends(string username, List<CrossFriendInfoPayload> payload)
         {
             Preconditions.checkArgument(payload != null, "Payload should not be empty");
             String payloadJson = this.ToString(payload);
-            return crossAppsUpdateFriends(username, payloadJson);
+            return crossUpdateFriends(username, payloadJson);
         }
-        public ResponseWrapper crossAppsUpdateFriends(string username, string payload)
+        public ResponseWrapper crossUpdateFriends(string username, string payload)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payload), "payload String should not be empty");
             Console.WriteLine(payload);
@@ -81,7 +81,7 @@ namespace jmessage.cross.friend
         }
 
 
-        public string ToString(List<CrossFriendPayload> payload)
+        public string ToString(CrossFriendPayload payload)
         {
             return JsonConvert.SerializeObject(payload,
                             Newtonsoft.Json.Formatting.None,
