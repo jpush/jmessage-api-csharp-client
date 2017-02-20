@@ -24,6 +24,18 @@ namespace example.CrossExamples
             client.crossRemoveBlacklist("xiaohuihui", payloads);
 
             client.crossGetBlacklist("xiaohuihui");
+
+            //Nodisturb
+            List<string> sadd = new List<string> { "jmessage123" };
+            List<string> sremove = new List<string> { "jmessage123" };
+            SingleNodisturb spayload= new SingleNodisturb(sadd, sremove);
+            List<string> gadd = new List<string> { "19749893" };
+            List<string> gremove = new List<string> { "19749893" };
+            GroupNodisturb gpayload = new GroupNodisturb(gadd, gremove);
+            CrossNodisturbPayload no = new CrossNodisturbPayload(appkey, spayload, gpayload);
+            List<CrossNodisturbPayload> nopayloads = new List<CrossNodisturbPayload> { };
+            nopayloads.Add(no);
+            client.crossSetNodisturb("xiaohuihui", nopayloads);
         }
     }
 }
