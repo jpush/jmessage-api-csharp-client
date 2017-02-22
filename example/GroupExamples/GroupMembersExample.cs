@@ -21,7 +21,7 @@ namespace example.GroupExamples
             GroupClient client = new GroupClient(app_key, master_secret);
             List<string> add = new List<string> { "jmessage" };
             List<string> remove = new List<string> { "jmessage123" };
-            MemberPayload payload = new MemberPayload (app_key,add, remove);
+            MemberPayload payload = new MemberPayload (app_key,add, remove); 
             client.removeGroupMembers(19150325,payload);
             Console.ReadLine();
         }

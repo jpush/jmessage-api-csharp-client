@@ -18,7 +18,7 @@ namespace example
             //需要修改的用户的用户名
             string user = "jintian";
             List<string> users = new List<string> { "jintian1234" };
-            client.putUserBlacklist(user, users);
+            client.updateUserBlacklist(user, users);
             Console.ReadLine();
         }
     }

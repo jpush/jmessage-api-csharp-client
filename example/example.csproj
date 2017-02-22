@@ -76,7 +76,6 @@
     <Compile Include="MessageExamples\SendImageMessageExample.cs" />
     <Compile Include="MessageExamples\UploadImageExample.cs" />
     <Compile Include="MessageExamples\UploadFileExample.cs" />
-    <Compile Include="UserExamples\AddSingleNodisturbExample.cs" />
     <Compile Include="UserExamples\DeleteUserExample.cs" />
     <Compile Include="UserExamples\GetUserExample.cs" />
     <Compile Include="UserExamples\GetUserBlacklistExample.cs" />
@@ -92,7 +91,6 @@
     <Compile Include="UserExamples\UpdateUserPasswordExample.cs" />
     <Compile Include="UserExamples\RegistAdminExample.cs" />
     <Compile Include="UserExamples\RegistUserExample.cs" />
-    <Compile Include="UserExamples\RemoveSingleNodisturbExample.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

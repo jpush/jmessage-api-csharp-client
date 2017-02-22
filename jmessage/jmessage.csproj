@@ -71,6 +71,7 @@
     <Compile Include="message\MessageClient.cs" />
     <Compile Include="message\MessagePayload.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="user\NodisturbPayload.cs" />
     <Compile Include="user\UserClient.cs" />
     <Compile Include="user\UserPayload.cs" />
     <Compile Include="util\Base64.cs" />

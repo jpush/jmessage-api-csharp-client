@@ -165,7 +165,7 @@ namespace jmessage.user
             return result;
         }
 
-        public ResponseWrapper putUserBlacklist(string username, List<string> users)
+        public ResponseWrapper updateUserBlacklist(string username, List<string> users)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(username), "payloadString should not be empty");
             String url = HOST_NAME_SSL + USER_PATH + username + "/blacklist";
@@ -192,109 +192,15 @@ namespace jmessage.user
             return result;
         }
 
-
-        public ResponseWrapper addSingleNodisturb(string username, List<String> users)
+        public ResponseWrapper SetNodisturb(string username, List<NodisturbPayload> payload)
         {
             String url = HOST_NAME_SSL;
             url += USER_PATH;
             url += username;
             url += "/nodisturb";
-            Dictionary<String, Dictionary<String, List<String>>> nodisturb = new Dictionary<String, Dictionary<String, List<String>>> { };
-            Dictionary<String, List<String>> single = new Dictionary<string, List<string>> { };
-            List<String> add = users;
-            single["add"] = add;
-            nodisturb["single"] = single;
-            String payload = ToString(nodisturb);
-            ResponseWrapper result = sendPost(url, Authorization(), payload);
+            string payloadString = this.ToString(payload);
+            ResponseWrapper result = sendPost(url, Authorization(), payloadString);
             return result;
-        }
-
-        public ResponseWrapper removeSingleNodisturb(string username, List<String> users)
-        {
-            String url = HOST_NAME_SSL;
-            url += USER_PATH;
-            url += username;
-            url += "/nodisturb";
-            Dictionary<String, Dictionary<String, List<String>>> nodisturb = new Dictionary<String, Dictionary<String, List<String>>> { };
-            Dictionary<String, List<String>> single = new Dictionary<string, List<string>> { };
-            List<String> remove = users;
-            single["remove"] = remove;
-            nodisturb["single"] = single;
-            String payload = ToString(nodisturb);
-            ResponseWrapper result = sendPost(url, Authorization(), payload);
-            return result;
-        }
-
-        public ResponseWrapper addGroupNodisturb(string username, List<String> users)
-        {
-            String url = HOST_NAME_SSL;
-            url += USER_PATH;
-            url += username;
-            url += "/nodisturb";
-            Dictionary<String, Dictionary<String, List<String>>> nodisturb = new Dictionary<String, Dictionary<String, List<String>>> { };
-            Dictionary<String, List<String>> group = new Dictionary<string, List<string>> { };
-            List<String> add = users;
-            group["add"] = users;
-            nodisturb["group"] = group;
-            String payload = ToString(nodisturb);
-            ResponseWrapper result = sendPost(url, Authorization(), payload);
-            return result;
-        }
-
-
-        public ResponseWrapper removeGroupNodisturb(string username, List<String> users)
-        {
-            String url = HOST_NAME_SSL;
-            url += USER_PATH;
-            url += username;
-            url += "/nodisturb";
-            Dictionary<String, Dictionary<String, List<String>>> nodisturb = new Dictionary<String, Dictionary<String, List<String>>> { };
-            Dictionary<String, List<String>> group = new Dictionary<string, List<string>> { };
-            List<String> add = users;
-            group["remove"] = users;
-            nodisturb["group"] = group;
-            String payload = ToString(nodisturb);
-            ResponseWrapper result = sendPost(url, Authorization(), payload);
-            return result;
-        }
-
-
-
-        public ResponseWrapper setGlobalNodisturbOpen(string username)
-        {
-            String url = HOST_NAME_SSL;
-            url += USER_PATH;
-            url += username;
-            url += "/nodisturb";
-            Dictionary<String, Int16> nodisturb = new Dictionary<string, short> { };
-            nodisturb["global"] = 1;
-            String payload = ToString(nodisturb);
-            ResponseWrapper result = sendPost(url, Authorization(), payload);
-            return result;
-        }
-
-        public ResponseWrapper setGlobalNodisturbClose(string username)
-        {
-            String url = HOST_NAME_SSL;
-            url += USER_PATH;
-            url += username;
-            url += "/nodisturb";
-            Dictionary<String, Int16> nodisturb = new Dictionary<string, short> { };
-            nodisturb["global"] = 0;
-            String payload = ToString(nodisturb);
-            ResponseWrapper result = sendPost(url, Authorization(), payload);
-            return result;
-        }
-
-
-        public string ToString(Dictionary<String, Int16> payload)
-        {
-            return JsonConvert.SerializeObject(payload,
-                            Newtonsoft.Json.Formatting.None,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            });
         }
 
         public string ToString(List<string> payload)
@@ -317,7 +223,7 @@ namespace jmessage.user
                             });
         }
 
-        public string ToString(Dictionary<String, Dictionary<String, List<String>>> payload)
+        public string ToString(List<NodisturbPayload> payload)
         {
             return JsonConvert.SerializeObject(payload,
                             Newtonsoft.Json.Formatting.None,
