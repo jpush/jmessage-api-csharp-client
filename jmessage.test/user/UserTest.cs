@@ -23,7 +23,7 @@ namespace test.user
         }
 
         [TestMethod]
-        public void TestMethod1()
+        public void registUserTest()
         {  
             UserPayload user = new UserPayload("jmessage123", "password");
             List<UserPayload> users = new List<UserPayload> { user };
