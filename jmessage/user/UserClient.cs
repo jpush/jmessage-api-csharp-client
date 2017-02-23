@@ -192,7 +192,7 @@ namespace jmessage.user
             return result;
         }
 
-        public ResponseWrapper SetNodisturb(string username, List<NodisturbPayload> payload)
+        public ResponseWrapper setNodisturb(string username, NodisturbPayload payload)
         {
             String url = HOST_NAME_SSL;
             url += USER_PATH;
@@ -223,7 +223,7 @@ namespace jmessage.user
                             });
         }
 
-        public string ToString(List<NodisturbPayload> payload)
+        public string ToString(NodisturbPayload payload)
         {
             return JsonConvert.SerializeObject(payload,
                             Newtonsoft.Json.Formatting.None,

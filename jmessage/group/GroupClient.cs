@@ -78,33 +78,14 @@ namespace jmessage.group
             return result;
         }
 
-        public ResponseWrapper addGroupMembers(int groupId, MemberPayload payload)
+        public ResponseWrapper updateGroupMembers(int groupId, MemberPayload payload)
         {
             Preconditions.checkArgument(payload != null, "Payload should not be empty");
             String payloadJson = this.ToString(payload);
-            return addGroupMembers(groupId,payloadJson);
+            return updateGroupMembers(groupId,payloadJson);
         }
 
-        public ResponseWrapper addGroupMembers(int groupId,string payloadString)
-        {
-            Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
-            Console.WriteLine(payloadString);
-            String url = HOST_NAME_SSL;
-            url += GROUP_PATH;
-            url += groupId.ToString();
-            url += "/members";
-            ResponseWrapper result = sendPost(url, Authorization(), payloadString);
-            return result;
-        }
-
-        public ResponseWrapper removeGroupMembers(int groupId, MemberPayload payload)
-        {
-            Preconditions.checkArgument(payload != null, "Payload should not be empty");
-            String payloadJson = this.ToString(payload);
-            return removeGroupMembers(groupId, payloadJson);
-        }
-
-        public ResponseWrapper removeGroupMembers(int groupId, string payloadString)
+        public ResponseWrapper updateGroupMembers(int groupId,string payloadString)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
             Console.WriteLine(payloadString);

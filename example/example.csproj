@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>example.CrossExamples.FriendExample</StartupObject>
+    <StartupObject>example.GroupExamples.GroupMembersExample</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="jmessage, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
@@ -80,6 +80,7 @@
     <Compile Include="UserExamples\GetUserExample.cs" />
     <Compile Include="UserExamples\GetUserBlacklistExample.cs" />
     <Compile Include="UserExamples\DeleteUserBlacklistExample.cs" />
+    <Compile Include="UserExamples\NodisturbExample.cs" />
     <Compile Include="UserExamples\UpdateUserBlacklistExample.cs" />
     <Compile Include="UserExamples\GetUsersExample.cs" />
     <Compile Include="UserExamples\GetUserStatExample.cs" />
@@ -93,7 +94,9 @@
     <Compile Include="UserExamples\RegistUserExample.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

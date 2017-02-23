@@ -18,12 +18,12 @@ namespace example.FriendExamples
         public static String master_secret = "a19bef7870c55d7e51f4c4f0";
         public static void Main(string[] args)
         {
-            FriendClient client = new FriendClient(app_key, master_secret);
-            Dictionary<string, string> newinfo = new Dictionary<string, string>{};
-            newinfo["note_name"] = "new note name";
-            newinfo["username"] = "jintian";
-            newinfo["others"] = "others";
-            List<Dictionary<string, string>> payload = new List<Dictionary<string, string>> { newinfo};
+            FriendClient client = new FriendClient(app_key, master_secret);  
+            String username = "jintian";
+            String note_name = "new note name";
+            String others = "others";
+            FriendInfoPayload newinfo = new FriendInfoPayload(username, note_name, others);
+            List<FriendInfoPayload> payload = new List<FriendInfoPayload> {newinfo};
             client.updateFriends("xiaohuihui", payload);
             Console.ReadLine();
         }

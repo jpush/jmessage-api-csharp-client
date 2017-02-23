@@ -61,7 +61,7 @@ namespace jmessage.friend
             return result;
         }
 
-        public ResponseWrapper updateFriends(string username, List<Dictionary<string, string>> payload)
+        public ResponseWrapper updateFriends(string username, List<FriendInfoPayload> payload)
         {
             Preconditions.checkArgument(payload != null, "Payload should not be empty");
             String payloadJson = this.ToString(payload);
@@ -99,7 +99,7 @@ namespace jmessage.friend
                                 NullValueHandling = NullValueHandling.Ignore
                             });
         }
-        public string ToString(List<Dictionary<string,string>> payload)
+        public string ToString(List<FriendInfoPayload> payload)
         {
             return JsonConvert.SerializeObject(payload,
                             Newtonsoft.Json.Formatting.None,
