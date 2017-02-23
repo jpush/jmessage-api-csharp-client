@@ -8,7 +8,7 @@ using jmessage.user;
 using jmessage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace test.user
+namespace jmessage.test.user
 {
     /// <summary>
     /// UserTest 的摘要说明
@@ -29,6 +29,7 @@ namespace test.user
             List<UserPayload> users = new List<UserPayload> { user };
             ResponseWrapper content = client.registUser(users);
         }
+
         [TestMethod]
         public void registAdminTest()
         {
@@ -36,5 +37,21 @@ namespace test.user
             UserPayload admin = new UserPayload("jmessage", "password");
             ResponseWrapper content = client.registAdmin(admin);
         }
+
+
+        [TestMethod]
+        public void getUserTest()
+        {
+            ResponseWrapper content = client.getUser("jintian");
+        }
+
+        [TestMethod]
+        public void getAdminTest()
+        {
+            ResponseWrapper content = client.getAdmin(1, 2);
+        }
+
+
+
     }
 }

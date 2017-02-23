@@ -6,7 +6,7 @@ using jmessage.common;
 using jmessage.util;
 using jmessage.user;
 using jmessage;
-namespace test
+namespace jmessage.test
 {
 
     public class UnitTestBase
