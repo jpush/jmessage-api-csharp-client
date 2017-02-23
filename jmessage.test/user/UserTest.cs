@@ -29,5 +29,12 @@ namespace test.user
             List<UserPayload> users = new List<UserPayload> { user };
             ResponseWrapper content = client.registUser(users);
         }
+        [TestMethod]
+        public void registAdminTest()
+        {
+            UserPayload user = new UserPayload("jmessage123", "password");
+            UserPayload admin = new UserPayload("jmessage", "password");
+            ResponseWrapper content = client.registAdmin(admin);
+        }
     }
 }
