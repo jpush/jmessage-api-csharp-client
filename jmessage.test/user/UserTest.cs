@@ -26,21 +26,26 @@ namespace jmessage.test.user
         [TestMethod]
         public void registUserTest()
         {
-            UserPayload user = new UserPayload("jmessage123", "password");
+            Random ran = new Random();
+            int RandKey = ran.Next(100, 99999999);
+            String randString = RandKey.ToString();
+            UserPayload user = new UserPayload("jmessage"+ randString, "password");
             List<UserPayload> users = new List<UserPayload> { user };
             ResponseWrapper content = client.registUser(users);
             //repeat add user
-            Assert.AreEqual(content.responseCode, HttpStatusCode.Forbidden);
+            Assert.AreEqual(content.responseCode, HttpStatusCode.Created);
         }
 
         [TestMethod]
         public void registAdminTest()
         {
-            UserPayload user = new UserPayload("jmessage123", "password");
-            UserPayload admin = new UserPayload("jmessage", "password");
+            Random ran = new Random();
+            int RandKey = ran.Next(100, 99999999);
+            String randString = RandKey.ToString();
+            UserPayload admin = new UserPayload("jmessage" + randString, "password");
             ResponseWrapper content = client.registAdmin(admin);
             //repeat add user
-            Assert.AreEqual(content.responseCode, HttpStatusCode.Forbidden);
+            Assert.AreEqual(content.responseCode, HttpStatusCode.Created);
         }
 
 
