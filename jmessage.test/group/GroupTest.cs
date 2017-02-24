@@ -7,6 +7,7 @@ using jmessage.util;
 using jmessage.group;
 using jmessage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Net;
 
 namespace jmessage.test.group
 {
@@ -25,22 +26,25 @@ namespace jmessage.test.group
             List<string> members_username = new List<string> { "xiaohuihui", "jintian" };
             GroupPayload payload = new GroupPayload("toms", "xiaohuihui", members_username, "jmessage");
             ResponseWrapper content = client.createGroup(payload);
-            }
+            Assert.AreEqual(content.responseCode, HttpStatusCode.Created);
+        }
 
             [TestMethod]
             public void deleteGroupTest()
             {
                 ResponseWrapper content = client.deleteGroup(20293553);
-            }
+            Assert.AreEqual(content.responseCode, HttpStatusCode.Forbidden);
+        }
 
 
-            [TestMethod]
+        [TestMethod]
             public void updateGroupTest()
             {
             GroupPayload payload = new GroupPayload();
             payload.desc = "new desc";
             ResponseWrapper content = client.updateGroup(20292095, payload);
-            }
+            Assert.AreEqual(content.responseCode, HttpStatusCode.NoContent);
+        }
 
             [TestMethod]
             public void updateGroupMembersTest()
@@ -49,6 +53,7 @@ namespace jmessage.test.group
             List<string> remove = new List<string> { "jmessage123" };
             MemberPayload payload = new MemberPayload(add, remove);
             ResponseWrapper content = client.updateGroupMembers(19749893, payload);
+            Assert.AreEqual(content.responseCode, HttpStatusCode.BadRequest);
         }
 
         }

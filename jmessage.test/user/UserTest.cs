@@ -7,6 +7,7 @@ using jmessage.util;
 using jmessage.user;
 using jmessage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Net;
 
 namespace jmessage.test.user
 {
@@ -24,10 +25,12 @@ namespace jmessage.test.user
 
         [TestMethod]
         public void registUserTest()
-        {  
+        {
             UserPayload user = new UserPayload("jmessage123", "password");
             List<UserPayload> users = new List<UserPayload> { user };
             ResponseWrapper content = client.registUser(users);
+            //repeat add user
+            Assert.AreEqual(content.responseCode, HttpStatusCode.Forbidden);
         }
 
         [TestMethod]
@@ -36,6 +39,8 @@ namespace jmessage.test.user
             UserPayload user = new UserPayload("jmessage123", "password");
             UserPayload admin = new UserPayload("jmessage", "password");
             ResponseWrapper content = client.registAdmin(admin);
+            //repeat add user
+            Assert.AreEqual(content.responseCode, HttpStatusCode.Forbidden);
         }
 
 
@@ -43,12 +48,14 @@ namespace jmessage.test.user
         public void getUserTest()
         {
             ResponseWrapper content = client.getUser("jintian");
+            Assert.AreEqual(content.responseCode, HttpStatusCode.OK);
         }
 
         [TestMethod]
         public void getAdminTest()
         {
             ResponseWrapper content = client.getAdmin(1, 2);
+            Assert.AreEqual(content.responseCode, HttpStatusCode.OK);
         }
 
 
