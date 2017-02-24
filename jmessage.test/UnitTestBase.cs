@@ -13,6 +13,5 @@ namespace jmessage.test
     {
         public static String app_key = "6be9204c30b9473e87bad4dc";
         public static String master_secret = "a19bef7870c55d7e51f4c4f0";
-        UserClient client = new UserClient(app_key, master_secret);
     }
 }

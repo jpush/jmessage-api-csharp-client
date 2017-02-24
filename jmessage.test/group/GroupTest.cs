@@ -56,5 +56,21 @@ namespace jmessage.test.group
             Assert.AreEqual(content.responseCode, HttpStatusCode.BadRequest);
         }
 
+        [TestMethod]
+        public void getGroupTest()
+        {
+            ResponseWrapper content = client.getGroup(20292095);
+            Assert.AreEqual(content.responseCode, HttpStatusCode.OK);
         }
+
+        [TestMethod]
+        public void getGroupMembersTest()
+        {
+            GroupPayload payload = new GroupPayload();
+            payload.desc = "new desc";
+            ResponseWrapper content = client.getGroupMembers(20292095);
+            Assert.AreEqual(content.responseCode, HttpStatusCode.OK);
+        }
+
+    }
     }
