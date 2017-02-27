@@ -24,17 +24,17 @@ List<UserPayload> users = new List<UserPayload> { user };
 ResponseWrapper content = client.registUser(users);
 ```
 ###  以文本消息发送为例
->一下代码节选自项目目录  example\MessageExamples\SendTextMessageExample.cs
+>以下代码节选自项目目录  example\MessageExamples\SendTextMessageExample.cs
 
 ```
-TextMsg_body msg_body = new TextMsg_body();
-msg_body.text = "msg_type text";
+TextMessageBody msg_body = new TextMessageBody();
+msg_body.text= "text";
 msg_body.extras = null;
-TextMessagePayload payload = new TextMessagePayload("1", "single","admin", "text", "xiaohuihui", "admin", msg_body);           
-ResponseWrapper content = client.sendMessage(payload);
+TextMessagePayload payload = new TextMessagePayload("1", "single", "admin", "text", "xiaohuihui", "admin",msg_body);
+ResponseWrapper content = client.sendMessage(payload);          
 ```
 ###  以创建群组为例
->一下代码节选自项目目录  example\GroupExamples\CreateGroupExample.cs
+>以下代码节选自项目目录  example\GroupExamples\CreateGroupExample.cs
 
 ```
 List<string> members_username = new List<string> { "xiaohuihui", "jintian" };
@@ -43,7 +43,7 @@ ResponseWrapper content = client.createGroup(payload);
 ```
 
 ###  以添加好友为例
->一下代码节选自项目目录  example\FriendExamples\AddFriendsExample.cs
+>以下代码节选自项目目录  example\FriendExamples\AddFriendsExample.cs
 
 ```
 List<string> members_username = new List<string> {"jintian" };       
@@ -51,7 +51,7 @@ ResponseWrapper content = client.addFriends("xiaohuihui", members_username);
 ```
 
 ###  以跨应用管理群组成员为例
->一下代码节选自项目目录  example\CrossExamples\GroupExample.cs
+>以下代码节选自项目目录  example\CrossExamples\GroupExample.cs
 
 ```
 String appkey = "6be9204c30b9473e87bad4dc";

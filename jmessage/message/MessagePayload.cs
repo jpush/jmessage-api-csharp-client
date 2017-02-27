@@ -35,9 +35,9 @@ namespace jmessage.message
 
     public class ImageMessagePayload : MessagePayload
     {
-        public ImageMsg_body msg_body;
+        public ImageMessageBody msg_body;
         public ImageMessagePayload(string version, string target_type, string from_type, string msg_type,
-            string target_id, string from_id, string from_name, string target_name, ImageMsg_body msg_body)
+            string target_id, string from_id, string from_name, string target_name, ImageMessageBody msg_body)
         {
             this.version = version;
             this.target_type = target_type;
@@ -51,7 +51,7 @@ namespace jmessage.message
         }
 
         public ImageMessagePayload(string version, string target_type, string from_type, string msg_type,
-               string target_id, string from_id, ImageMsg_body msg_body)
+               string target_id, string from_id, ImageMessageBody msg_body)
         {
             this.version = version;
             this.target_type = target_type;
@@ -79,7 +79,7 @@ namespace jmessage.message
 
 
 
-    public class ImageMsg_body
+    public class ImageMessageBody
     {
         public string media_id;
         public long media_crc32;
@@ -89,7 +89,7 @@ namespace jmessage.message
         public int fsize;
         public string extras;
 
-        public ImageMsg_body()
+        public ImageMessageBody()
         {
             this.media_id = null;
             this.media_crc32 = 0;
@@ -100,7 +100,7 @@ namespace jmessage.message
             this.extras = null;
         }
 
-        public ImageMsg_body(string media_id, long media_crc32, int width, int height, string format, int fsize, string extras)
+        public ImageMessageBody(string media_id, long media_crc32, int width, int height, string format, int fsize, string extras)
         {
             this.media_id = media_id;
             this.media_crc32 = media_crc32;
@@ -115,9 +115,9 @@ namespace jmessage.message
 
     public class TextMessagePayload : MessagePayload
     {
-        public TextMsg_body msg_body;
+        public TextMessageBody msg_body;
         public TextMessagePayload(string version, string target_type, string from_type, string msg_type,
-            string target_id, string from_id, string from_name, string target_name, TextMsg_body msg_body)
+            string target_id, string from_id, string from_name, string target_name, TextMessageBody msg_body)
         {
             this.version = version;
             this.target_type = target_type;
@@ -131,7 +131,7 @@ namespace jmessage.message
         }
 
         public TextMessagePayload(string version, string target_type, string from_type, string msg_type,
-               string target_id, string from_id, TextMsg_body msg_body)
+               string target_id, string from_id, TextMessageBody msg_body)
         {
             this.version = version;
             this.target_type = target_type;
@@ -158,16 +158,16 @@ namespace jmessage.message
     }
 
 
-    public class TextMsg_body
+    public class TextMessageBody
     {
         public string text;
         public string extras;
-        public TextMsg_body()
+        public TextMessageBody()
         {
             this.text = null;
             this.extras = null;
         }
-        public TextMsg_body(string text, string extras)
+        public TextMessageBody(string text, string extras)
         {
             this.text = text;
             this.extras = extras;

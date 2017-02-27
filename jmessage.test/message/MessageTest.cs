@@ -28,8 +28,8 @@ namespace jmessage.test.message
         [TestMethod]
         public void sendTextMessageTest()
         {
-            TextMsg_body msg_body = new TextMsg_body();
-            msg_body.text = "msg_type text";
+            TextMessageBody msg_body = new TextMessageBody();
+            msg_body.text = "text";
             msg_body.extras = null;
             TextMessagePayload payload = new TextMessagePayload("1", "single", "admin", "text", "xiaohuihui", "admin", msg_body);           
             ResponseWrapper content = client.sendMessage(payload);
@@ -39,7 +39,7 @@ namespace jmessage.test.message
         [TestMethod]
         public void sendImageMessageTest()
         {
-            ImageMsg_body msg_body = new ImageMsg_body();
+            ImageMessageBody msg_body = new ImageMessageBody();
             msg_body.media_id = "qiniu/image/CE0ACD035CBF71F8";
             msg_body.media_crc32 = 2778919613;
             msg_body.width = 3840;

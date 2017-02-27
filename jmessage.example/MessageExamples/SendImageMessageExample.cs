@@ -19,8 +19,8 @@ namespace example.MessageExamples
         {
             MessageClient client = new MessageClient(app_key, master_secret);
             //ImageMessagePayload(string version, string target_type, string from_type, string msg_type,string target_id, string from_id)
-            
-            ImageMsg_body msg_body = new ImageMsg_body();
+
+            ImageMessageBody msg_body = new ImageMessageBody();
             msg_body.media_id= "qiniu/image/CE0ACD035CBF71F8";
             msg_body.media_crc32 = 2778919613;
             msg_body.width = 3840;

@@ -27,14 +27,13 @@ namespace jmessage.test.cross
         [TestMethod]
         public void crossAddRemoveMembersTest()
         {
-            CrossGroupClient client = new CrossGroupClient(app_key, master_secret);
             String appkey = "6be9204c30b9473e87bad4dc";
             List<string> add = new List<string> { "jmessage123" };
             CrossMemberPayload payload = new CrossMemberPayload(appkey, add, null);
             List<CrossMemberPayload> payloads = new List<CrossMemberPayload> { };
             payloads.Add(payload);    
             ResponseWrapper content = client.crossAddRemoveMembers("19749893", payloads);
-            Assert.AreEqual(content.responseCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(content.responseCode, HttpStatusCode.BadRequest);
         }
 
         [TestMethod]

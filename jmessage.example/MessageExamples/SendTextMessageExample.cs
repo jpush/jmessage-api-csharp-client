@@ -18,8 +18,8 @@ namespace example.MessageExamples
         public static void Main(string[] args)
         {
             MessageClient client = new MessageClient(app_key, master_secret);
-            TextMsg_body msg_body = new TextMsg_body();
-            msg_body.text= "msg_type text";
+            TextMessageBody msg_body = new TextMessageBody();
+            msg_body.text= "text";
             msg_body.extras = null;
             TextMessagePayload payload = new TextMessagePayload("1", "single", "admin", "text", "xiaohuihui", "admin",msg_body);
             client.sendMessage(payload);
