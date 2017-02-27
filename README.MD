@@ -19,8 +19,7 @@ JMessage's officially supported CSharp client library for accessing JMessage API
 >一下代码节选自项目目录  example/UserExamples/RegistUserExample.cs
 
 ```
-String username = this.username;
-UserPayload user = new UserPayload(username, "password");
+UserPayload user = new UserPayload("username", "password");
 List<UserPayload> users = new List<UserPayload> { user };
 ResponseWrapper content = client.registUser(users);
 ```
@@ -52,7 +51,7 @@ ResponseWrapper content = client.addFriends("xiaohuihui", members_username);
 ```
 
 ###  以跨应用管理群组成员为例
->一下代码节选自项目目录  example\CrossExamples\CrossAppsAddRemoveMembersExample.cs
+>一下代码节选自项目目录  example\CrossExamples\GroupExample.cs
 
 ```
 String appkey = "6be9204c30b9473e87bad4dc";
