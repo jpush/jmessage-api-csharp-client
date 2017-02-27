@@ -16,7 +16,7 @@ JMessage's officially supported CSharp client library for accessing JMessage API
 
 ###  以用户注册为例
 
->一下代码节选自项目目录  example/UserExamples/RegistUserExample.cs
+>以下代码节选自项目目录  example/UserExamples/RegistUserExample.cs
 
 ```
 UserPayload user = new UserPayload("username", "password");
