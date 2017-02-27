@@ -59,6 +59,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="cross\CrossGroupTest.cs" />
+    <Compile Include="cross\CrossFriendTest.cs" />
+    <Compile Include="cross\CrossUserTest.cs" />
     <Compile Include="friend\FriendTest.cs" />
     <Compile Include="group\GroupTest.cs" />
     <Compile Include="message\MessageTest.cs" />
