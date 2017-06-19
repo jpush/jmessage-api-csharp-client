@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace jmessage.user
 {
@@ -10,6 +7,7 @@ namespace jmessage.user
         public int global;
         public SingleNodisturb single;
         public GroupNodisturb group;
+
         public NodisturbPayload(SingleNodisturb single, GroupNodisturb group, int global)
         {
             this.global = global;
@@ -17,20 +15,24 @@ namespace jmessage.user
             this.group = group;
         }
     }
+
     public class SingleNodisturb
     {
         public List<string> add;
         public List<string> remove;
+
         public SingleNodisturb(List<string> add, List<string> remove)
         {
             this.add = add;
             this.remove = remove;
         }
     }
+
     public class GroupNodisturb
     {
         public List<string> add;
         public List<string> remove;
+
         public GroupNodisturb(List<string> add, List<string> remove)
         {
             this.add = add;
