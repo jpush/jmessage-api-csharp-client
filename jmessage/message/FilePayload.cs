@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace jmessage.message
+﻿namespace jmessage.message
 {
-
-
     class ImagePayload
     {
-
         public string media_id;
         public long media_crc32;
         public int width;
@@ -19,12 +11,12 @@ namespace jmessage.message
 
         public ImagePayload()
         {
-            this.media_id = null;
-            this.media_crc32 = 0;
-            this.width = 0;
-            this.height = 0;
-            this.format = null;
-            this.fsize = 0;
+            media_id = null;
+            media_crc32 = 0;
+            width = 0;
+            height = 0;
+            format = null;
+            fsize = 0;
         }
 
         public ImagePayload(string media_id, long media_crc32, int width, int height, string format, int fsize)
@@ -40,7 +32,6 @@ namespace jmessage.message
 
     class FilePayload
     {
-
         public string media_id;
         public long media_crc32;
         public string fname;
@@ -49,11 +40,11 @@ namespace jmessage.message
 
         public FilePayload()
         {
-            this.media_id = null;
-            this.media_crc32 = 0;
-            this.fname = null;
-            this.fsize = 0;
-            this.hash = null;
+            media_id = null;
+            media_crc32 = 0;
+            fname = null;
+            fsize = 0;
+            hash = null;
         }
 
         public FilePayload(string media_id, long media_crc32, string fname, int fsize, string hash)
@@ -65,6 +56,4 @@ namespace jmessage.message
             this.hash = hash;
         }
     }
-
-
 }

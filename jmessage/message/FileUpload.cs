@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using jmessage.util;
 using jmessage.common;
 using System.Diagnostics;
-using Newtonsoft.Json;
 using System.Net;
 using System.IO;
 using System.Collections.Specialized;
@@ -23,6 +19,7 @@ namespace jmessage.message
 
         private String appKey;
         private String masterSecret;
+
         public FileUpload(String appKey, String masterSecret)
         {
             Preconditions.checkArgument(!String.IsNullOrEmpty(appKey), "appKey should be set");
@@ -96,8 +93,6 @@ namespace jmessage.message
                     Debug.Print(e.Message);
                     Console.WriteLine(string.Format("fail  to get response - {0}", errorCode) + " " + DateTime.Now);
                 }
-
-
             }
             catch (Exception ex)
             {
@@ -117,7 +112,6 @@ namespace jmessage.message
 
         public String Authorization()
         {
-
             Debug.Assert(!string.IsNullOrEmpty(this.appKey));
             Debug.Assert(!string.IsNullOrEmpty(this.masterSecret));
 
