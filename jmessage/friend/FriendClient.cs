@@ -37,8 +37,7 @@ namespace jmessage.friend
             Console.WriteLine(payloadString);
 
             string url = HOST_NAME_SSL + USER_PATH + username + "/friends";
-            ResponseWrapper result = sendPost(url, Authorization(), payloadString);
-            return result;
+            return sendPost(url, Authorization(), payloadString);
         }
 
         public ResponseWrapper deleteFriends(string username, List<string> payload)
