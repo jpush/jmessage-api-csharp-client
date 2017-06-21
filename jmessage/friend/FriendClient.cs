@@ -98,8 +98,7 @@ namespace jmessage.friend
             Debug.Assert(!string.IsNullOrEmpty(appKey));
             Debug.Assert(!string.IsNullOrEmpty(masterSecret));
 
-            string origin = appKey + ":" + masterSecret;
-            return Base64.getBase64Encode(origin);
+            return Base64.getBase64Encode(appKey + ":" + masterSecret);
         }
     }
 }
