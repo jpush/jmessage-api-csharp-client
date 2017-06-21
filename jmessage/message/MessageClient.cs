@@ -28,7 +28,7 @@ namespace jmessage.message
         public ResponseWrapper sendMessage(MessagePayload payload)
         {
             Preconditions.checkArgument(payload != null, "message Payload should not be empty");
-            String payloadString = this.ToString(payload);
+            String payloadString = ToString(payload);
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
             String url = HOST_NAME_SSL;
             url += MESSAGE_PATH;

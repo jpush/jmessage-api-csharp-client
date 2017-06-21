@@ -16,20 +16,21 @@ namespace jmessage.message
 
         public MessagePayload()
         {
-            this.version = null;
-            this.target_type = null;
-            this.from_type = null;
-            this.msg_type = null;
-            this.target_id = null;
-            this.from_id = null;
-            this.from_name = null;
-            this.target_name = null;
+            version = null;
+            target_type = null;
+            from_type = null;
+            msg_type = null;
+            target_id = null;
+            from_id = null;
+            from_name = null;
+            target_name = null;
         }
     }
 
     public class ImageMessagePayload : MessagePayload
     {
         public ImageMessageBody msg_body;
+
         public ImageMessagePayload(string version, string target_type, string from_type, string msg_type,
             string target_id, string from_id, string from_name, string target_name, ImageMessageBody msg_body)
         {
@@ -63,6 +64,7 @@ namespace jmessage.message
                 NullValueHandling = NullValueHandling.Ignore
             });
         }
+
         public MessagePayload Check()
         {
             return this;
