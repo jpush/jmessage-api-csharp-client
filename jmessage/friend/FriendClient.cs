@@ -65,7 +65,9 @@ namespace jmessage.friend
         public ResponseWrapper updateFriends(string username, string payload)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payload), "payloadstring should not be empty");
+
             Console.WriteLine(payload);
+
             string url = HOST_NAME_SSL + USER_PATH + username + "/friends";
             return sendPut(url, Authorization(), payload);
         }
