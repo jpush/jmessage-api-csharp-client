@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace jmessage.util
 {
@@ -15,6 +11,7 @@ namespace jmessage.util
                 throw new ArgumentNullException();
             }
         }
+
         public static void checkArgument(bool expression, object errorMessage)
         {
             if (!expression)

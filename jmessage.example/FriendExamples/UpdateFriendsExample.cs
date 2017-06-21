@@ -1,29 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using jmessage.util;
-using jmessage.common;
-using System.Diagnostics;
-using Newtonsoft.Json;
-using jmessage.message;
-using jmessage.group;
 using jmessage.friend;
-using jmessage;
+
 namespace example.FriendExamples
 {
     class UpdateFriendsExample
     {
-        public static String app_key = "6be9204c30b9473e87bad4dc";
-        public static String master_secret = "a19bef7870c55d7e51f4c4f0";
+        public static string app_key = "6be9204c30b9473e87bad4dc";
+        public static string master_secret = "a19bef7870c55d7e51f4c4f0";
+
         public static void Main(string[] args)
         {
-            FriendClient client = new FriendClient(app_key, master_secret);  
-            String username = "jintian";
-            String note_name = "new note name";
-            String others = "others";
+            string username = "jintian";
+            string note_name = "new note name";
+            string others = "others";
             FriendInfoPayload newinfo = new FriendInfoPayload(username, note_name, others);
-            List<FriendInfoPayload> payload = new List<FriendInfoPayload> {newinfo};
+            List<FriendInfoPayload> payload = new List<FriendInfoPayload> { newinfo };
+
+            FriendClient client = new FriendClient(app_key, master_secret);
             client.updateFriends("xiaohuihui", payload);
             Console.ReadLine();
         }

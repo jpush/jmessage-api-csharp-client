@@ -20,6 +20,7 @@ namespace jmessage.user
 
         private String appKey;
         private String masterSecret;
+
         public UserClient(String appKey, String masterSecret)
         {
             Preconditions.checkArgument(!String.IsNullOrEmpty(appKey), "appKey should be set");
@@ -27,14 +28,16 @@ namespace jmessage.user
             this.appKey = appKey;
             this.masterSecret = masterSecret;
         }
-        public ResponseWrapper registUser(List<UserPayload> payload)
+
+        public ResponseWrapper registerUser(List<UserPayload> payload)
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
             //payload.Check();
             String payloadJson = this.ToString(payload);
-            return registUser(payloadJson);
+            return registerUser(payloadJson);
         }
-        public ResponseWrapper registUser(string payloadString)
+
+        public ResponseWrapper registerUser(string payloadString)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
             Console.WriteLine(payloadString);
@@ -44,18 +47,17 @@ namespace jmessage.user
             return result;
         }
 
-        public ResponseWrapper registAdmin(UserPayload payload)
+        public ResponseWrapper registerAdmin(UserPayload payload)
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
             payload.Check();
             String payloadJson = payload.ToString(payload);
-            return registAdmin(payloadJson);
+            return registerAdmin(payloadJson);
         }
 
-        public ResponseWrapper registAdmin(string payloadString)
+        public ResponseWrapper registerAdmin(string payloadString)
         {
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
-
             String url = HOST_NAME_SSL;
             url += ADMIN_PATH;
             ResponseWrapper result = sendPost(url, Authorization(), payloadString);
@@ -131,7 +133,6 @@ namespace jmessage.user
             return result;
         }
 
-
         public ResponseWrapper deleteUser(UserPayload payload)
         {
             Preconditions.checkArgument(payload != null, "pushPayload should not be empty");
@@ -187,7 +188,6 @@ namespace jmessage.user
             Preconditions.checkArgument(!string.IsNullOrEmpty(username), "payloadString should not be empty");
             String url = HOST_NAME_SSL + USER_PATH + username + "/blacklist";
             string userslist = ToString(users);
-
             ResponseWrapper result = sendDelete(url, Authorization(), userslist);
             return result;
         }
@@ -233,10 +233,8 @@ namespace jmessage.user
                             });
         }
 
-
         public String Authorization()
         {
-
             Debug.Assert(!string.IsNullOrEmpty(this.appKey));
             Debug.Assert(!string.IsNullOrEmpty(this.masterSecret));
 

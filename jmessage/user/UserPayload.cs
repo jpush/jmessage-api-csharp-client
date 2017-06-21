@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
-using jmessage.common;
-using jmessage.util;
+﻿using Newtonsoft.Json;
 
 namespace jmessage.user
 {
@@ -23,38 +17,36 @@ namespace jmessage.user
         public string ctime;
         public string mtime;
 
-
         public UserPayload(string username, string password)
         {
             this.username = username;
             this.password = password;
         }
+
         public UserPayload(string username)
         {
             this.username = username;
-            this.password = null;
-            this.new_password = null;
-            this.appkey = null;
-            this.nickname = null;
-            this.birthday = null;
-            this.gender = null;
-            this.signature = null;
-            this.region = null;
-            this.address = null;
-            this.ctime = null;
-            this.mtime = null;
+            password = null;
+            new_password = null;
+            appkey = null;
+            nickname = null;
+            birthday = null;
+            gender = null;
+            signature = null;
+            region = null;
+            address = null;
+            ctime = null;
+            mtime = null;
         }
-
 
         public string ToString(UserPayload user)
         {
-            return JsonConvert.SerializeObject(user,
-                            Newtonsoft.Json.Formatting.None,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            });
+            return JsonConvert.SerializeObject(user, Formatting.None, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
         }
+
         public UserPayload Check()
         {
             return this;

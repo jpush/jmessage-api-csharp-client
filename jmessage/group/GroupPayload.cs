@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using jmessage.common;
-using jmessage.util;
 
 namespace jmessage.group
 {
@@ -20,13 +15,13 @@ namespace jmessage.group
 
         public GroupPayload()
         {
-            this.name = null;
-            this.desc = null;
-            this.owner_username = null;
-            this.members_username = null;
-            this.MaxMemberCount = null;
-            this.ctime = null;
-            this.mtime = null;
+            name = null;
+            desc = null;
+            owner_username = null;
+            members_username = null;
+            MaxMemberCount = null;
+            ctime = null;
+            mtime = null;
         }
 
         public GroupPayload(string name, string owner_username, List<string> members_username, string desc)
@@ -38,19 +33,16 @@ namespace jmessage.group
             this.MaxMemberCount = null;
             this.ctime = null;
             this.mtime = null;
-
         }
-
 
         public string ToString(GroupPayload group)
         {
-            return JsonConvert.SerializeObject(group,
-                            Newtonsoft.Json.Formatting.None,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            });
+            return JsonConvert.SerializeObject(group, Formatting.None, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
         }
+
         public GroupPayload Check()
         {
             return this;

@@ -1,21 +1,15 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Net;
-using jmessage.util;
-using System.Diagnostics;
-using Newtonsoft.Json;
 
 namespace jmessage.common
 {
     public class ResponseWrapper
     {
-        private const int RESPONSE_CODE_NONE = -1;
         public HttpStatusCode responseCode = HttpStatusCode.BadRequest;
+
+        private const int RESPONSE_CODE_NONE = -1;
         private String _responseContent;
+
         public String responseContent
         {
             get
@@ -27,10 +21,12 @@ namespace jmessage.common
                 _responseContent = value;
             }
         }
+
         public void setErrorObject()
         {
             if (!string.IsNullOrEmpty(_responseContent))
             {
+
             }
         }
 
@@ -42,11 +38,12 @@ namespace jmessage.common
         {
             return responseCode == HttpStatusCode.OK;
         }
+
         public String exceptionString;
 
         public ResponseWrapper()
         {
-        }
 
+        }
     }
 }

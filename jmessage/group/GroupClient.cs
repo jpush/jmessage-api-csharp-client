@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using jmessage.util;
 using jmessage.common;
 using System.Diagnostics;
@@ -11,69 +8,66 @@ namespace jmessage.group
 {
     public class GroupClient : BaseHttpClient
     {
-        private const String HOST_NAME_SSL = "https://api.im.jpush.cn";
-        private const String GROUP_PATH = "/v1/groups/";
-        private const String USER_PATH = "/v1/users/";
-        
-        private const String GET_GROUPS = "/v1/groups/?start=";
-        private const String GET_USERS_PATH = "/v1/users/?start=";
+        private const string HOST_NAME_SSL = "https://api.im.jpush.cn";
+        private const string GROUP_PATH = "/v1/groups/";
+        private const string USER_PATH = "/v1/users/";
+        private const string GET_GROUPS = "/v1/groups/?start=";
+        private const string GET_USERS_PATH = "/v1/users/?start=";
 
-        private String appKey;
-        private String masterSecret;
-        public GroupClient(String appKey, String masterSecret)
+        private string appKey;
+        private string masterSecret;
+
+        public GroupClient(string appKey, string masterSecret)
         {
             Preconditions.checkArgument(!String.IsNullOrEmpty(appKey), "appKey should be set");
             Preconditions.checkArgument(!String.IsNullOrEmpty(masterSecret), "masterSecret should be set");
             this.appKey = appKey;
             this.masterSecret = masterSecret;
         }
+
         public ResponseWrapper createGroup(GroupPayload payload)
         {
             Preconditions.checkArgument(payload != null, "Payload should not be empty");
-            String payloadJson = this.ToString(payload);
+            string payloadJson = ToString(payload);
             return createGroup(payloadJson);
         }
+
         public ResponseWrapper createGroup(string payloadString)
         {
-            Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
+            Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadstring should not be empty");
             Console.WriteLine(payloadString);
-            String url = HOST_NAME_SSL;
+            string url = HOST_NAME_SSL;
             url += GROUP_PATH;
             ResponseWrapper result = sendPost(url, Authorization(), payloadString);
             return result;
         }
 
-
         public ResponseWrapper getGroup(int groupId)
         {
-            String url = HOST_NAME_SSL;
+            string url = HOST_NAME_SSL;
             url += GROUP_PATH;
             url += groupId.ToString();
-            ResponseWrapper result = sendGet(url, Authorization(),null);
+            ResponseWrapper result = sendGet(url, Authorization(), null);
             return result;
         }
 
-        public ResponseWrapper updateGroup(int groupId,GroupPayload payload)
+        public ResponseWrapper updateGroup(int groupId, GroupPayload payload)
         {
             Preconditions.checkArgument(payload != null, "Payload should not be empty");
-            String payloadJson = payload.ToString(payload);
+            string payloadJson = payload.ToString(payload);
             return updateGroup(groupId, payloadJson);
         }
 
-        public ResponseWrapper updateGroup(int groupId,string payloadJson)
+        public ResponseWrapper updateGroup(int groupId, string payloadJson)
         {
-            String url = HOST_NAME_SSL;
-            url += GROUP_PATH;
-            url += groupId.ToString();
+            string url = HOST_NAME_SSL + GROUP_PATH + groupId.ToString();
             ResponseWrapper result = sendPut(url, Authorization(), payloadJson);
             return result;
         }
 
         public ResponseWrapper deleteGroup(int groupId)
         {
-            String url = HOST_NAME_SSL;
-            url += GROUP_PATH;
-            url += groupId.ToString();
+            string url = HOST_NAME_SSL + GROUP_PATH + groupId.ToString();
             ResponseWrapper result = sendDelete(url, Authorization(), null);
             return result;
         }
@@ -81,81 +75,63 @@ namespace jmessage.group
         public ResponseWrapper updateGroupMembers(int groupId, MemberPayload payload)
         {
             Preconditions.checkArgument(payload != null, "Payload should not be empty");
-            String payloadJson = this.ToString(payload);
-            return updateGroupMembers(groupId,payloadJson);
+            string payloadJson = ToString(payload);
+            return updateGroupMembers(groupId, payloadJson);
         }
 
-        public ResponseWrapper updateGroupMembers(int groupId,string payloadString)
+        public ResponseWrapper updateGroupMembers(int groupId, string payloadString)
         {
-            Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
+            Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadstring should not be empty");
             Console.WriteLine(payloadString);
-            String url = HOST_NAME_SSL;
-            url += GROUP_PATH;
-            url += groupId.ToString();
-            url += "/members";
+            string url = HOST_NAME_SSL + GROUP_PATH + groupId.ToString() + "/members";
             ResponseWrapper result = sendPost(url, Authorization(), payloadString);
             return result;
         }
 
         public ResponseWrapper getGroupMembers(int groupId)
         {
-            String url = HOST_NAME_SSL;
-            url += GROUP_PATH;
-            url += groupId.ToString();
-            url += "/members/";
+            string url = HOST_NAME_SSL + GROUP_PATH + groupId.ToString() + "/members/";
             ResponseWrapper result = sendGet(url, Authorization(), null);
             return result;
         }
 
         public ResponseWrapper getMemberGroups(string username)
         {
-            String url = HOST_NAME_SSL;
-            url += USER_PATH;
-            url += username;
-            url += "/groups/";
+            string url = HOST_NAME_SSL + USER_PATH + username + "/groups/";
             ResponseWrapper result = sendGet(url, Authorization(), null);
             return result;
         }
 
-        public ResponseWrapper getGroupsList(int start,int count)
+        public ResponseWrapper getGroupsList(int start, int count)
         {
-            String url = HOST_NAME_SSL;
-            url += GET_GROUPS;
-            url += start.ToString();
-            url += "&count=";
-            url += count.ToString();
+            string url = HOST_NAME_SSL + GET_GROUPS + start.ToString() + "&count=" + count.ToString();
             ResponseWrapper result = sendGet(url, Authorization(), null);
             return result;
         }
 
         public string ToString(GroupPayload payload)
         {
-            return JsonConvert.SerializeObject(payload,
-                            Newtonsoft.Json.Formatting.None,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            });
+            return JsonConvert.SerializeObject(payload, Formatting.None, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
         }
 
         public string ToString(MemberPayload payload)
         {
-            return JsonConvert.SerializeObject(payload,
-                            Newtonsoft.Json.Formatting.None,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            });
+            return JsonConvert.SerializeObject(payload, Formatting.None, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
         }
 
-
-        public String Authorization()
+        public string Authorization()
         {
 
-            Debug.Assert(!string.IsNullOrEmpty(this.appKey));
-            Debug.Assert(!string.IsNullOrEmpty(this.masterSecret));
+            Debug.Assert(!string.IsNullOrEmpty(appKey));
+            Debug.Assert(!string.IsNullOrEmpty(masterSecret));
 
-            String origin = this.appKey + ":" + this.masterSecret;
+            string origin = appKey + ":" + masterSecret;
             return Base64.getBase64Encode(origin);
         }
     }

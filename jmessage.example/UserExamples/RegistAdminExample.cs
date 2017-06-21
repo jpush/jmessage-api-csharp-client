@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using jmessage.common;
-using jmessage.util;
 using jmessage.user;
-using jmessage;
 
 namespace example
 {
@@ -20,7 +14,7 @@ namespace example
             Console.WriteLine("*****开始注册管理员******");
             UserClient client = new UserClient(app_key, master_secret);
             UserPayload admin = new UserPayload("jmessage", "password");
-            client.registAdmin(admin);
+            client.registerAdmin(admin);
             Console.ReadLine();
         }
     }

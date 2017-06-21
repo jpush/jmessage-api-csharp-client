@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace jmessage.cross.user
 {
@@ -10,6 +7,7 @@ namespace jmessage.cross.user
         public string appkey;
         public CrossSingleNodisturb single;
         public CrossGroupNodisturb group;
+
         public CrossNodisturbPayload(string appkey, CrossSingleNodisturb single, CrossGroupNodisturb group)
         {
             this.appkey = appkey;
@@ -17,20 +15,24 @@ namespace jmessage.cross.user
             this.group = group;
         }
     }
+
     public class CrossSingleNodisturb
     {
         public List<string> add;
         public List<string> remove;
+
         public CrossSingleNodisturb(List<string> add, List<string> remove)
         {
             this.add = add;
             this.remove = remove;
         }
     }
+
     public class CrossGroupNodisturb
     {
         public List<string> add;
         public List<string> remove;
+
         public CrossGroupNodisturb(List<string> add, List<string> remove)
         {
             this.add = add;

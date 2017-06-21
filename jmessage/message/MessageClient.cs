@@ -8,7 +8,6 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 
 namespace jmessage.message
-
 {
     public class MessageClient : BaseHttpClient
     {
@@ -17,6 +16,7 @@ namespace jmessage.message
 
         private String appKey;
         private String masterSecret;
+
         public MessageClient(String appKey, String masterSecret)
         {
             Preconditions.checkArgument(!String.IsNullOrEmpty(appKey), "appKey should be set");
@@ -24,10 +24,11 @@ namespace jmessage.message
             this.appKey = appKey;
             this.masterSecret = masterSecret;
         }
+
         public ResponseWrapper sendMessage(MessagePayload payload)
         {
             Preconditions.checkArgument(payload != null, "message Payload should not be empty");
-            String payloadString = this.ToString(payload);
+            String payloadString = ToString(payload);
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
             String url = HOST_NAME_SSL;
             url += MESSAGE_PATH;
@@ -35,24 +36,18 @@ namespace jmessage.message
             return result;
         }
 
-
-        
         public string ToString(MessagePayload payload)
         {
-            return JsonConvert.SerializeObject(payload,
-                            Newtonsoft.Json.Formatting.None,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            });
+            return JsonConvert.SerializeObject(payload, Formatting.None, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
         }
 
         public String Authorization()
         {
-
             Debug.Assert(!string.IsNullOrEmpty(this.appKey));
             Debug.Assert(!string.IsNullOrEmpty(this.masterSecret));
-
             String origin = this.appKey + ":" + this.masterSecret;
             return Base64.getBase64Encode(origin);
         }

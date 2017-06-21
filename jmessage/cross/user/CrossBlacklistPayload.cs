@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace jmessage.cross.user
 {
@@ -9,7 +6,8 @@ namespace jmessage.cross.user
     {
         public string appkey;
         public List<string> usernames;
-        public CrossBlacklistPayload(string appkey,List<string> usernames)
+
+        public CrossBlacklistPayload(string appkey, List<string> usernames)
         {
             this.appkey = appkey;
             this.usernames = usernames;
