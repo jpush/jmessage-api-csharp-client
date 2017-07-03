@@ -13,24 +13,22 @@ namespace jmessage.message
     /// </summary>
     public sealed class FileUpload : BaseHttpClient
     {
-        //public static readonly ILog log = LogManager.GetLogger(typeof(jmessage.message));
-        private const String HOST_NAME_SSL = "https://api.im.jpush.cn";
-        private const String MESSAGE_PATH = "/v1/resource";
+        private const string HOST_NAME_SSL = "https://api.im.jpush.cn";
+        private const string MESSAGE_PATH = "/v1/resource";
 
-        private String appKey;
-        private String masterSecret;
+        private string appKey;
+        private string masterSecret;
 
-        public FileUpload(String appKey, String masterSecret)
+        public FileUpload(string appKey, string masterSecret)
         {
-            Preconditions.checkArgument(!String.IsNullOrEmpty(appKey), "appKey should be set");
-            Preconditions.checkArgument(!String.IsNullOrEmpty(masterSecret), "masterSecret should be set");
+            Preconditions.checkArgument(!string.IsNullOrEmpty(appKey), "appKey should be set");
+            Preconditions.checkArgument(!string.IsNullOrEmpty(masterSecret), "masterSecret should be set");
             this.appKey = appKey;
             this.masterSecret = masterSecret;
         }
 
         public void HttpUploadFile(string url, string file, string paramName, string contentType, NameValueCollection nvc)
         {
-            //log.Debug(string.Format("Uploading {0} to {1}", file, url));
             string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
             byte[] boundarybytes = System.Text.Encoding.ASCII.GetBytes("\r\n--" + boundary + "\r\n");
 
@@ -38,7 +36,7 @@ namespace jmessage.message
             wr.ContentType = "multipart/form-data; boundary=" + boundary;
             wr.Method = "POST";
             wr.KeepAlive = true;
-            wr.Credentials = System.Net.CredentialCache.DefaultCredentials;
+            wr.Credentials = CredentialCache.DefaultCredentials;
             wr.Headers.Add("Authorization", "Basic " + this.Authorization());
 
             Stream rs = wr.GetRequestStream();
@@ -96,7 +94,6 @@ namespace jmessage.message
             }
             catch (Exception ex)
             {
-                //log.Error("Error uploading file:" + file, ex);
                 throw ex;
             }
             finally
@@ -110,12 +107,12 @@ namespace jmessage.message
             }
         }
 
-        public String Authorization()
+        public string Authorization()
         {
-            Debug.Assert(!string.IsNullOrEmpty(this.appKey));
-            Debug.Assert(!string.IsNullOrEmpty(this.masterSecret));
+            Debug.Assert(!string.IsNullOrEmpty(appKey));
+            Debug.Assert(!string.IsNullOrEmpty(masterSecret));
 
-            String origin = this.appKey + ":" + this.masterSecret;
+            string origin = appKey + ":" + masterSecret;
             return Base64.getBase64Encode(origin);
         }
     }
