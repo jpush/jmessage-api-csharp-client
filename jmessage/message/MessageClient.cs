@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using jmessage.util;
 using jmessage.common;
 using System.Diagnostics;
@@ -11,16 +8,16 @@ namespace jmessage.message
 {
     public class MessageClient : BaseHttpClient
     {
-        private const String HOST_NAME_SSL = "https://api.im.jpush.cn";
-        private const String MESSAGE_PATH = "/v1/messages/";
+        private const string HOST_NAME_SSL = "https://api.im.jpush.cn";
+        private const string MESSAGE_PATH = "/v1/messages/";
 
-        private String appKey;
-        private String masterSecret;
+        private string appKey;
+        private string masterSecret;
 
-        public MessageClient(String appKey, String masterSecret)
+        public MessageClient(string appKey, string masterSecret)
         {
-            Preconditions.checkArgument(!String.IsNullOrEmpty(appKey), "appKey should be set");
-            Preconditions.checkArgument(!String.IsNullOrEmpty(masterSecret), "masterSecret should be set");
+            Preconditions.checkArgument(!string.IsNullOrEmpty(appKey), "appKey should be set");
+            Preconditions.checkArgument(!string.IsNullOrEmpty(masterSecret), "masterSecret should be set");
             this.appKey = appKey;
             this.masterSecret = masterSecret;
         }
@@ -28,12 +25,26 @@ namespace jmessage.message
         public ResponseWrapper sendMessage(MessagePayload payload)
         {
             Preconditions.checkArgument(payload != null, "message Payload should not be empty");
-            String payloadString = ToString(payload);
+            string payloadString = ToString(payload);
             Preconditions.checkArgument(!string.IsNullOrEmpty(payloadString), "payloadString should not be empty");
-            String url = HOST_NAME_SSL;
-            url += MESSAGE_PATH;
+            string url = HOST_NAME_SSL + MESSAGE_PATH;
             ResponseWrapper result = sendPost(url, Authorization(), payloadString);
             return result;
+        }
+
+        /// <summary>
+        /// 消息撤回
+        /// </summary>
+        /// <param name="msgId">消息 ID</param>
+        /// <param name="username">发送该消息的用户名</param>
+        /// <returns></returns>
+        public ResponseWrapper retractMessage(string msgId, string username)
+        {
+            Preconditions.checkArgument(!string.IsNullOrEmpty(msgId), "msgId shouldn't be empty.");
+            Preconditions.checkArgument(!string.IsNullOrEmpty(username), "username shouldn't be empty");
+
+            string url = HOST_NAME_SSL + MESSAGE_PATH + "/" + username + "/" + msgId + "/retract";
+            return sendGet(url, Authorization(), null);
         }
 
         public string ToString(MessagePayload payload)

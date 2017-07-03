@@ -11,8 +11,30 @@ namespace jmessage.message
         public string msg_type;
         public string target_id;
         public string from_id;
-        public string from_name;
+
+        // optional start.
+
+        /// <summary>
+        /// 发送者展示名称
+        /// </summary>
+        public string from_name;    
+
+        /// <summary>
+        /// 接收者展示名称
+        /// </summary>
         public string target_name;
+
+        /// <summary>
+        /// 消息是否离线存储，默认为 false，表示需要离线存储
+        /// </summary>
+        public bool no_offline;
+
+        /// <summary>
+        /// 消息是否在通知栏展示，默认为 false，表示会在通知栏展示
+        /// </summary>
+        public bool no_notification;
+
+        // optional end.
 
         public MessagePayload()
         {
