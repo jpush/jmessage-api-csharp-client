@@ -57,9 +57,10 @@ namespace jmessage.message
 
         public String Authorization()
         {
-            Debug.Assert(!string.IsNullOrEmpty(this.appKey));
-            Debug.Assert(!string.IsNullOrEmpty(this.masterSecret));
-            String origin = this.appKey + ":" + this.masterSecret;
+            Debug.Assert(!string.IsNullOrEmpty(appKey));
+            Debug.Assert(!string.IsNullOrEmpty(masterSecret));
+
+            String origin = appKey + ":" + masterSecret;
             return Base64.getBase64Encode(origin);
         }
     }

@@ -131,6 +131,11 @@ namespace jmessage.message
     {
         public TextMessageBody msg_body;
 
+        public TextMessagePayload()
+        {
+
+        }
+
         public TextMessagePayload(string version, string target_type, string from_type, string msg_type,
             string target_id, string from_id, string from_name, string target_name, TextMessageBody msg_body)
         {
