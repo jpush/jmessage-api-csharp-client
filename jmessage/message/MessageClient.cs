@@ -44,7 +44,7 @@ namespace jmessage.message
             Preconditions.checkArgument(!string.IsNullOrEmpty(username), "username shouldn't be empty");
 
             string url = HOST_NAME_SSL + MESSAGE_PATH + "/" + username + "/" + msgId + "/retract";
-            return sendGet(url, Authorization(), null);
+            return sendPost(url, Authorization(), null);
         }
 
         public string ToString(MessagePayload payload)
