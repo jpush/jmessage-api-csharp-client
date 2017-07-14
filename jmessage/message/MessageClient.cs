@@ -44,7 +44,7 @@ namespace jmessage.message
             Preconditions.checkArgument(!string.IsNullOrEmpty(username), "username shouldn't be empty");
 
             string url = HOST_NAME_SSL + MESSAGE_PATH + "/" + username + "/" + msgId + "/retract";
-            return sendGet(url, Authorization(), null);
+            return sendPost(url, Authorization(), null);
         }
 
         public string ToString(MessagePayload payload)
@@ -57,9 +57,10 @@ namespace jmessage.message
 
         public String Authorization()
         {
-            Debug.Assert(!string.IsNullOrEmpty(this.appKey));
-            Debug.Assert(!string.IsNullOrEmpty(this.masterSecret));
-            String origin = this.appKey + ":" + this.masterSecret;
+            Debug.Assert(!string.IsNullOrEmpty(appKey));
+            Debug.Assert(!string.IsNullOrEmpty(masterSecret));
+
+            String origin = appKey + ":" + masterSecret;
             return Base64.getBase64Encode(origin);
         }
     }
