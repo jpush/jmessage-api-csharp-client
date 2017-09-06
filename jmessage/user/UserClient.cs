@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using jmessage.util;
 using jmessage.common;
 using System.Diagnostics;
@@ -194,51 +192,52 @@ namespace jmessage.user
 
         public ResponseWrapper setNodisturb(string username, NodisturbPayload payload)
         {
-            String url = HOST_NAME_SSL;
-            url += USER_PATH;
-            url += username;
-            url += "/nodisturb";
-            string payloadString = this.ToString(payload);
-            ResponseWrapper result = sendPost(url, Authorization(), payloadString);
-            return result;
+            String url = HOST_NAME_SSL + USER_PATH + username + "/nodisturb";
+            string payloadString = ToString(payload);
+            return sendPost(url, Authorization(), payloadString);
+        }
+
+        /// <summary>
+        /// 禁用用户
+        /// </summary>
+        /// <param name="username">用户名</param>
+        /// <param name="isForbid">是否禁用用户。true: 禁用；false: 激活</param>
+        public ResponseWrapper forbidUser(string username, bool isForbid)
+        {
+            string url = HOST_NAME_SSL + USER_PATH + username + "/forbidden?disable=" + isForbid;
+            return sendPut(url, Authorization(), null);
         }
 
         public string ToString(List<string> payload)
         {
-            return JsonConvert.SerializeObject(payload,
-                            Newtonsoft.Json.Formatting.None,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            });
+            return JsonConvert.SerializeObject(payload, Formatting.None, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
         }
 
         public string ToString(List<UserPayload> payload)
         {
-            return JsonConvert.SerializeObject(payload,
-                            Newtonsoft.Json.Formatting.None,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            });
+            return JsonConvert.SerializeObject(payload, Formatting.None, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
         }
 
         public string ToString(NodisturbPayload payload)
         {
-            return JsonConvert.SerializeObject(payload,
-                            Newtonsoft.Json.Formatting.None,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            });
+            return JsonConvert.SerializeObject(payload, Formatting.None, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
         }
 
         public String Authorization()
         {
-            Debug.Assert(!string.IsNullOrEmpty(this.appKey));
-            Debug.Assert(!string.IsNullOrEmpty(this.masterSecret));
+            Debug.Assert(!string.IsNullOrEmpty(appKey));
+            Debug.Assert(!string.IsNullOrEmpty(masterSecret));
 
-            String origin = this.appKey + ":" + this.masterSecret;
+            String origin = appKey + ":" + masterSecret;
             return Base64.getBase64Encode(origin);
         }
     }
