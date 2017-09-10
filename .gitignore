@@ -163,3 +163,5 @@ $RECYCLE.BIN/
 
 # VisualStudioCode
 .vscode
+
+\.vs/jmessage-api-csharp-client/v15/sqlite3/
