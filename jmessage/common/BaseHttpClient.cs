@@ -70,12 +70,15 @@ namespace jmessage.common
                 }
                 if (method == "POST")
                 {
-                    byte[] bs = Encoding.UTF8.GetBytes(reqParams);
-                    myReq.ContentLength = bs.Length;
-                    using (Stream reqStream = myReq.GetRequestStream())
+                    if (reqParams != null)
                     {
-                        reqStream.Write(bs, 0, bs.Length);
-                        reqStream.Close();
+                        byte[] bs = Encoding.UTF8.GetBytes(reqParams);
+                        myReq.ContentLength = bs.Length;
+                        using (Stream reqStream = myReq.GetRequestStream())
+                        {
+                            reqStream.Write(bs, 0, bs.Length);
+                            reqStream.Close();
+                        }
                     }
                 }
 
@@ -95,12 +98,15 @@ namespace jmessage.common
 
                 if (method == "PUT")
                 {
-                    byte[] bs = Encoding.UTF8.GetBytes(reqParams);
-                    myReq.ContentLength = bs.Length;
-                    using (Stream reqStream = myReq.GetRequestStream())
+                    if (reqParams != null)
                     {
-                        reqStream.Write(bs, 0, bs.Length);
-                        reqStream.Close();
+                        byte[] bs = Encoding.UTF8.GetBytes(reqParams);
+                        myReq.ContentLength = bs.Length;
+                        using (Stream reqStream = myReq.GetRequestStream())
+                        {
+                            reqStream.Write(bs, 0, bs.Length);
+                            reqStream.Close();
+                        }
                     }
                 }
 
