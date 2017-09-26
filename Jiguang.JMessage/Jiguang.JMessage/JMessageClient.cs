@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jiguang.JMessage.Module;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -9,7 +10,8 @@ namespace Jiguang.JMessage
     {
         public static readonly HttpClient HttpClient;
 
-        public User User { get; set; }
+        public UserClient User { get; } = new UserClient();
+        public MessageClient Message { get; } = new MessageClient();
 
         static JMessageClient()
         {

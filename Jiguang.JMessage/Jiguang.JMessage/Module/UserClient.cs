@@ -10,7 +10,11 @@ using System.Threading.Tasks;
 
 namespace Jiguang.JMessage
 {
-    public class User
+    /// <summary>
+    /// 用户相关 API。
+    /// <<para><see cref="https://docs.jiguang.cn/jmessage/server/rest_api_im/#_3"/></para>
+    /// </summary>
+    public class UserClient
     {
         /// <summary>
         /// <seealso cref="UserRegister(List{UserInfo})"/>
@@ -90,6 +94,34 @@ namespace Jiguang.JMessage
         public HttpResponse GetAdminList(int start, int count)
         {
             Task<HttpResponse> task = Task.Run(() => GetAdminList(start, count));
+            task.Wait();
+            return task.Result;
+        }
+
+        /// <summary>
+        /// <seealso cref="GetUserList(int, int)"/>
+        /// </summary>
+        public async Task<HttpResponse> GetUserListAsync(int start, int count)
+        {
+            if (start < 0)
+                throw new ArgumentOutOfRangeException(nameof(start));
+
+            if (count > 500)
+                throw new ArgumentOutOfRangeException(nameof(count));
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync($"/v1/users?start={start}&count={count}").ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 获取用户列表。
+        /// </summary>
+        /// <param name="start">起始记录位置，从 0 开始。</param>
+        /// <param name="count">查询条数，最多支持 500 条。</param>
+        public HttpResponse GetUserList(int start, int count)
+        {
+            Task<HttpResponse> task = Task.Run(() => GetUserListAsync(start, count));
             task.Wait();
             return task.Result;
         }
@@ -291,9 +323,12 @@ namespace Jiguang.JMessage
             if (string.IsNullOrEmpty(username))
                 throw new ArgumentNullException(nameof(username));
 
+            if (targetUsernameList == null)
+                throw new ArgumentNullException(nameof(targetUsernameList));
+
             string jsonStr = JsonConvert.SerializeObject(targetUsernameList);
             HttpContent httpContent = new StringContent(jsonStr, Encoding.UTF8);
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PutAsync($"/v1/users/{username}/blacklist", httpContent);
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PutAsync($"/v1/users/{username}/blacklist", httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -306,6 +341,193 @@ namespace Jiguang.JMessage
         public HttpResponse AddToBlackList(string username, List<string> targetUsernameList)
         {
             Task<HttpResponse> task = Task.Run(() => AddToBlackListAsync(username, targetUsernameList));
+            task.Wait();
+            return task.Result;
+        }
+
+        /// <summary>
+        /// <seealso cref="RemoveFromBlackList(string, List{string})"/>
+        /// </summary>
+        public async Task<HttpResponse> RemoveFromBlackListAsync(string username, List<string> targetUsernameList)
+        {
+            if (string.IsNullOrEmpty(username))
+                throw new ArgumentNullException(nameof(username));
+
+            if (targetUsernameList == null)
+                throw new ArgumentNullException(nameof(targetUsernameList));
+
+            string jsonStr = JsonConvert.SerializeObject(targetUsernameList, Formatting.Indented);
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri($"/v1/users/{username}/blacklist"),
+                Content = new StringContent(jsonStr, Encoding.UTF8, "application/json")
+            };
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 将用户从黑名单中移除。
+        /// </summary>
+        /// <param name="username">需要移除黑名单用户的用户名。</param>
+        /// <param name="targetUsernameList">被移除用户的用户名列表。</param>
+        public HttpResponse RemoveFromBlackList(string username, List<string> targetUsernameList)
+        {
+            Task<HttpResponse> task = Task.Run(() => RemoveFromBlackListAsync(username, targetUsernameList));
+            task.Wait();
+            return task.Result;
+        }
+
+        /// <summary>
+        /// <seealso cref="GetBlackList(string)"/>
+        /// </summary>
+        public async Task<HttpResponse> GetBlackListAsync(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+                throw new ArgumentNullException(nameof(username));
+
+            string url = $"/v1/users/{username}/blacklist";
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 获取指定用户的黑名单列表。
+        /// <para><see cref="https://docs.jiguang.cn/jmessage/server/rest_api_im/#_3"/></para>
+        /// </summary>
+        /// <param name="username">需要获取黑名单用户的用户名。</param>
+        public HttpResponse GetBlackList(string username)
+        {
+            Task<HttpResponse> task = Task.Run(() => GetBlackListAsync(username));
+            task.Wait();
+            return task.Result;
+        }
+
+        /// <summary>
+        /// <seealso cref="SetUserNoDisturbAsync(string, List{string}, bool)"/>
+        /// </summary>
+        public async Task<HttpResponse> SetUserNoDisturbAsync(string username, List<string> targetUsernameList, bool enable)
+        {
+            if (string.IsNullOrEmpty(username))
+                throw new ArgumentNullException(nameof(username));
+
+            if (targetUsernameList == null)
+                throw new ArgumentNullException(nameof(targetUsernameList));
+
+            JObject body = new JObject();
+            JObject single = new JObject();
+
+            if (enable)
+            {
+                single.Add("add", JArray.FromObject(targetUsernameList));
+            } else
+            {
+                single.Add("remove", JArray.FromObject(targetUsernameList));
+            }
+
+            body.Add("single", single);
+
+            string url = $"/v1/users/{username}/nodisturb";
+            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8);
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 对指定用户设置免打扰。
+        /// </summary>
+        /// <param name="username">需要设置免打扰用户的用户名。</param>
+        /// <param name="targetUsernameList">需要被设置为免打扰的目标用户用户名列表。</param>
+        /// <param name="enable">true: 设置为免打扰；false: 解除免打扰。</param>
+        public HttpResponse SetUserNoDisturb(string username, List<string> targetUsernameList, bool enable)
+        {
+            Task<HttpResponse> task = Task.Run(() => SetUserNoDisturbAsync(username, targetUsernameList, enable));
+            task.Wait();
+            return task.Result;
+        }
+
+
+        /// <summary>
+        /// <seealso cref="SetGroupNoDisturbAsync(string, List{string}, bool)"/>
+        /// </summary>
+        public async Task<HttpResponse> SetGroupNoDisturbAsync(string username, List<int> targetGroupIdList, bool enable)
+        {
+            if (string.IsNullOrEmpty(username))
+                throw new ArgumentNullException(nameof(username));
+
+            if (targetGroupIdList == null)
+                throw new ArgumentNullException(nameof(targetGroupIdList));
+
+            JObject body = new JObject();
+            JObject group = new JObject();
+
+            if (enable)
+            {
+                group.Add("add", JArray.FromObject(targetGroupIdList));
+            }
+            else
+            {
+                group.Add("remove", JArray.FromObject(targetGroupIdList));
+            }
+
+            body.Add("single", group);
+
+            string url = $"/v1/users/{username}/nodisturb";
+            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8);
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 对指定用户设置免打扰。
+        /// </summary>
+        /// <param name="username">需要设置免打扰用户的用户名。</param>
+        /// <param name="targetGroupIdList">需要被设置为免打扰的目标群组 Id 列表。</param>
+        /// <param name="enable">true: 设置为免打扰；false: 解除免打扰。</param>
+        public HttpResponse SetGroupNoDisturb(string username, List<int> targetGroupIdList, bool enable)
+        {
+            Task<HttpResponse> task = Task.Run(() => SetGroupNoDisturbAsync(username, targetGroupIdList, enable));
+            task.Wait();
+            return task.Result;
+        }
+
+        /// <summary>
+        /// <seealso cref="SetGlobalNoDisturb(string, bool)"/>
+        /// </summary>
+        public async Task<HttpResponse> SetGlobalNoDisturbAsync(string username, bool enable)
+        {
+            if (string.IsNullOrEmpty(username))
+                throw new ArgumentNullException(nameof(username));
+
+            JObject body = new JObject();
+            int global = enable ? 1 : 0;
+            body.Add("global", global);
+
+            string url = $"/v1/users/{username}/nodisturb";
+            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8);
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 为指定用户设置全局免打扰。
+        /// </summary>
+        /// <param name="username">需要设置免打扰用户的用户名。</param>
+        /// <param name="enable">true: 开启免打扰；false: 关闭免打扰。</param>
+        public HttpResponse SetGlobalNoDisturb(string username, bool enable)
+        {
+            Task<HttpResponse> task = Task.Run(() => SetGlobalNoDisturbAsync(username, enable));
             task.Wait();
             return task.Result;
         }
