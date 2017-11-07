@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jiguang.JMessage", "Jiguang.JMessage\Jiguang.JMessage.csproj", "{B3CC782D-C9A7-406E-A24C-25364D8AB5BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jiguang.JMessage", "Jiguang.JMessage\Jiguang.JMessage.csproj", "{B3CC782D-C9A7-406E-A24C-25364D8AB5BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "..\Example\Example.csproj", "{C4DD0BE8-B1BD-47AA-9E97-23586C3D390D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B3CC782D-C9A7-406E-A24C-25364D8AB5BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3CC782D-C9A7-406E-A24C-25364D8AB5BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3CC782D-C9A7-406E-A24C-25364D8AB5BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4DD0BE8-B1BD-47AA-9E97-23586C3D390D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4DD0BE8-B1BD-47AA-9E97-23586C3D390D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4DD0BE8-B1BD-47AA-9E97-23586C3D390D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4DD0BE8-B1BD-47AA-9E97-23586C3D390D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

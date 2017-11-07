@@ -19,7 +19,7 @@ namespace Jiguang.JMessage.Message
             public string MediaId { get; set; }
 
             /// <summary>
-            /// 文件的 crc32 校验码，用于下载大图的校验（必填）。
+            /// 文件的 crc32 校验码，用于下载文件的校验（必填）。
             /// </summary>
             [JsonProperty("media_crc32")]
             public long MediaCrc32 { get; set; }

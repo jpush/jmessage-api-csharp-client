@@ -1,4 +1,4 @@
-﻿using Jiguang.JMessage.Model;
+﻿using Jiguang.JMessage.Common;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;

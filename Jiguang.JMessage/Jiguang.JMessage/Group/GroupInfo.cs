@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Jiguang.JMessage.Model
+namespace Jiguang.JMessage.Group
 {
     /// <summary>
     /// 群组信息。

@@ -1,4 +1,4 @@
-﻿using Jiguang.JMessage.Model;
+﻿using Jiguang.JMessage.Common;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -6,12 +6,12 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Jiguang.JMessage.Module
+namespace Jiguang.JMessage.Group
 {
     /// <summary>
     /// 群组相关 API。
     /// </summary>
-    class GroupClient
+    public class GroupClient
     {
         /// <summary>
         /// <see cref="CreateGroup(GroupInfo, List{string})"/>
@@ -217,5 +217,98 @@ namespace Jiguang.JMessage.Module
             task.Wait();
             return task.Result;
         }
+
+        // Cross App API - start
+
+        /// <summary>
+        /// <see cref="AddMembersCrossApp(long, List{string}, string)"/>
+        /// </summary>
+        public async Task<HttpResponse> AddMembersCrossAppAsync(long groupId, List<string> usernameList, string appKey)
+        {
+            var url = $"/v1/cross/groups/{groupId}/members";
+
+            JObject body = new JObject
+            {
+                { "add",  JArray.FromObject(usernameList)}
+            };
+            body.Add("appkey", appKey);
+
+            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8);
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 跨应用添加群组成员。
+        /// <para><see cref="https://docs.jiguang.cn/jmessage/server/rest_api_im/#_38"/></para>
+        /// </summary>
+        /// <param name="groupId">需要添加成员的群组 Id。</param>
+        /// <param name="usernameList">待添加的用户用户名列表。</param>
+        /// <param name="appKey">待添加用户所属的 AppKey。</param>
+        public HttpResponse AddMembersCrossApp(long groupId, List<string> usernameList, string appKey)
+        {
+            Task<HttpResponse> task = Task.Run(() => AddMembersCrossAppAsync(groupId, usernameList, appKey));
+            task.Wait();
+            return task.Result;
+        }
+
+        /// <summary>
+        /// <see cref="RemoveMembersCrossApp(long, List{string}, string)"/>
+        /// </summary>
+        public async Task<HttpResponse> RemoveMembersCrossAppAsync(long groupId, List<string> usernameList, string appKey)
+        {
+            var url = $"/v1/cross/groups/{groupId}/members";
+
+            JObject body = new JObject
+            {
+                { "remove",  JArray.FromObject(usernameList)}
+            };
+            body.Add("appkey", appKey);
+
+            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8);
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 跨应用移除群组成员。
+        /// <para><see cref="https://docs.jiguang.cn/jmessage/server/rest_api_im/#_38"/></para>
+        /// </summary>
+        /// <param name="groupId">需要移除成员的群组 Id。</param>
+        /// <param name="usernameList">待移除的用户用户名列表。</param>
+        /// <param name="appKey">待移除用户所属的 AppKey。</param>
+        public HttpResponse RemoveMembersCrossApp(long groupId, List<string> usernameList, string appKey)
+        {
+            Task<HttpResponse> task = Task.Run(() => RemoveMembersCrossAppAsync(groupId, usernameList, appKey));
+            task.Wait();
+            return task.Result;
+        }
+
+        /// <summary>
+        /// <see cref="GetMembersCrossApp(long)"/>
+        /// </summary>
+        public async Task<HttpResponse> GetMembersCrossAppAsync(long groupId)
+        {
+            var url = $"/v1/cross/groups/{groupId}/members";
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 获取跨应用群组成员列表。
+        /// </summary>
+        /// <param name="groupId">目标群组 Id。</param>
+        public HttpResponse GetMembersCrossApp(long groupId)
+        {
+            Task<HttpResponse> task = Task.Run(() => GetMembersCrossAppAsync(groupId));
+            task.Wait();
+            return task.Result;
+        }
+
+        // Cross App API - end
     }
 }

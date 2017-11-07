@@ -1,4 +1,4 @@
-﻿using Jiguang.JMessage.Model;
+﻿using Jiguang.JMessage.Common;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Jiguang.JMessage
+namespace Jiguang.JMessage.User
 {
     /// <summary>
     /// 用户相关 API。
@@ -307,7 +307,7 @@ namespace Jiguang.JMessage
         /// </summary>
         /// <param name="username">目标用户用户名。</param>
         /// <param name="isDisable">true: 禁用；false：激活。</param>
-        public HttpResponse Disable(string username, bool isDisable) 
+        public HttpResponse Disable(string username, bool isDisable)
         {
             Task<HttpResponse> task = Task.Run(() => DisableAsync(username, isDisable));
             task.Wait();
@@ -424,7 +424,8 @@ namespace Jiguang.JMessage
             if (enable)
             {
                 single.Add("add", JArray.FromObject(targetUsernameList));
-            } else
+            }
+            else
             {
                 single.Add("remove", JArray.FromObject(targetUsernameList));
             }
@@ -724,5 +725,259 @@ namespace Jiguang.JMessage
         }
 
         // Friend API - end
+
+        // Cross API - start
+
+        public async Task<HttpResponse> GetGroupsCrossAppAsync(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+                throw new ArgumentNullException(nameof(username));
+
+            var url = $"/v1/cross/users/{username}/groups";
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// <see cref="AddToBlackListCrossApp(string, List{string})"/>
+        /// </summary>
+        public async Task<HttpResponse> AddToBlackListCrossAppAsync(string username, List<string> usernameList)
+        {
+            if (string.IsNullOrEmpty(username))
+                throw new ArgumentNullException(nameof(username));
+
+            if (usernameList == null)
+                throw new ArgumentNullException(nameof(usernameList));
+
+            var url = $"/v1/cross/users/{username}/blacklist";
+
+            JArray body = JArray.FromObject(usernameList);
+            var httpContent = new StringContent(body.ToString(), Encoding.UTF8);
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PutAsync(url, httpContent).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 添加跨应用用户到黑名单。
+        /// </summary>
+        /// <param name="username">需要添加用户到黑名单的用户用户名。</param>
+        /// <param name="usernameList">被添加的用户用户名列表。</param>
+        public HttpResponse AddToBlackListCrossApp(string username, List<string> usernameList)
+        {
+            Task<HttpResponse> task = Task.Run(() => AddToBlackListCrossAppAsync(username, usernameList));
+            task.Wait();
+            return task.Result;
+        }
+
+        /// <summary>
+        /// <see cref="RemoveFromBlackListCrossApp(string, List{string}, string)"/>
+        /// </summary>
+        public async Task<HttpResponse> RemoveFromBlackListCrossAppAsync(string username, List<string> usernameList, string appKey)
+        {
+            if (string.IsNullOrEmpty(username))
+                throw new ArgumentNullException(nameof(username));
+
+            if (usernameList == null)
+                throw new ArgumentNullException(nameof(usernameList));
+
+            JObject body = new JObject
+            {
+                { "appkey", appKey },
+                { "usernames", JArray.FromObject(usernameList) }
+            };
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri($"/v1/cross/users/{username}/blacklist"),
+                Content = new StringContent(body.ToString(), Encoding.UTF8, "application/json")
+            };
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 从黑名单中移除跨应用用户。
+        /// </summary>
+        /// <param name="username">需要移除黑名单用户的用户名。</param>
+        /// <param name="usernameList">待移除的用户用户名列表。</param>
+        /// <param name="appKey">待移除用户所属应用的 AppKey。</param>
+        public HttpResponse RemoveFromBlackListCrossApp(string username, List<string> usernameList, string appKey)
+        {
+            Task<HttpResponse> task = Task.Run(() => RemoveFromBlackListCrossAppAsync(username, usernameList, appKey));
+            task.Wait();
+            return task.Result;
+        }
+
+        /// <summary>
+        /// <see cref="GetBlackListCrossApp(string)"/>
+        /// </summary>
+        public async Task<HttpResponse> GetBlackListCrossAppAsync(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+                throw new ArgumentNullException(nameof(username));
+
+            var url = $"/v1/cross/users/{username}/blacklist";
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 获取跨应用黑名单用户列表。
+        /// </summary>
+        /// <param name="username">待查询跨应用黑名单的用户用户名。</param>
+        public HttpResponse GetBlackListCrossApp(string username)
+        {
+            Task<HttpResponse> task = Task.Run(() => GetBlackListCrossAppAsync(username));
+            task.Wait();
+            return task.Result;
+        }
+
+        /// <summary>
+        /// <see cref="SetUserNoDisturbCrossApp(string, List{string}, string, bool)"/>
+        /// </summary>
+        public async Task<HttpResponse> SetUserNoDisturbCrossAppAsync(string username, List<string> usernameList, string appKey, bool isNoDisturb)
+        {
+            if (string.IsNullOrEmpty(username))
+                throw new ArgumentNullException(nameof(username));
+
+            if (usernameList == null)
+                throw new ArgumentNullException(nameof(usernameList));
+
+            if (string.IsNullOrEmpty(appKey))
+                throw new ArgumentNullException(nameof(appKey));
+
+            var url = $"/v1/cross/users/{username}/nodisturb";
+
+            JArray body = new JArray
+            {
+                new JObject
+                {
+                    { "appkey", appKey },
+                    { "single", new JObject
+                        {
+                            new JArray{ "add", JArray.FromObject(usernameList) }
+                        }
+                    }
+                }
+            };
+
+            var httpContent = new StringContent(body.ToString());
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 设置跨应用用户免打扰。
+        /// </summary>
+        /// <param name="username">需要设置免打扰的用户。</param>
+        /// <param name="usernameList">被设置为免打扰的用户用户名列表。</param>
+        /// <param name="appKey">被设置为免打扰用户所属应用的 AppKey。</param>
+        /// <param name="isNoDisturb">是否设置为免打扰。true: 设置免打扰；false: 取消免打扰。</param>
+        public HttpResponse SetUserNoDisturbCrossApp(string username, List<string> usernameList, string appKey, bool isNoDisturb)
+        {
+            Task<HttpResponse> task = Task.Run(() => SetUserNoDisturbCrossAppAsync(username, usernameList, appKey, isNoDisturb));
+            task.Wait();
+            return task.Result;
+        }
+
+        /// <summary>
+        /// <see cref="AddFriendsCrossApp(string, List{string}, string)"/>
+        /// </summary>
+        public async Task<HttpResponse> AddFriendsCrossAppAsync(string username, List<string> usernameList, string appKey)
+        {
+            if (string.IsNullOrEmpty(username))
+                throw new ArgumentNullException(nameof(username));
+
+            if (usernameList == null)
+                throw new ArgumentNullException(nameof(usernameList));
+
+            if (string.IsNullOrEmpty(appKey))
+                throw new ArgumentNullException(nameof(appKey));
+
+            var url = $"/v1/cross/users/{username}/friends";
+
+            JObject body = new JObject
+            {
+                { "appkey", appKey },
+                { "users", JArray.FromObject(usernameList) }
+            };
+
+            var httpContent = new StringContent(body.ToString());
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 跨应用添加好友。
+        /// </summary>
+        /// <param name="username">需要添加好友的用户用户名。</param>
+        /// <param name="usernameList">待添加的用户用户名列表。</param>
+        /// <param name="appKey">待添加用户所属应用的 AppKey。</param>
+        public HttpResponse AddFriendsCrossApp(string username, List<string> usernameList, string appKey)
+        {
+            Task<HttpResponse> task = Task.Run(() => AddFriendsCrossAppAsync(username, usernameList, appKey));
+            task.Wait();
+            return task.Result;
+        }
+
+        /// <summary>
+        /// <see cref="RemoveFriendsCrossApp(string, List{string}, string)"/>
+        /// </summary>
+        public async Task<HttpResponse> RemovedFriendsCrossAppAsync(string username, List<string> usernameList, string appKey)
+        {
+            if (string.IsNullOrEmpty(username))
+                throw new ArgumentNullException(nameof(username));
+
+            if (usernameList == null)
+                throw new ArgumentNullException(nameof(usernameList));
+
+            if (string.IsNullOrEmpty(appKey))
+                throw new ArgumentNullException(nameof(appKey));
+
+            JObject body = new JObject
+            {
+                { "appkey", appKey },
+                { "users", JArray.FromObject(usernameList) }
+            };
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri($"/v1/cross/users/{username}/friends"),
+                Content = new StringContent(body.ToString(), Encoding.UTF8, "application/json")
+            };
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 跨应用删除好友。
+        /// </summary>
+        /// <param name="username">需要删除好友的用户用户名。</param>
+        /// <param name="usernameList">待删除用户的用户名列表。</param>
+        /// <param name="appKey">待删除用户所属应用的 AppKey。</param>
+        public HttpResponse RemoveFriendsCrossApp(string username, List<string> usernameList, string appKey)
+        {
+            Task<HttpResponse> task = Task.Run(() => AddFriendsCrossAppAsync(username, usernameList, appKey));
+            task.Wait();
+            return task.Result;
+        }
+
+        // Cross API - end
     }
 }

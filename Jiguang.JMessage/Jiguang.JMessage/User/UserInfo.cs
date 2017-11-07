@@ -2,7 +2,7 @@
 using System.Collections;
 using System.ComponentModel;
 
-namespace Jiguang.JMessage.Model
+namespace Jiguang.JMessage.User
 {
     public class UserInfo
     {
