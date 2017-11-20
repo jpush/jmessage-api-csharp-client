@@ -21,8 +21,9 @@ namespace Jiguang.JMessage.Group
             JObject bodyJsonObj = JObject.FromObject(groupInfo);
             bodyJsonObj.Add("item", JArray.FromObject(members));
 
-            HttpContent httpContent = new StringContent(bodyJsonObj.ToString(), Encoding.UTF8);
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync("/v1/groups/", httpContent).ConfigureAwait(false);
+            HttpContent httpContent = new StringContent(bodyJsonObj.ToString(), Encoding.UTF8, "application/json");
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(
+                "/v1/groups/", httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -46,7 +47,12 @@ namespace Jiguang.JMessage.Group
         public async Task<HttpResponse> GetGroupInfoAsync(long groupId)
         {
             var url = $"/v1/groups/{groupId}";
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -65,10 +71,16 @@ namespace Jiguang.JMessage.Group
         /// <summary>
         /// <see cref="UpdateGroupInfo(string, GroupInfo)"/>
         /// </summary>
-        public async Task<HttpResponse> UpdateGroupInfoAsync(long groupId, GroupInfo groupInfo)
+        public async Task<HttpResponse> UpdateGroupInfoAsync(GroupInfo groupInfo)
         {
-            var url = $"/v1/groups/{groupId}";
-            var httpContent = new StringContent(groupInfo.ToString());
+            if (groupInfo == null)
+                throw new ArgumentNullException(nameof(groupInfo));
+
+            if (groupInfo.Id == -1)
+                throw new ArgumentException(nameof(groupInfo.Id));
+
+            var url = $"/v1/groups/{groupInfo.Id}";
+            var httpContent = new StringContent(groupInfo.ToString(), Encoding.UTF8, "application/json");
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PutAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -80,9 +92,9 @@ namespace Jiguang.JMessage.Group
         /// </summary>
         /// <param name="groupId">待修改的群组 Id，会在创建时返回。</param>
         /// <param name="groupInfo">群组信息对象，可只设置需要修改的属性。</param>
-        public HttpResponse UpdateGroupInfo(long groupId, GroupInfo groupInfo)
+        public HttpResponse UpdateGroupInfo(GroupInfo groupInfo)
         {
-            Task<HttpResponse> task = Task.Run(() => UpdateGroupInfoAsync(groupId, groupInfo));
+            Task<HttpResponse> task = Task.Run(() => UpdateGroupInfoAsync(groupInfo));
             task.Wait();
             return task.Result;
         }
@@ -93,8 +105,12 @@ namespace Jiguang.JMessage.Group
         public async Task<HttpResponse> DeleteGroupAsync(long groupId)
         {
             var url = $"/v1/groups/{groupId}";
+            var request = new HttpRequestMessage(HttpMethod.Delete, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
 
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.DeleteAsync(url).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -119,7 +135,7 @@ namespace Jiguang.JMessage.Group
                 { "add", JArray.FromObject(usernameList) }
             };
 
-            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8);
+            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
@@ -130,6 +146,7 @@ namespace Jiguang.JMessage.Group
         /// </summary>
         /// <param name="groupId">群组 Id。</param>
         /// <param name="usernameList">用户名列表。</param>
+        /// <returns>204 No Content, if success.</returns>
         public HttpResponse AddMembers(long groupId, List<string> usernameList)
         {
             Task<HttpResponse> task = Task.Run(() => AddMembersAsync(groupId, usernameList));
@@ -146,7 +163,7 @@ namespace Jiguang.JMessage.Group
                 { "remove", JArray.FromObject(usernameList) }
             };
 
-            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8);
+            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
@@ -159,7 +176,7 @@ namespace Jiguang.JMessage.Group
         /// <param name="usernameList">用户名列表。</param>
         public HttpResponse RemoveMembers(long groupId, List<string> usernameList)
         {
-            Task<HttpResponse> task = Task.Run(() => AddMembersAsync(groupId, usernameList));
+            Task<HttpResponse> task = Task.Run(() => RemoveMembersAsync(groupId, usernameList));
             task.Wait();
             return task.Result;
         }
@@ -170,8 +187,12 @@ namespace Jiguang.JMessage.Group
         public async Task<HttpResponse> GetMembersAsync(long groupId)
         {
             var url = $"/v1/groups/{groupId}/members";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
 
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -200,8 +221,12 @@ namespace Jiguang.JMessage.Group
                 throw new ArgumentOutOfRangeException(nameof(count));
 
             var url = $"/v1/groups/?start={start}&count={count}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
 
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -233,7 +258,7 @@ namespace Jiguang.JMessage.Group
             };
             body.Add("appkey", appKey);
 
-            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8);
+            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
@@ -266,7 +291,7 @@ namespace Jiguang.JMessage.Group
             };
             body.Add("appkey", appKey);
 
-            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8);
+            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
@@ -292,8 +317,12 @@ namespace Jiguang.JMessage.Group
         public async Task<HttpResponse> GetMembersCrossAppAsync(long groupId)
         {
             var url = $"/v1/cross/groups/{groupId}/members";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
 
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,8 +25,9 @@ namespace Jiguang.JMessage.User
                 throw new ArgumentNullException(nameof(userInfoList));
 
             string json = JsonConvert.SerializeObject(userInfoList, Formatting.Indented);
-            HttpContent httpContent = new StringContent(json, Encoding.UTF8);
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync("/v1/users/", httpContent).ConfigureAwait(false);
+            HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync("/v1/users", httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -50,7 +52,7 @@ namespace Jiguang.JMessage.User
             if (userInfo == null)
                 throw new ArgumentNullException(nameof(userInfo));
 
-            HttpContent httpContent = new StringContent(userInfo.ToString(), Encoding.UTF8);
+            HttpContent httpContent = new StringContent(userInfo.ToString(), Encoding.UTF8, "application/json");
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync("/v1/admins/", httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
@@ -79,7 +81,13 @@ namespace Jiguang.JMessage.User
             if (count > 500)
                 throw new ArgumentOutOfRangeException(nameof(count));
 
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync($"/v1/admins?start={start}&count={count}").ConfigureAwait(false);
+            var url = $"/v1/admins?start={start}&count={count}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -108,7 +116,13 @@ namespace Jiguang.JMessage.User
             if (count > 500)
                 throw new ArgumentOutOfRangeException(nameof(count));
 
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync($"/v1/users?start={start}&count={count}").ConfigureAwait(false);
+            var url = $"/v1/users?start={start}&count={count}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -133,7 +147,13 @@ namespace Jiguang.JMessage.User
             if (string.IsNullOrEmpty(username))
                 throw new ArgumentException(nameof(username));
 
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync($"/v1/users/{username}").ConfigureAwait(false);
+            var url = $"/v1/users/{username}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -157,7 +177,7 @@ namespace Jiguang.JMessage.User
             if (userInfo == null)
                 throw new ArgumentNullException(nameof(userInfo));
 
-            HttpContent httpContent = new StringContent(userInfo.ToString(), Encoding.UTF8);
+            HttpContent httpContent = new StringContent(userInfo.ToString(), Encoding.UTF8, "application/json");
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PutAsync($"/v1/users/{userInfo.Username}", httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
@@ -184,7 +204,13 @@ namespace Jiguang.JMessage.User
             if (string.IsNullOrEmpty(username))
                 throw new ArgumentException(username);
 
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync($"/v1/users/{username}/userstat").ConfigureAwait(false);
+            var url = $"/v1/users/{username}/userstat";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -210,7 +236,7 @@ namespace Jiguang.JMessage.User
                 throw new ArgumentNullException(nameof(usernameList));
 
             string jsonStr = JsonConvert.SerializeObject(usernameList, Formatting.Indented);
-            HttpContent httpContent = new StringContent(jsonStr, Encoding.UTF8);
+            HttpContent httpContent = new StringContent(jsonStr, Encoding.UTF8, "application/json");
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync("/v1/users/userstat", httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
@@ -244,8 +270,8 @@ namespace Jiguang.JMessage.User
                 { "new_password", newPassword }
             };
 
-            HttpContent httpContent = new StringContent(jObject.ToString(), Encoding.UTF8);
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync($"/v1/users/{username}/password", httpContent).ConfigureAwait(false);
+            HttpContent httpContent = new StringContent(jObject.ToString(), Encoding.UTF8, "application/json");
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PutAsync($"/v1/users/{username}/password", httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -271,7 +297,13 @@ namespace Jiguang.JMessage.User
             if (string.IsNullOrEmpty(username))
                 throw new ArgumentNullException(username);
 
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.DeleteAsync($"/v1/users/{username}").ConfigureAwait(false);
+            var url = $"/v1/users/{username}";
+            var request = new HttpRequestMessage(HttpMethod.Delete, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -297,7 +329,8 @@ namespace Jiguang.JMessage.User
                 throw new ArgumentNullException(nameof(username));
 
             string url = $"/v1/users/{username}/forbidden?disable={isDisable}";
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PutAsync(url, null).ConfigureAwait(false);
+            HttpContent httpContent = new StringContent("", Encoding.UTF8, "application/json");
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PutAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -326,7 +359,7 @@ namespace Jiguang.JMessage.User
                 throw new ArgumentNullException(nameof(targetUsernameList));
 
             string jsonStr = JsonConvert.SerializeObject(targetUsernameList);
-            HttpContent httpContent = new StringContent(jsonStr, Encoding.UTF8);
+            HttpContent httpContent = new StringContent(jsonStr, Encoding.UTF8, "application/json");
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PutAsync($"/v1/users/{username}/blacklist", httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
@@ -390,7 +423,12 @@ namespace Jiguang.JMessage.User
                 throw new ArgumentNullException(nameof(username));
 
             string url = $"/v1/users/{username}/blacklist";
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -433,7 +471,7 @@ namespace Jiguang.JMessage.User
             body.Add("single", single);
 
             string url = $"/v1/users/{username}/nodisturb";
-            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8);
+            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -480,7 +518,7 @@ namespace Jiguang.JMessage.User
             body.Add("single", group);
 
             string url = $"/v1/users/{username}/nodisturb";
-            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8);
+            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -488,10 +526,10 @@ namespace Jiguang.JMessage.User
         }
 
         /// <summary>
-        /// 对指定用户设置免打扰。
+        /// 对指定群组设置免打扰。
         /// </summary>
-        /// <param name="username">需要设置免打扰用户的用户名。</param>
-        /// <param name="targetGroupIdList">需要被设置为免打扰的目标群组 Id 列表。</param>
+        /// <param name="username">需要设置免打扰的用户用户名。</param>
+        /// <param name="targetGroupIdList">需要被设置为免打扰的群组 Id 列表。</param>
         /// <param name="enable">true: 设置为免打扰；false: 解除免打扰。</param>
         public HttpResponse SetGroupNoDisturb(string username, List<int> targetGroupIdList, bool enable)
         {
@@ -513,7 +551,7 @@ namespace Jiguang.JMessage.User
             body.Add("global", global);
 
             string url = $"/v1/users/{username}/nodisturb";
-            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8);
+            HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -540,8 +578,13 @@ namespace Jiguang.JMessage.User
             if (string.IsNullOrEmpty(username))
                 throw new ArgumentNullException(nameof(username));
 
-            var url = $"/v1/users/{username}/groups/";
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
+            var url = $"/v1/users/{username}/groups";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -575,7 +618,7 @@ namespace Jiguang.JMessage.User
                 { "add", JArray.FromObject(groupIdList) }
             };
 
-            var httpContent = new StringContent(body.ToString());
+            var httpContent = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
@@ -611,7 +654,7 @@ namespace Jiguang.JMessage.User
                 { "remove", JArray.FromObject(groupIdList) }
             };
 
-            var httpContent = new StringContent(body.ToString());
+            var httpContent = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
@@ -642,7 +685,7 @@ namespace Jiguang.JMessage.User
             var url = $"/v1/users/{username}/friends";
 
             var body = JArray.FromObject(friendUsernameList);
-            var httpContent = new StringContent(body.ToString());
+            var httpContent = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -670,13 +713,11 @@ namespace Jiguang.JMessage.User
             if (friendUsernameList == null)
                 throw new ArgumentNullException(nameof(friendUsernameList));
 
-            var url = $"/v1/users/{username}/friends";
             var body = JArray.FromObject(friendUsernameList);
+            var url = $"/v1/users/{username}/friends";
 
-            var request = new HttpRequestMessage
+            var request = new HttpRequestMessage(HttpMethod.Delete, url)
             {
-                Method = HttpMethod.Delete,
-                RequestUri = new Uri($"/v1/users/{username}/friends"),
                 Content = new StringContent(body.ToString(), Encoding.UTF8, "application/json")
             };
 
@@ -707,8 +748,12 @@ namespace Jiguang.JMessage.User
                 throw new ArgumentNullException(nameof(username));
 
             var url = $"/v1/users/{username}/friends";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
 
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -724,6 +769,48 @@ namespace Jiguang.JMessage.User
             return task.Result;
         }
 
+        /// <summary>
+        /// <see cref="UpdateFriendNoteInfo(string, string)"/>
+        /// </summary>
+        public async Task<HttpResponse> UpdateFriendNoteInfoAsync(string username, string noteInfoJsonStr)
+        {
+            if (string.IsNullOrEmpty(nameof(username)))
+                throw new ArgumentNullException(nameof(username));
+
+            if (string.IsNullOrEmpty(noteInfoJsonStr))
+                throw new ArgumentNullException(nameof(noteInfoJsonStr));
+
+            var url = $"/v1/users/{username}/friends";
+
+            var httpContent = new StringContent(noteInfoJsonStr, Encoding.UTF8, "application/json");
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PutAsync(url, httpContent).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 更新好友备注信息。
+        /// </summary>
+        /// <param name="username">待更新好友的用户用户名。</param>
+        /// <param name="noteInfoJsonStr">
+        ///     好友备注信息的 Json 字符串。格式为：
+        ///     <para>
+        ///     [
+        ///         {
+        ///             "username": "好友用户名",
+        ///             "note_name": "好友新备注名",
+        ///             "others": "好友新备注信息"
+        ///         }
+        ///     ]    
+        /// </para>
+        /// </param>
+        public HttpResponse UpdateFriendNoteInfo(string username, string noteInfoJsonStr)
+        {
+            Task<HttpResponse> task = Task.Run(() => UpdateFriendNoteInfoAsync(username, noteInfoJsonStr));
+            task.Wait();
+            return task.Result;
+        }
+
         // Friend API - end
 
         // Cross API - start
@@ -734,8 +821,12 @@ namespace Jiguang.JMessage.User
                 throw new ArgumentNullException(nameof(username));
 
             var url = $"/v1/cross/users/{username}/groups";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
 
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -754,7 +845,7 @@ namespace Jiguang.JMessage.User
             var url = $"/v1/cross/users/{username}/blacklist";
 
             JArray body = JArray.FromObject(usernameList);
-            var httpContent = new StringContent(body.ToString(), Encoding.UTF8);
+            var httpContent = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PutAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -824,8 +915,12 @@ namespace Jiguang.JMessage.User
                 throw new ArgumentNullException(nameof(username));
 
             var url = $"/v1/cross/users/{username}/blacklist";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
 
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -870,7 +965,7 @@ namespace Jiguang.JMessage.User
                 }
             };
 
-            var httpContent = new StringContent(body.ToString());
+            var httpContent = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -913,7 +1008,7 @@ namespace Jiguang.JMessage.User
                 { "users", JArray.FromObject(usernameList) }
             };
 
-            var httpContent = new StringContent(body.ToString());
+            var httpContent = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);

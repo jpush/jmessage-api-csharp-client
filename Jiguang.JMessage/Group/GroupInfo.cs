@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace Jiguang.JMessage.Group
 {
@@ -11,7 +12,9 @@ namespace Jiguang.JMessage.Group
         /// <summary>
         /// 群组 Id。
         /// </summary>
-        public long Id { get; set; }
+        [DefaultValue(-1)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public long Id { get; set; } = -1;
 
         /// <summary>
         /// 群组名称。

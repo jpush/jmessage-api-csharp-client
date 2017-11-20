@@ -38,8 +38,12 @@ namespace Jiguang.JMessage.Report
                 throw new ArgumentNullException(nameof(endTime));
 
             var url = $"/messages?count={count}&begin_time={beginTime}&end_time={endTime}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
 
-            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(url).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, content);
         }
@@ -64,8 +68,12 @@ namespace Jiguang.JMessage.Report
                 throw new ArgumentNullException(nameof(cursor));
 
             var url = $"/messages?cursor={cursor}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
 
-            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(url).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, content);
         }
@@ -98,7 +106,12 @@ namespace Jiguang.JMessage.Report
 
             var url = $"/users/{username}/messages?count={count}&begin_time={beginTime}&end_time={endTime}";
 
-            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(url).ConfigureAwait(false);
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
+
+            HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, content);
         }
@@ -128,7 +141,12 @@ namespace Jiguang.JMessage.Report
 
             var url = $"/users/{username}/messages?cursor={cursor}";
 
-            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(url).ConfigureAwait(false);
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
+
+            HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, content);
         }
@@ -164,8 +182,12 @@ namespace Jiguang.JMessage.Report
                 throw new ArgumentNullException(nameof(endTime));
 
             var url = $"/groups/{groupId}/messages?count={count}&begin_time={beginTime}&end_time={endTime}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
 
-            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(url).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, content);
         }
@@ -193,8 +215,12 @@ namespace Jiguang.JMessage.Report
                 throw new ArgumentNullException(nameof(cursor));
 
             var url = $"/groups/{groupId}/messages?cursor={cursor}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
 
-            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(url).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, content);
         }
@@ -224,8 +250,12 @@ namespace Jiguang.JMessage.Report
                 throw new ArgumentOutOfRangeException(nameof(duration));
 
             var url = $"/statistic/users?time_unit=DAY&start={startTime}&duration={duration}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
 
-            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(url).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, content);
         }
@@ -256,8 +286,12 @@ namespace Jiguang.JMessage.Report
                 throw new ArgumentOutOfRangeException(nameof(duration));
 
             var url = $"/statistic/groups?time_unit=DAY&start={startTime}&duration={duration}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
 
-            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(url).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, content);
         }
@@ -287,8 +321,12 @@ namespace Jiguang.JMessage.Report
                 throw new ArgumentOutOfRangeException(nameof(duration));
 
             var url = $"/statistic/messages?time_unit=DAY&start={startTime}&duration={duration}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
 
-            HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(url).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, content);
         }

@@ -15,5 +15,10 @@ namespace Jiguang.JMessage.Common
             Headers = headers;
             Content = content;
         }
+
+        public override string ToString()
+        {
+            return StatusCode.ToString() + ": " + Content;
+        }
     }
 }

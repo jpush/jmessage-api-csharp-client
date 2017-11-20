@@ -22,8 +22,8 @@ namespace Jiguang.JMessage
         public GroupClient Group { get; }
         public ReportClient Report { get; }
 
-        public static string AppKey;
-        public static string MasterSecret;
+        private string AppKey;
+        private string MasterSecret;
 
         static JMessageClient()
         {
@@ -62,10 +62,10 @@ namespace Jiguang.JMessage
             if (wordList == null)
                 throw new ArgumentNullException(nameof(wordList));
 
-            var url = $"/v1/sensitiveword";
+            var url = "/v1/sensitiveword";
 
             JArray body = JArray.FromObject(wordList);
-            var httpContent = new StringContent(body.ToString());
+            var httpContent = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
 
             HttpResponseMessage httpResponseMessage = await HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -92,7 +92,7 @@ namespace Jiguang.JMessage
             if (string.IsNullOrEmpty(newWord))
                 throw new ArgumentNullException(nameof(newWord));
 
-            var url = $"/v1/sensitiveword";
+            var url = "/v1/sensitiveword";
 
             JObject body = new JObject
             {
@@ -100,7 +100,7 @@ namespace Jiguang.JMessage
                 { "new_word", newWord }
             };
 
-            var httpContent = new StringContent(body.ToString(), Encoding.UTF8);
+            var httpContent = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
 
             HttpResponseMessage httpResponseMessage = await HttpClient.PutAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -132,7 +132,7 @@ namespace Jiguang.JMessage
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Delete,
-                RequestUri = new Uri($"/v1/sensitiveword"),
+                RequestUri = new Uri("https://api.im.jpush.cn/v1/sensitiveword"),
                 Content = new StringContent(body.ToString(), Encoding.UTF8, "application/json")
             };
 
@@ -163,9 +163,14 @@ namespace Jiguang.JMessage
             if (count < 0 || count > 2000)
                 throw new ArgumentOutOfRangeException(nameof(count));
 
-            var url = $"/v1/sensitiveword?stat={start}&count={count}";
+            var url = $"/v1/sensitiveword?start={start}&count={count}";
 
-            HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(url).ConfigureAwait(false);
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
+
+            HttpResponseMessage httpResponseMessage = await HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -188,8 +193,12 @@ namespace Jiguang.JMessage
         public async Task<HttpResponse> SetSensitiveWordsStatusAsync(bool enable)
         {
             int status = enable ? 1 : 0;
+
             var url = $"/v1/sensitiveword/status?status={status}";
-            HttpResponseMessage httpResponseMessage = await HttpClient.PutAsync(url, null).ConfigureAwait(false);
+
+            var httpContent = new StringContent("", Encoding.UTF8, "application/json");
+
+            HttpResponseMessage httpResponseMessage = await HttpClient.PutAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -208,7 +217,13 @@ namespace Jiguang.JMessage
         public async Task<HttpResponse> GetSensitiveStatusWordsAsync()
         {
             var url = $"/v1/sensitiveword/status";
-            HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(url).ConfigureAwait(false);
+
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
+
+            HttpResponseMessage httpResponseMessage = await HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
