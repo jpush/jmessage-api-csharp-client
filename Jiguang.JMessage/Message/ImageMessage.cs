@@ -2,7 +2,7 @@
 
 namespace Jiguang.JMessage.Message
 {
-    class ImageMessage : Message
+    public class ImageMessage : Message
     {
         [JsonProperty("msg_type", Required = Required.Always)]
         public string Type { get; } = "image";

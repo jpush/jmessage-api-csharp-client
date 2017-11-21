@@ -9,6 +9,9 @@ namespace Jiguang.JMessage.Message
     /// </summary>
     public class Message
     {
+        [JsonIgnore]
+        public long Id { get; set; }
+
         [JsonProperty("version")]
         public int Version { get; } = 1;
 

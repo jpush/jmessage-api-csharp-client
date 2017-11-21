@@ -38,6 +38,8 @@ namespace Test
         [TestMethod]
         public void TestGetGroupInfo()
         {
+            Console.WriteLine(groupId);
+
             var result = JMessageTest.Client.Group.GetGroupInfo(groupId);
             Console.WriteLine(result);
             Assert.AreEqual(result.StatusCode, HttpStatusCode.OK);
@@ -61,7 +63,7 @@ namespace Test
         public void TestAddMembers()
         {
             var result = JMessageTest.Client.Group.AddMembers(groupId,
-                new List<string> { JMessageTest.User3, JMessageTest.User4});
+                new List<string> { JMessageTest.User3, JMessageTest.User4 });
             Console.WriteLine(result);
             Assert.AreEqual(result.StatusCode, HttpStatusCode.NoContent);
         }
@@ -89,6 +91,14 @@ namespace Test
             var result = JMessageTest.Client.Group.GetGroupList(0, 1);
             Console.WriteLine(result);
             Assert.AreEqual(result.StatusCode, HttpStatusCode.OK);
+        }
+
+        [TestMethod]
+        public void TestDeleteGroup()
+        {
+            var result = JMessageTest.Client.Group.DeleteGroup(groupId);
+            Console.WriteLine(result);
+            Assert.AreEqual(result.StatusCode, HttpStatusCode.NoContent);
         }
     }
 }

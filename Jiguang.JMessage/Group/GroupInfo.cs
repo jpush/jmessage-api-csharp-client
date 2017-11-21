@@ -12,8 +12,7 @@ namespace Jiguang.JMessage.Group
         /// <summary>
         /// 群组 Id。
         /// </summary>
-        [DefaultValue(-1)]
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonIgnore]
         public long Id { get; set; } = -1;
 
         /// <summary>
@@ -67,7 +66,8 @@ namespace Jiguang.JMessage.Group
         {
             return JsonConvert.SerializeObject(this, new JsonSerializerSettings
             {
-                NullValueHandling = NullValueHandling.Ignore
+                NullValueHandling = NullValueHandling.Ignore,
+                DefaultValueHandling = DefaultValueHandling.Ignore
             });
         }
     }

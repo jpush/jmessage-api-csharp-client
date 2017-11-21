@@ -115,7 +115,7 @@ namespace Jiguang.JMessage.Message
         /// <summary>
         /// <see cref="FileUpload(string, string)"/>
         /// </summary>
-        public async Task<HttpResponse> FileUploadAaync(string filePath, string type)
+        public async Task<HttpResponse> FileUploadAsync(string filePath, string type)
         {
             if (string.IsNullOrEmpty(filePath))
                 throw new ArgumentNullException(nameof(filePath));
@@ -124,18 +124,18 @@ namespace Jiguang.JMessage.Message
                 throw new ArgumentNullException(nameof(type));
 
             filePath = filePath.Trim();
-            type = type.Trim();
+            type = type.Trim().ToLower();
 
-            if (type != "image" || type != "voice" || type != "file")
+            if (type != "image" && type != "voice" && type != "file")
                 throw new ArgumentException("type is error.");
 
             MultipartFormDataContent form = new MultipartFormDataContent();
             ByteArrayContent fileContent = new ByteArrayContent(System.IO.File.ReadAllBytes(filePath));
-            fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = filePath };
             form.Add(fileContent);
 
             var url = $"/v1/resource?type={type}";
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, form).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(
+                url, form).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -148,7 +148,7 @@ namespace Jiguang.JMessage.Message
         /// <param name="type">文件类型。支持："image", "voice", "file"。</param>
         public HttpResponse FileUpload(string filePath, string type)
         {
-            Task<HttpResponse> task = Task.Run(() => FileUploadAaync(filePath, type));
+            Task<HttpResponse> task = Task.Run(() => FileUploadAsync(filePath, type));
             task.Wait();
             return task.Result;
         }

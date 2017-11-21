@@ -83,7 +83,7 @@ namespace Jiguang.JMessage.Report
         /// <para><see cref="https://docs.jiguang.cn/jmessage/server/rest_api_im_report_v2/#_2"/></para>
         /// </summary>
         /// <param name="cursor">当第一次请求后如果后面有数据，会返回一个 cursor 回来用这个获取接下来的消息（cursor 有效时间是 120 秒，过期后需要重第一个请求获取，重新遍历）。</param>
-        public HttpResponse GetGroupMessageHistory(string cursor)
+        public HttpResponse GetMessageHistory(string cursor)
         {
             Task<HttpResponse> task = Task.Run(() => GetMessageHistoryAsync(cursor));
             task.Wait();
@@ -165,13 +165,10 @@ namespace Jiguang.JMessage.Report
         }
 
         /// <summary>
-        /// <see cref="GetGroupMessageHistory(string, int, string, string)"/>
+        /// <see cref="GetGroupMessageHistory(long, int, string, string)"/>
         /// </summary>
-        public async Task<HttpResponse> GetGroupMessageHistoryAsync(string groupId, int count, string beginTime, string endTime)
+        public async Task<HttpResponse> GetGroupMessageHistoryAsync(long groupId, int count, string beginTime, string endTime)
         {
-            if (string.IsNullOrEmpty(groupId))
-                throw new ArgumentNullException(nameof(groupId));
-
             if (count < 1 || count > 1000)
                 throw new ArgumentOutOfRangeException(nameof(count));
 
@@ -199,18 +196,15 @@ namespace Jiguang.JMessage.Report
         /// <param name="count">查询的总条数，一次最多 1000 条。</param>
         /// <param name="beginTime">记录开始时间，格式 yyyy-MM-dd HH:mm:ss</param>
         /// <param name="endTime">记录结束时间，格式 yyyy-MM-dd HH:mm:ss</param>
-        public HttpResponse GetGroupMessageHistory(string groupId, int count, string beginTime, string endTime)
+        public HttpResponse GetGroupMessageHistory(long groupId, int count, string beginTime, string endTime)
         {
             Task<HttpResponse> task = Task.Run(() => GetGroupMessageHistoryAsync(groupId, count, beginTime, endTime));
             task.Wait();
             return task.Result;
         }
 
-        public async Task<HttpResponse> GetGroupMessageHistoryAsync(string groupId, string cursor)
+        public async Task<HttpResponse> GetGroupMessageHistoryAsync(long groupId, string cursor)
         {
-            if (string.IsNullOrEmpty(groupId))
-                throw new ArgumentNullException(nameof(groupId));
-
             if (string.IsNullOrEmpty(cursor))
                 throw new ArgumentNullException(nameof(cursor));
 
@@ -231,9 +225,9 @@ namespace Jiguang.JMessage.Report
         /// </summary>
         /// <param name="username">待查询群组的 Id。</param>
         /// <param name="cursor">当第一次请求后如果后面有数据，会返回一个 cursor 回来用这个获取接下来的消息（cursor 有效时间是 120 秒，过期后需要重第一个请求获取，重新遍历）。</param>
-        public HttpResponse GetGroupMessageHistory(string groupId, string cursor)
+        public HttpResponse GetGroupMessageHistory(long groupId, string cursor)
         {
-            Task<HttpResponse> task = Task.Run(() => GetUserMessageHistoryAsync(groupId, cursor));
+            Task<HttpResponse> task = Task.Run(() => GetGroupMessageHistoryAsync(groupId, cursor));
             task.Wait();
             return task.Result;
         }
@@ -264,7 +258,6 @@ namespace Jiguang.JMessage.Report
         /// 获取用户统计数据（VIP only）。
         /// <para><see cref="https://docs.jiguang.cn/jmessage/server/rest_api_im_report_v2/#_5"/></para>
         /// </summary>
-        /// <param name="username">待查询用户的用户名。</param>
         /// <param name="startTime">开始时间，格式为 yyyy-MM-dd。</param>
         /// <param name="duration">持续时长，单位天，最长为 60 天。</param>
         public HttpResponse GetUserStatistic(string startTime, int duration)
