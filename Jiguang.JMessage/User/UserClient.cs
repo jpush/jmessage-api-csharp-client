@@ -571,36 +571,6 @@ namespace Jiguang.JMessage.User
         }
 
         /// <summary>
-        /// <see cref="GetGroupList(string)"/>
-        /// </summary>
-        public async Task<HttpResponse> GetGroupListAsync(string username)
-        {
-            if (string.IsNullOrEmpty(username))
-                throw new ArgumentNullException(nameof(username));
-
-            var url = $"/v1/users/{username}/groups";
-            var request = new HttpRequestMessage(HttpMethod.Get, url)
-            {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
-            };
-
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
-            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
-        }
-
-        /// <summary>
-        /// 获取某用户所属的群组列表。
-        /// </summary>
-        /// <param name="username">目标用户的用户名。</param>
-        public HttpResponse GetGroupList(string username)
-        {
-            Task<HttpResponse> task = Task.Run(() => GetGroupListAsync(username));
-            task.Wait();
-            return task.Result;
-        }
-
-        /// <summary>
         /// <see cref="BlockGroup(string, List{long})"/>
         /// </summary>
         public async Task<HttpResponse> BlockGroupAsync(string username, List<long> groupIdList)

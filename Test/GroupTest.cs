@@ -86,9 +86,17 @@ namespace Test
         }
 
         [TestMethod]
-        public void TestGetGroupList()
+        public void TestGetGroupListOfApp()
         {
             var result = JMessageTest.Client.Group.GetGroupList(0, 1);
+            Console.WriteLine(result);
+            Assert.AreEqual(result.StatusCode, HttpStatusCode.OK);
+        }
+
+        [TestMethod]
+        public void TestGetGroupListOfUser()
+        {
+            var result = JMessageTest.Client.Group.GetGroupList("Admin");
             Console.WriteLine(result);
             Assert.AreEqual(result.StatusCode, HttpStatusCode.OK);
         }

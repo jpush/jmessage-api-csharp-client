@@ -50,18 +50,15 @@ namespace Jiguang.JMessage.Message
         }
         
         /// <summary>
-        /// <seealso cref="Retract(string, string)"/>
+        /// <seealso cref="Retract(string, long)"/>
         /// </summary>
-        public async Task<HttpResponse> RetractAsync(string msgId, string username)
+        public async Task<HttpResponse> RetractAsync(string senderUsername, long msgId)
         {
-            if (string.IsNullOrEmpty(msgId))
-                throw new ArgumentNullException(nameof(msgId));
+            if (string.IsNullOrEmpty(senderUsername))
+                throw new ArgumentNullException(nameof(senderUsername));
 
-            if (string.IsNullOrEmpty(username))
-                throw new ArgumentNullException(nameof(username));
-
-            var url = $"/v1/messages/{username}/{msgId}/retract";
-            var request = new HttpRequestMessage(HttpMethod.Put, url) {
+            var url = $"/v1/messages/{senderUsername}/{msgId}/retract";
+            var request = new HttpRequestMessage(HttpMethod.Post, url) {
                 Content = new StringContent("", Encoding.UTF8, "application/json")
             };
 
@@ -71,13 +68,13 @@ namespace Jiguang.JMessage.Message
         }
 
         /// <summary>
-        /// 消息撤回。
+        /// 消息撤回。有效撤回时间为消息发出后的 3 分钟之内。
         /// </summary>
+        /// <param name="senderUsername">发送该消息用户的用户名。</param>
         /// <param name="msgId">要撤回的消息 Id。</param>
-        /// <param name="username">发送该消息的用户名。</param>
-        public HttpResponse Retract(string msgId, string username)
+        public HttpResponse Retract(string senderUsername, long msgId)
         {
-            Task<HttpResponse> task = Task.Run(() => RetractAsync(msgId, username));
+            Task<HttpResponse> task = Task.Run(() => RetractAsync(senderUsername, msgId));
             task.Wait();
             return task.Result;
         }
@@ -131,7 +128,7 @@ namespace Jiguang.JMessage.Message
 
             MultipartFormDataContent form = new MultipartFormDataContent();
             ByteArrayContent fileContent = new ByteArrayContent(System.IO.File.ReadAllBytes(filePath));
-            form.Add(fileContent);
+            form.Add(fileContent, "filename", filePath);
 
             var url = $"/v1/resource?type={type}";
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(
@@ -141,7 +138,7 @@ namespace Jiguang.JMessage.Message
         }
 
         /// <summary>
-        /// 文件上传。
+        /// 文件上传。目前文件大小限制为 8M。
         /// <para><see cref="https://docs.jiguang.cn/jmessage/server/rest_api_im/#_20"/></para>
         /// </summary>
         /// <param name="filePath">文件本地路径。</param>
