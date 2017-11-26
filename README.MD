@@ -1,69 +1,38 @@
-# JMessage API client library for CSharp
+# JMessage Library for .NET
 
-## 概述
-JMessage's officially supported CSharp client library for accessing JMessage APIs. 极光IM官方支持的 CSharp 版本服务器端 SDK。
+JMessage's officially supported .NET library for accessing JMessage APIs. 
 
-## 安装
-###  本地安装
-*   安装第三方依赖 Json.NET
-*   项目引用添加 jmessage.dll
+极光官方支持的 IM .NET 服务器端 SDK。
 
-### nuget 安装
-*   nuget 搜索并安装 Json.NET
-*   nuget 搜索并安装 jmessage
+## Install
 
-## 使用
+[Nuget](https://www.nuget.org/packages/Jiguang.JMessage)
 
-###  以用户注册为例
+## Example
 
->以下代码节选自项目目录  example/UserExamples/RegistUserExample.cs
+可参考项目 *./Test* 目录中的测试代码。
 
-```
-UserPayload user = new UserPayload("username", "password");
-List<UserPayload> users = new List<UserPayload> { user };
-ResponseWrapper content = client.registUser(users);
-```
-###  以文本消息发送为例
->以下代码节选自项目目录  example\MessageExamples\SendTextMessageExample.cs
+## Document
 
-```
-TextMessageBody msg_body = new TextMessageBody();
-msg_body.text= "text";
-msg_body.extras = null;
-TextMessagePayload payload = new TextMessagePayload("1", "single", "admin", "text", "xiaohuihui", "admin",msg_body);
-ResponseWrapper content = client.sendMessage(payload);          
-```
-###  以创建群组为例
->以下代码节选自项目目录  example\GroupExamples\CreateGroupExample.cs
+[REST API document](http://docs.jiguang.cn/jmessage/server/rest_api_im/).
 
-```
-List<string> members_username = new List<string> { "xiaohuihui", "jintian" };
-GroupPayload payload = new GroupPayload("toms", "xiaohuihui", members_username, "jmessage");
-ResponseWrapper content = client.createGroup(payload);
-```
+## Support
 
-###  以添加好友为例
->以下代码节选自项目目录  example\FriendExamples\AddFriendsExample.cs
+- [Issues](https://github.com/jpush/jmessage-api-csharp-client/issues)
+- [极光社区](https://community.jiguang.cn/)
 
-```
-List<string> members_username = new List<string> {"jintian" };       
-ResponseWrapper content = client.addFriends("xiaohuihui", members_username);
-```
+## FAQ
 
-###  以跨应用管理群组成员为例
->以下代码节选自项目目录  example\CrossExamples\GroupExample.cs
+1. 如果调用异步方法时出现死锁，即一直没有返回 HttpResponse，可参考这篇[文章](https://blogs.msdn.microsoft.com/jpsanders/2017/08/28/asp-net-do-not-use-task-result-in-main-context/)。
 
-```
-String appkey = "6be9204c30b9473e87bad4dc";
-List<string> add = new List<string> { "jmessage123" };
-CrossMemberPayload payload = new CrossMemberPayload(appkey, add, null);
-List<CrossMemberPayload> payloads = new List<CrossMemberPayload> { };
-payloads.Add(payload);    
-ResponseWrapper content = client.crossAddRemoveMembers("19749893", payloads);
-```
+2. 当前 SDK 支持 [.NET Standard](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) 1.3 和 1.6。
 
-## REST 文档
->文档地址：https://docs.jiguang.cn/jmessage/server/rest_api_im/
+3. 因为使用了 HttpClient，所以不支持 .NET Framework 4.0 及以下版本。
 
-## ErrorCode
-> 文档地址：https://docs.jiguang.cn/jmessage/client/im_errorcode_server/
+## Contribute
+
+Please contribute! [Look at the issues](https://github.com/jpush/jmessage-api-csharp-client/issues).
+
+## License
+
+MIT © [JiGuang](https://github.com/jpush/jmessage-api-csharp-client/blob/master/license)
