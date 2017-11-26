@@ -25,9 +25,9 @@ JMessage's officially supported .NET library for accessing JMessage APIs.
 
 1. 如果调用异步方法时出现死锁，即一直没有返回 HttpResponse，可参考这篇[文章](https://blogs.msdn.microsoft.com/jpsanders/2017/08/28/asp-net-do-not-use-task-result-in-main-context/)。
 
-2. 当前 SDK 支持 [.NET Standard](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) 1.3 和 1.6。
+1. 当前 library 支持 [.NET Standard](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) 1.3 和 1.6。
 
-3. 因为使用了 HttpClient，所以不支持 .NET Framework 4.0 及以下版本。
+1. 因为使用了 HttpClient，所以当前 library 不支持 .NET Framework 4.0 及以下版本。因此如果是这些版本的话，需要使用 [v1](https://github.com/jpush/jmessage-api-csharp-client/tree/v1) 版本的 library。
 
 ## Contribute
 

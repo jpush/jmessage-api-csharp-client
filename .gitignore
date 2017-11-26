@@ -167,3 +167,7 @@ $RECYCLE.BIN/
 Jiguang\.JMessage/\.vs/Jiguang\.JMessage/v15/sqlite3/
 
 Jiguang\.JMessage/\.vs/Jiguang\.JMessage/v15/Server/sqlite3/
+
+*.ide
+
+*.lock
