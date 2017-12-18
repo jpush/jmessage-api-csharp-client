@@ -10,6 +10,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Jiguang.JMessage.Group;
+using Jiguang.JMessage.Chatroom;
 
 namespace Jiguang.JMessage
 {
@@ -21,6 +22,7 @@ namespace Jiguang.JMessage
         public MessageClient Message { get; }
         public GroupClient Group { get; }
         public ReportClient Report { get; }
+        public ChatroomClient Chatroom { get; }
 
         private string AppKey;
         private string MasterSecret;
@@ -52,6 +54,7 @@ namespace Jiguang.JMessage
             Message = new MessageClient();
             Group = new GroupClient();
             Report = new ReportClient(appKey, masterSecret);
+            Chatroom = new ChatroomClient();
         }
 
         /// <summary>
