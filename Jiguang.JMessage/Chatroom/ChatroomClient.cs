@@ -14,7 +14,7 @@ namespace Jiguang.JMessage.Chatroom
     /// </summary>
     public class ChatroomClient
     {
-        public async Task<HttpResponse> CreateAsync(ChatroomInfo chatroomInfo)
+        public async Task<HttpResponse> CreateChatroomAsync(ChatroomInfo chatroomInfo)
         {
             if (chatroomInfo == null)
                 throw new ArgumentNullException(nameof(chatroomInfo));
@@ -35,9 +35,9 @@ namespace Jiguang.JMessage.Chatroom
         /// 创建聊天室。
         /// </summary>
         /// <param name="chatroomInfo">聊天室对象。</param>
-        public HttpResponse Create(ChatroomInfo chatroomInfo)
+        public HttpResponse CreateChatroom(ChatroomInfo chatroomInfo)
         {
-            Task<HttpResponse> task = Task.Run(() => CreateAsync(chatroomInfo));
+            Task<HttpResponse> task = Task.Run(() => CreateChatroomAsync(chatroomInfo));
             task.Wait();
             return task.Result;
         }
@@ -125,9 +125,77 @@ namespace Jiguang.JMessage.Chatroom
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
 
+        /// <summary>
+        /// 更新聊天室信息。
+        /// </summary>
+        /// <param name="chatroomInfo">其中 Id 和 Name 属性为必填。</param>
         public HttpResponse UpdateChatroomInfo(ChatroomInfo chatroomInfo)
         {
             Task<HttpResponse> task = Task.Run(() => UpdateChatroomInfoAsync(chatroomInfo));
+            task.Wait();
+            return task.Result;
+        }
+
+        public async Task<HttpResponse> DeleteChatroomAsync(long roomId)
+        {
+            var url = $"/v1/chatroom/{roomId}";
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.DeleteAsync(url).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 删除聊天室。
+        /// </summary>
+        /// <param name="roomId">待删除聊天室的 Id</param>
+        public HttpResponse DeleteChatroom(long roomId)
+        {
+            Task<HttpResponse> task = Task.Run(() => DeleteChatroomAsync(roomId));
+            task.Wait();
+            return task.Result;
+        }
+
+        public async Task<HttpResponse> UpdateUserForbiddenStatusAsync(long roomId, string username, bool isForbidden)
+        {
+            var status = isForbidden ? 1 : 0;   // 0：不禁言；1：禁言。
+            var url = $"/v1/chatroom/{roomId}/forbidden/{username}?status={status}";
+            HttpContent httpContent = new StringContent("", Encoding.UTF8, "application/json");
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PutAsync(url, httpContent).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 更新用户禁言状态。
+        /// </summary>
+        /// <param name="roomId">聊天室 Id</param>
+        /// <param name="username">待修改用户的用户名</param>
+        /// <param name="isForbidden">是否禁言</param>
+        public HttpResponse UpdateUserForbiddenStatus(long roomId, string username, bool isForbidden)
+        {
+            Task<HttpResponse> task = Task.Run(() => UpdateUserForbiddenStatusAsync(roomId, username, isForbidden));
+            task.Wait();
+            return task.Result;
+        }
+
+        public async Task<HttpResponse> GetMemberListAsync(long roomId, int start, int count)
+        {
+            var url = $"/v1/chatroom/{roomId}/members?start={start}&count={count}";
+
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 获取聊天室成员列表。
+        /// </summary>
+        /// <param name="roomId">待查询聊天室的 id</param>
+        /// <param name="start">起始数据序号，从 0 开始</param>
+        /// <param name="count">待查询数据条数</param>
+        public HttpResponse GetMemberList(long roomId, int start, int count)
+        {
+            Task<HttpResponse> task = Task.Run(() => GetMemberListAsync(roomId, start, count));
             task.Wait();
             return task.Result;
         }
