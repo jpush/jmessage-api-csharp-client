@@ -35,6 +35,7 @@ namespace Jiguang.JMessage.Chatroom
         /// 创建聊天室。
         /// </summary>
         /// <param name="chatroomInfo">聊天室对象。</param>
+        /// <returns>Success: 201 Created</returns>
         public HttpResponse CreateChatroom(ChatroomInfo chatroomInfo)
         {
             Task<HttpResponse> task = Task.Run(() => CreateChatroomAsync(chatroomInfo));
@@ -42,7 +43,7 @@ namespace Jiguang.JMessage.Chatroom
             return task.Result;
         }
 
-        public async Task<HttpResponse> GetChatroomInfoByIdAsync(List<long> chatroomIdList)
+        public async Task<HttpResponse> GetChatroomInfoAsync(List<long> chatroomIdList)
         {
             if (chatroomIdList == null || chatroomIdList.Count == 0)
                 throw new ArgumentNullException(nameof(chatroomIdList));
@@ -58,14 +59,14 @@ namespace Jiguang.JMessage.Chatroom
         /// 根据聊天室 id 获取聊天室详情。
         /// </summary>
         /// <param name="chatroomIdList">聊天室 id 列表。</param>
-        public HttpResponse GetChatroomInfoById(List<long> chatroomIdList)
+        public HttpResponse GetChatroomInfo(List<long> chatroomIdList)
         {
-            Task<HttpResponse> task = Task.Run(() => GetChatroomInfoByIdAsync(chatroomIdList));
+            Task<HttpResponse> task = Task.Run(() => GetChatroomInfoAsync(chatroomIdList));
             task.Wait();
             return task.Result;
         }
 
-        public async Task<HttpResponse> GetChatroomInfoOfUserAsync(string username)
+        public async Task<HttpResponse> GetChatroomInfoAsync(string username)
         {
             if (string.IsNullOrEmpty(username))
                 throw new ArgumentNullException(nameof(username));
@@ -80,9 +81,9 @@ namespace Jiguang.JMessage.Chatroom
         /// 获取指定用户的聊天室详情。
         /// </summary>
         /// <param name="username">用户名</param>
-        public HttpResponse GetChatroomInfoOfUser(string username)
+        public HttpResponse GetChatroomInfo(string username)
         {
-            Task<HttpResponse> task = Task.Run(() => GetChatroomInfoOfUserAsync(username));
+            Task<HttpResponse> task = Task.Run(() => GetChatroomInfoAsync(username));
             task.Wait();
             return task.Result;
         }
@@ -113,9 +114,6 @@ namespace Jiguang.JMessage.Chatroom
         public async Task<HttpResponse> UpdateChatroomInfoAsync(ChatroomInfo chatroomInfo)
         {
             if (chatroomInfo == null)
-                throw new ArgumentNullException(nameof(chatroomInfo));
-
-            if (chatroomInfo.Id == null)
                 throw new ArgumentNullException(nameof(chatroomInfo));
 
             var url = $"/v1/chatroom/{chatroomInfo.Id}";
@@ -171,6 +169,7 @@ namespace Jiguang.JMessage.Chatroom
         /// <param name="roomId">聊天室 Id</param>
         /// <param name="username">待修改用户的用户名</param>
         /// <param name="isForbidden">是否禁言</param>
+        /// <returns>if success, StatusCode: OK 200</returns>
         public HttpResponse UpdateUserForbiddenStatus(long roomId, string username, bool isForbidden)
         {
             Task<HttpResponse> task = Task.Run(() => UpdateUserForbiddenStatusAsync(roomId, username, isForbidden));
@@ -178,7 +177,7 @@ namespace Jiguang.JMessage.Chatroom
             return task.Result;
         }
 
-        public async Task<HttpResponse> GetMemberListAsync(long roomId, int start, int count)
+        public async Task<HttpResponse> GetMembersAsync(long roomId, int start, int count)
         {
             var url = $"/v1/chatroom/{roomId}/members?start={start}&count={count}";
 
@@ -193,9 +192,58 @@ namespace Jiguang.JMessage.Chatroom
         /// <param name="roomId">待查询聊天室的 id</param>
         /// <param name="start">起始数据序号，从 0 开始</param>
         /// <param name="count">待查询数据条数</param>
-        public HttpResponse GetMemberList(long roomId, int start, int count)
+        public HttpResponse GetMembers(long roomId, int start, int count)
         {
-            Task<HttpResponse> task = Task.Run(() => GetMemberListAsync(roomId, start, count));
+            Task<HttpResponse> task = Task.Run(() => GetMembersAsync(roomId, start, count));
+            task.Wait();
+            return task.Result;
+        }
+
+        public async Task<HttpResponse> AddMembersAsync(long roomId, List<string> usernameList)
+        {
+            if (usernameList == null)
+                throw new ArgumentNullException(nameof(usernameList));
+
+            var url = $"/v1/chatroom/{roomId}/members";
+            var json = JArray.FromObject(usernameList);
+            var httpContent = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
+            var httpResponseMessage = await JMessageClient.HttpClient.PutAsync(url, httpContent).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 添加聊天室成员。
+        /// </summary>
+        /// <param name="roomId">聊天室 id</param>
+        /// <param name="usernameList">待添加用户的用户名列表，一次最多 3000 个</param>
+        /// <returns>if success: No Content 204</returns>
+        public HttpResponse AddMembers(long roomId, List<string> usernameList)
+        {
+            Task<HttpResponse> task = Task.Run(() => AddMembersAsync(roomId, usernameList));
+            task.Wait();
+            return task.Result;
+        }
+
+        public async Task<HttpResponse> RemoveMembersAsync(long roomId, List<string> usernameList)
+        {
+            if (usernameList == null)
+                throw new ArgumentNullException(nameof(usernameList));
+
+            var url = $"/v1/chatroom/{roomId}/members";
+            var httpResponseMessage = await JMessageClient.HttpClient.DeleteAsync(url).ConfigureAwait(false);
+            string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
+        }
+
+        /// <summary>
+        /// 移除聊天室成员。
+        /// </summary>
+        /// <param name="roomId">聊天室 id</param>
+        /// <param name="usernameList">待移除用户的用户名列表，一次最多 3000 个</param>
+        public HttpResponse RemoveMembers(long roomId, List<string> usernameList)
+        {
+            Task<HttpResponse> task = Task.Run(() => RemoveMembersAsync(roomId, usernameList));
             task.Wait();
             return task.Result;
         }

@@ -10,7 +10,7 @@ namespace Jiguang.JMessage.Chatroom
     /// </summary>
     public class ChatroomInfo
     {
-        public long? Id { get; set; } 
+        public long Id { get; set; } 
 
         /// <summary>
         /// 聊天室名称（必填）。
@@ -34,7 +34,7 @@ namespace Jiguang.JMessage.Chatroom
         /// 成员用户名列表。
         /// </summary>
         [JsonProperty("members_username", NullValueHandling = NullValueHandling.Ignore)]
-        public List<string> MemberList { get; set; }
+        public List<string> Members { get; set; }
 
         /// <summary>
         /// 创建时间。形式为 "yyyy-MM-dd hh:mm:ss"
