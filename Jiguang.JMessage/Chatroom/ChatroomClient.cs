@@ -72,7 +72,11 @@ namespace Jiguang.JMessage.Chatroom
                 throw new ArgumentNullException(nameof(username));
 
             var url = $"/v1/users/{username}/chatroom";
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -94,7 +98,11 @@ namespace Jiguang.JMessage.Chatroom
                 throw new ArgumentOutOfRangeException(nameof(start));
 
             var url = $"/v1/chatroom?start={start}&count={count}";
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -118,7 +126,7 @@ namespace Jiguang.JMessage.Chatroom
 
             var url = $"/v1/chatroom/{chatroomInfo.Id}";
             var httpContent = new StringContent(chatroomInfo.ToString(), Encoding.UTF8, "application/json");
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PutAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -137,7 +145,11 @@ namespace Jiguang.JMessage.Chatroom
         public async Task<HttpResponse> DeleteChatroomAsync(long roomId)
         {
             var url = $"/v1/chatroom/{roomId}";
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.DeleteAsync(url).ConfigureAwait(false);
+            var request = new HttpRequestMessage(HttpMethod.Delete, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -180,8 +192,11 @@ namespace Jiguang.JMessage.Chatroom
         public async Task<HttpResponse> GetMembersAsync(long roomId, int start, int count)
         {
             var url = $"/v1/chatroom/{roomId}/members?start={start}&count={count}";
-
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url);
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Content = new StringContent("", Encoding.UTF8, "application/json")
+            };
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -231,7 +246,11 @@ namespace Jiguang.JMessage.Chatroom
                 throw new ArgumentNullException(nameof(usernameList));
 
             var url = $"/v1/chatroom/{roomId}/members";
-            var httpResponseMessage = await JMessageClient.HttpClient.DeleteAsync(url).ConfigureAwait(false);
+            var request = new HttpRequestMessage(HttpMethod.Delete, url)
+            {
+                Content = new StringContent(JArray.FromObject(usernameList).ToString(), Encoding.UTF8, "application/json")
+            };
+            var httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }

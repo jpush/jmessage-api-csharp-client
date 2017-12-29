@@ -10,6 +10,7 @@ namespace Jiguang.JMessage.Chatroom
     /// </summary>
     public class ChatroomInfo
     {
+        [JsonIgnore]
         public long Id { get; set; } 
 
         /// <summary>
