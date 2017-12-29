@@ -82,8 +82,6 @@ namespace Jiguang.JMessage.Group
             var url = $"/v1/groups/{groupInfo.Id}";
             var httpContent = new StringContent(groupInfo.ToString(), Encoding.UTF8, "application/json");
 
-            Console.WriteLine(groupInfo.ToString());
-
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PutAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);

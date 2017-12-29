@@ -17,7 +17,7 @@ namespace Test
         public static string User3 = "User3";
         public static string User4 = "User4";
 
-        private List<string> sensitiveWordList = new List<string> { "funk", "操" };
+        private List<string> sensitiveWordList = new List<string> { "fuck", "操" };
 
         [TestMethod]
         public void TestAddSensitiveWords()
