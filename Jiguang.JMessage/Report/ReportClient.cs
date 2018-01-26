@@ -40,7 +40,7 @@ namespace Jiguang.JMessage.Report
             var url = $"/messages?count={count}&begin_time={beginTime}&end_time={endTime}";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
@@ -57,7 +57,7 @@ namespace Jiguang.JMessage.Report
         /// <param name="endTime">记录结束时间，格式 yyyy-MM-dd HH:mm:ss。和 beginTime 之间最大不能相差 7 天。</param>
         public HttpResponse GetMessageHistory(int count, string beginTime, string endTime)
         {
-            Task<HttpResponse> task = Task.Run(() => GetMessageHistoryAsync(count, beginTime, endTime));
+            Task<HttpResponse> task = GetMessageHistoryAsync(count, beginTime, endTime);
             task.Wait();
             return task.Result;
         }
@@ -70,7 +70,7 @@ namespace Jiguang.JMessage.Report
             var url = $"/messages?cursor={cursor}";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
@@ -85,7 +85,7 @@ namespace Jiguang.JMessage.Report
         /// <param name="cursor">当第一次请求后如果后面有数据，会返回一个 cursor 回来用这个获取接下来的消息（cursor 有效时间是 120 秒，过期后需要重第一个请求获取，重新遍历）。</param>
         public HttpResponse GetMessageHistory(string cursor)
         {
-            Task<HttpResponse> task = Task.Run(() => GetMessageHistoryAsync(cursor));
+            Task<HttpResponse> task = GetMessageHistoryAsync(cursor);
             task.Wait();
             return task.Result;
         }
@@ -108,7 +108,7 @@ namespace Jiguang.JMessage.Report
 
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
@@ -126,7 +126,7 @@ namespace Jiguang.JMessage.Report
         /// <param name="endTime">记录结束时间，格式 yyyy-MM-dd HH:mm:ss</param>
         public HttpResponse GetUserMessageHistory(string username, int count, string beginTime, string endTime)
         {
-            Task<HttpResponse> task = Task.Run(() => GetUserMessageHistoryAsync(username, count, beginTime, endTime));
+            Task<HttpResponse> task = GetUserMessageHistoryAsync(username, count, beginTime, endTime);
             task.Wait();
             return task.Result;
         }
@@ -143,7 +143,7 @@ namespace Jiguang.JMessage.Report
 
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
@@ -159,7 +159,7 @@ namespace Jiguang.JMessage.Report
         /// <param name="cursor">当第一次请求后如果后面有数据，会返回一个 cursor 回来用这个获取接下来的消息（cursor 有效时间是 120 秒，过期后需要重第一个请求获取，重新遍历）。</param>
         public HttpResponse GetUserMessageHistory(string username, string cursor)
         {
-            Task<HttpResponse> task = Task.Run(() => GetUserMessageHistoryAsync(username, cursor));
+            Task<HttpResponse> task = GetUserMessageHistoryAsync(username, cursor);
             task.Wait();
             return task.Result;
         }
@@ -181,7 +181,7 @@ namespace Jiguang.JMessage.Report
             var url = $"/groups/{groupId}/messages?count={count}&begin_time={beginTime}&end_time={endTime}";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
@@ -198,7 +198,7 @@ namespace Jiguang.JMessage.Report
         /// <param name="endTime">记录结束时间，格式 yyyy-MM-dd HH:mm:ss</param>
         public HttpResponse GetGroupMessageHistory(long groupId, int count, string beginTime, string endTime)
         {
-            Task<HttpResponse> task = Task.Run(() => GetGroupMessageHistoryAsync(groupId, count, beginTime, endTime));
+            Task<HttpResponse> task = GetGroupMessageHistoryAsync(groupId, count, beginTime, endTime);
             task.Wait();
             return task.Result;
         }
@@ -211,7 +211,7 @@ namespace Jiguang.JMessage.Report
             var url = $"/groups/{groupId}/messages?cursor={cursor}";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
@@ -227,7 +227,7 @@ namespace Jiguang.JMessage.Report
         /// <param name="cursor">当第一次请求后如果后面有数据，会返回一个 cursor 回来用这个获取接下来的消息（cursor 有效时间是 120 秒，过期后需要重第一个请求获取，重新遍历）。</param>
         public HttpResponse GetGroupMessageHistory(long groupId, string cursor)
         {
-            Task<HttpResponse> task = Task.Run(() => GetGroupMessageHistoryAsync(groupId, cursor));
+            Task<HttpResponse> task = GetGroupMessageHistoryAsync(groupId, cursor);
             task.Wait();
             return task.Result;
         }
@@ -246,7 +246,7 @@ namespace Jiguang.JMessage.Report
             var url = $"/statistic/users?time_unit=DAY&start={startTime}&duration={duration}";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
@@ -262,7 +262,7 @@ namespace Jiguang.JMessage.Report
         /// <param name="duration">持续时长，单位天，最长为 60 天。</param>
         public HttpResponse GetUserStatistic(string startTime, int duration)
         {
-            Task<HttpResponse> task = Task.Run(() => GetUserStatisticAsync(startTime, duration));
+            Task<HttpResponse> task = GetUserStatisticAsync(startTime, duration);
             task.Wait();
             return task.Result;
         }
@@ -281,7 +281,7 @@ namespace Jiguang.JMessage.Report
             var url = $"/statistic/groups?time_unit=DAY&start={startTime}&duration={duration}";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
@@ -297,7 +297,7 @@ namespace Jiguang.JMessage.Report
         /// <param name="duration">持续时长，单位天，最长 60 天。</param>
         public HttpResponse GetGroupStatistic(string startTime, int duration)
         {
-            Task<HttpResponse> task = Task.Run(() => GetGroupStatisticAsync(startTime, duration));
+            Task<HttpResponse> task = GetGroupStatisticAsync(startTime, duration);
             task.Wait();
             return task.Result;
         }
@@ -316,7 +316,7 @@ namespace Jiguang.JMessage.Report
             var url = $"/statistic/messages?time_unit=DAY&start={startTime}&duration={duration}";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
@@ -332,7 +332,7 @@ namespace Jiguang.JMessage.Report
         /// <param name="duration">持续时长，单位天，最长 60 天。</param>
         public HttpResponse GetMessagesStatistic(string startTime, int duration)
         {
-            Task<HttpResponse> task = Task.Run(() => GetMessagesStatisticAsync(startTime, duration));
+            Task<HttpResponse> task = GetMessagesStatisticAsync(startTime, duration);
             task.Wait();
             return task.Result;
         }

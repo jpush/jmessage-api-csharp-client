@@ -39,7 +39,7 @@ namespace Jiguang.JMessage.User
         /// <param name="userInfoList">用户信息对象数组。</param>
         public HttpResponse Register(List<UserInfo> userInfoList)
         {
-            Task<HttpResponse> task = Task.Run(() => RegisterAsync(userInfoList));
+            Task<HttpResponse> task = RegisterAsync(userInfoList);
             task.Wait();
             return task.Result;
         }
@@ -65,7 +65,7 @@ namespace Jiguang.JMessage.User
         /// <param name="userInfo">待注册为管理员的用户信息对象。</param>
         public HttpResponse RegisterAsAdmin(UserInfo userInfo)
         {
-            Task<HttpResponse> task = Task.Run(() => RegisterAsAdminAsync(userInfo));
+            Task<HttpResponse> task = RegisterAsAdminAsync(userInfo);
             task.Wait();
             return task.Result;
         }
@@ -84,7 +84,7 @@ namespace Jiguang.JMessage.User
             var url = $"/v1/admins?start={start}&count={count}";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -100,7 +100,7 @@ namespace Jiguang.JMessage.User
         /// <param name="count">查询条数，最多支持 500 条。</param>
         public HttpResponse GetAdminList(int start, int count)
         {
-            Task<HttpResponse> task = Task.Run(() => GetAdminList(start, count));
+            Task<HttpResponse> task = GetAdminListAsync(start, count);
             task.Wait();
             return task.Result;
         }
@@ -119,7 +119,7 @@ namespace Jiguang.JMessage.User
             var url = $"/v1/users?start={start}&count={count}";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -134,7 +134,7 @@ namespace Jiguang.JMessage.User
         /// <param name="count">查询条数，最多支持 500 条。</param>
         public HttpResponse GetUserList(int start, int count)
         {
-            Task<HttpResponse> task = Task.Run(() => GetUserListAsync(start, count));
+            Task<HttpResponse> task = GetUserListAsync(start, count);
             task.Wait();
             return task.Result;
         }
@@ -150,7 +150,7 @@ namespace Jiguang.JMessage.User
             var url = $"/v1/users/{username}";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -164,7 +164,7 @@ namespace Jiguang.JMessage.User
         /// </summary>
         public HttpResponse GetUserInfo(string username)
         {
-            Task<HttpResponse> task = Task.Run(() => GetUserInfoAsync(username));
+            Task<HttpResponse> task = GetUserInfoAsync(username);
             task.Wait();
             return task.Result;
         }
@@ -191,7 +191,7 @@ namespace Jiguang.JMessage.User
         /// <param name="userInfo">更新后的用户信息对象。</param>
         public HttpResponse UpdateUserInfo(UserInfo userInfo)
         {
-            Task<HttpResponse> task = Task.Run(() => UpdateUserInfoAsync(userInfo));
+            Task<HttpResponse> task = UpdateUserInfoAsync(userInfo);
             task.Wait();
             return task.Result;
         }
@@ -207,7 +207,7 @@ namespace Jiguang.JMessage.User
             var url = $"/v1/users/{username}/userstat";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -222,7 +222,7 @@ namespace Jiguang.JMessage.User
         /// <param name="username">待查询用户的用户名。</param>
         public HttpResponse CheckStatus(string username)
         {
-            Task<HttpResponse> task = Task.Run(() => CheckStatusAsync(username));
+            Task<HttpResponse> task = CheckStatusAsync(username);
             task.Wait();
             return task.Result;
         }
@@ -249,7 +249,7 @@ namespace Jiguang.JMessage.User
         /// <param name="usernameList">待查询用户的用户名列表。</param>
         public HttpResponse CheckUserStatus(List<string> usernameList)
         {
-            Task<HttpResponse> task = Task.Run(() => CheckStatusAsync(usernameList));
+            Task<HttpResponse> task = CheckStatusAsync(usernameList);
             task.Wait();
             return task.Result;
         }
@@ -284,7 +284,7 @@ namespace Jiguang.JMessage.User
         /// <param name="newPassword">新密码。</param>
         public HttpResponse UpdatePassword(string username, string newPassword)
         {
-            Task<HttpResponse> task = Task.Run(() => UpdatePasswordAsync(username, newPassword));
+            Task<HttpResponse> task = UpdatePasswordAsync(username, newPassword);
             task.Wait();
             return task.Result;
         }
@@ -300,7 +300,7 @@ namespace Jiguang.JMessage.User
             var url = $"/v1/users/{username}";
             var request = new HttpRequestMessage(HttpMethod.Delete, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -315,7 +315,7 @@ namespace Jiguang.JMessage.User
         /// <param name="username">待删除用户的用户名。</param>
         public HttpResponse Delete(string username)
         {
-            Task<HttpResponse> task = Task.Run(() => DeleteAsync(username));
+            Task<HttpResponse> task = DeleteAsync(username);
             task.Wait();
             return task.Result;
         }
@@ -329,7 +329,7 @@ namespace Jiguang.JMessage.User
                 throw new ArgumentNullException(nameof(username));
 
             string url = $"/v1/users/{username}/forbidden?disable={isDisable}";
-            HttpContent httpContent = new StringContent("", Encoding.UTF8, "application/json");
+            HttpContent httpContent = new StringContent(string.Empty, Encoding.UTF8, "application/json");
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PutAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
@@ -342,7 +342,7 @@ namespace Jiguang.JMessage.User
         /// <param name="isDisable">true: 禁用；false：激活。</param>
         public HttpResponse Disable(string username, bool isDisable)
         {
-            Task<HttpResponse> task = Task.Run(() => DisableAsync(username, isDisable));
+            Task<HttpResponse> task = DisableAsync(username, isDisable);
             task.Wait();
             return task.Result;
         }
@@ -372,7 +372,7 @@ namespace Jiguang.JMessage.User
         /// <param name="targetUsernameList">被添加到黑名单中的用户名列表。</param>
         public HttpResponse AddToBlackList(string username, List<string> targetUsernameList)
         {
-            Task<HttpResponse> task = Task.Run(() => AddToBlackListAsync(username, targetUsernameList));
+            Task<HttpResponse> task = AddToBlackListAsync(username, targetUsernameList);
             task.Wait();
             return task.Result;
         }
@@ -390,10 +390,9 @@ namespace Jiguang.JMessage.User
 
             string jsonStr = JsonConvert.SerializeObject(targetUsernameList, Formatting.Indented);
 
-            var request = new HttpRequestMessage
+            var url = $"/v1/users/{username}/blacklist";
+            var request = new HttpRequestMessage(HttpMethod.Delete, url)
             {
-                Method = HttpMethod.Delete,
-                RequestUri = new Uri($"/v1/users/{username}/blacklist"),
                 Content = new StringContent(jsonStr, Encoding.UTF8, "application/json")
             };
 
@@ -409,7 +408,7 @@ namespace Jiguang.JMessage.User
         /// <param name="targetUsernameList">被移除用户的用户名列表。</param>
         public HttpResponse RemoveFromBlackList(string username, List<string> targetUsernameList)
         {
-            Task<HttpResponse> task = Task.Run(() => RemoveFromBlackListAsync(username, targetUsernameList));
+            Task<HttpResponse> task = RemoveFromBlackListAsync(username, targetUsernameList);
             task.Wait();
             return task.Result;
         }
@@ -425,7 +424,7 @@ namespace Jiguang.JMessage.User
             string url = $"/v1/users/{username}/blacklist";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -440,7 +439,7 @@ namespace Jiguang.JMessage.User
         /// <param name="username">需要获取黑名单用户的用户名。</param>
         public HttpResponse GetBlackList(string username)
         {
-            Task<HttpResponse> task = Task.Run(() => GetBlackListAsync(username));
+            Task<HttpResponse> task = GetBlackListAsync(username);
             task.Wait();
             return task.Result;
         }
@@ -486,7 +485,7 @@ namespace Jiguang.JMessage.User
         /// <param name="enable">true: 设置为免打扰；false: 解除免打扰。</param>
         public HttpResponse SetUserNoDisturb(string username, List<string> targetUsernameList, bool enable)
         {
-            Task<HttpResponse> task = Task.Run(() => SetUserNoDisturbAsync(username, targetUsernameList, enable));
+            Task<HttpResponse> task = SetUserNoDisturbAsync(username, targetUsernameList, enable);
             task.Wait();
             return task.Result;
         }
@@ -533,7 +532,7 @@ namespace Jiguang.JMessage.User
         /// <param name="enable">true: 设置为免打扰；false: 解除免打扰。</param>
         public HttpResponse SetGroupNoDisturb(string username, List<int> targetGroupIdList, bool enable)
         {
-            Task<HttpResponse> task = Task.Run(() => SetGroupNoDisturbAsync(username, targetGroupIdList, enable));
+            Task<HttpResponse> task = SetGroupNoDisturbAsync(username, targetGroupIdList, enable);
             task.Wait();
             return task.Result;
         }
@@ -565,7 +564,7 @@ namespace Jiguang.JMessage.User
         /// <param name="enable">true: 开启免打扰；false: 关闭免打扰。</param>
         public HttpResponse SetGlobalNoDisturb(string username, bool enable)
         {
-            Task<HttpResponse> task = Task.Run(() => SetGlobalNoDisturbAsync(username, enable));
+            Task<HttpResponse> task = SetGlobalNoDisturbAsync(username, enable);
             task.Wait();
             return task.Result;
         }
@@ -601,7 +600,7 @@ namespace Jiguang.JMessage.User
         /// <param name="groupIdList">被屏蔽的群组 Id 列表。</param>
         public HttpResponse BlockGroup(string username, List<long> groupIdList)
         {
-            Task<HttpResponse> task = Task.Run(() => BlockGroupAsync(username, groupIdList));
+            Task<HttpResponse> task = BlockGroupAsync(username, groupIdList);
             task.Wait();
             return task.Result;
         }
@@ -637,7 +636,7 @@ namespace Jiguang.JMessage.User
         /// <param name="groupIdList">需要解除被屏蔽的群组 Id 列表。</param>
         public HttpResponse UnblockGroup(string username, List<long> groupIdList)
         {
-            Task<HttpResponse> task = Task.Run(() => UnblockGroupAsync(username, groupIdList));
+            Task<HttpResponse> task = UnblockGroupAsync(username, groupIdList);
             task.Wait();
             return task.Result;
         }
@@ -670,7 +669,7 @@ namespace Jiguang.JMessage.User
         /// <param name="friendUsernameList">待添加的用户名列表（最多 500 个）。</param>
         public HttpResponse AddFriends(string username, List<string> friendUsernameList)
         {
-            Task<HttpResponse> task = Task.Run(() => AddFriendsAsync(username, friendUsernameList));
+            Task<HttpResponse> task = AddFriendsAsync(username, friendUsernameList);
             task.Wait();
             return task.Result;
         }
@@ -704,7 +703,7 @@ namespace Jiguang.JMessage.User
         /// <param name="friendUsernameList">待删除的用户名列表（最多 500 个）。</param>
         public HttpResponse RemoveFriends(string username, List<string> friendUsernameList)
         {
-            Task<HttpResponse> task = Task.Run(() => RemoveFriendsAsync(username, friendUsernameList));
+            Task<HttpResponse> task = RemoveFriendsAsync(username, friendUsernameList);
             task.Wait();
             return task.Result;
         }
@@ -720,7 +719,7 @@ namespace Jiguang.JMessage.User
             var url = $"/v1/users/{username}/friends";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -734,7 +733,7 @@ namespace Jiguang.JMessage.User
         /// <param name="username">待获取好友列表的用户名。</param>
         public HttpResponse GetFriendList(string username)
         {
-            Task<HttpResponse> task = Task.Run(() => GetFriendListAsync(username));
+            Task<HttpResponse> task = GetFriendListAsync(username);
             task.Wait();
             return task.Result;
         }
@@ -776,7 +775,7 @@ namespace Jiguang.JMessage.User
         /// </param>
         public HttpResponse UpdateFriendNoteInfo(string username, string noteInfoJsonStr)
         {
-            Task<HttpResponse> task = Task.Run(() => UpdateFriendNoteInfoAsync(username, noteInfoJsonStr));
+            Task<HttpResponse> task = UpdateFriendNoteInfoAsync(username, noteInfoJsonStr);
             task.Wait();
             return task.Result;
         }
@@ -793,7 +792,7 @@ namespace Jiguang.JMessage.User
             var url = $"/v1/cross/users/{username}/groups";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -829,7 +828,7 @@ namespace Jiguang.JMessage.User
         /// <param name="usernameList">被添加的用户用户名列表。</param>
         public HttpResponse AddToBlackListCrossApp(string username, List<string> usernameList)
         {
-            Task<HttpResponse> task = Task.Run(() => AddToBlackListCrossAppAsync(username, usernameList));
+            Task<HttpResponse> task = AddToBlackListCrossAppAsync(username, usernameList);
             task.Wait();
             return task.Result;
         }
@@ -871,7 +870,7 @@ namespace Jiguang.JMessage.User
         /// <param name="appKey">待移除用户所属应用的 AppKey。</param>
         public HttpResponse RemoveFromBlackListCrossApp(string username, List<string> usernameList, string appKey)
         {
-            Task<HttpResponse> task = Task.Run(() => RemoveFromBlackListCrossAppAsync(username, usernameList, appKey));
+            Task<HttpResponse> task = RemoveFromBlackListCrossAppAsync(username, usernameList, appKey);
             task.Wait();
             return task.Result;
         }
@@ -887,7 +886,7 @@ namespace Jiguang.JMessage.User
             var url = $"/v1/cross/users/{username}/blacklist";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -901,7 +900,7 @@ namespace Jiguang.JMessage.User
         /// <param name="username">待查询跨应用黑名单的用户用户名。</param>
         public HttpResponse GetBlackListCrossApp(string username)
         {
-            Task<HttpResponse> task = Task.Run(() => GetBlackListCrossAppAsync(username));
+            Task<HttpResponse> task = GetBlackListCrossAppAsync(username);
             task.Wait();
             return task.Result;
         }
@@ -936,7 +935,6 @@ namespace Jiguang.JMessage.User
             };
 
             var httpContent = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
-
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PostAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
@@ -951,7 +949,7 @@ namespace Jiguang.JMessage.User
         /// <param name="isNoDisturb">是否设置为免打扰。true: 设置免打扰；false: 取消免打扰。</param>
         public HttpResponse SetUserNoDisturbCrossApp(string username, List<string> usernameList, string appKey, bool isNoDisturb)
         {
-            Task<HttpResponse> task = Task.Run(() => SetUserNoDisturbCrossAppAsync(username, usernameList, appKey, isNoDisturb));
+            Task<HttpResponse> task = SetUserNoDisturbCrossAppAsync(username, usernameList, appKey, isNoDisturb);
             task.Wait();
             return task.Result;
         }
@@ -993,7 +991,7 @@ namespace Jiguang.JMessage.User
         /// <param name="appKey">待添加用户所属应用的 AppKey。</param>
         public HttpResponse AddFriendsCrossApp(string username, List<string> usernameList, string appKey)
         {
-            Task<HttpResponse> task = Task.Run(() => AddFriendsCrossAppAsync(username, usernameList, appKey));
+            Task<HttpResponse> task = AddFriendsCrossAppAsync(username, usernameList, appKey);
             task.Wait();
             return task.Result;
         }
@@ -1038,7 +1036,7 @@ namespace Jiguang.JMessage.User
         /// <param name="appKey">待删除用户所属应用的 AppKey。</param>
         public HttpResponse RemoveFriendsCrossApp(string username, List<string> usernameList, string appKey)
         {
-            Task<HttpResponse> task = Task.Run(() => AddFriendsCrossAppAsync(username, usernameList, appKey));
+            Task<HttpResponse> task = AddFriendsCrossAppAsync(username, usernameList, appKey);
             task.Wait();
             return task.Result;
         }

@@ -38,7 +38,7 @@ namespace Jiguang.JMessage.Chatroom
         /// <returns>Success: 201 Created</returns>
         public HttpResponse CreateChatroom(ChatroomInfo chatroomInfo)
         {
-            Task<HttpResponse> task = Task.Run(() => CreateChatroomAsync(chatroomInfo));
+            Task<HttpResponse> task = CreateChatroomAsync(chatroomInfo);
             task.Wait();
             return task.Result;
         }
@@ -61,7 +61,7 @@ namespace Jiguang.JMessage.Chatroom
         /// <param name="chatroomIdList">聊天室 id 列表。</param>
         public HttpResponse GetChatroomInfo(List<long> chatroomIdList)
         {
-            Task<HttpResponse> task = Task.Run(() => GetChatroomInfoAsync(chatroomIdList));
+            Task<HttpResponse> task = GetChatroomInfoAsync(chatroomIdList);
             task.Wait();
             return task.Result;
         }
@@ -74,7 +74,7 @@ namespace Jiguang.JMessage.Chatroom
             var url = $"/v1/users/{username}/chatroom";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -87,7 +87,7 @@ namespace Jiguang.JMessage.Chatroom
         /// <param name="username">用户名</param>
         public HttpResponse GetChatroomInfo(string username)
         {
-            Task<HttpResponse> task = Task.Run(() => GetChatroomInfoAsync(username));
+            Task<HttpResponse> task = GetChatroomInfoAsync(username);
             task.Wait();
             return task.Result;
         }
@@ -100,7 +100,7 @@ namespace Jiguang.JMessage.Chatroom
             var url = $"/v1/chatroom?start={start}&count={count}";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -114,7 +114,7 @@ namespace Jiguang.JMessage.Chatroom
         /// <param name="count"></param>
         public HttpResponse GetChatroomInfo(int start, int count)
         {
-            Task<HttpResponse> task = Task.Run(() => GetChatroomInfoAsync(start, count));
+            Task<HttpResponse> task = GetChatroomInfoAsync(start, count);
             task.Wait();
             return task.Result;
         }
@@ -137,7 +137,7 @@ namespace Jiguang.JMessage.Chatroom
         /// <param name="chatroomInfo">其中 Id 和 Name 属性为必填。</param>
         public HttpResponse UpdateChatroomInfo(ChatroomInfo chatroomInfo)
         {
-            Task<HttpResponse> task = Task.Run(() => UpdateChatroomInfoAsync(chatroomInfo));
+            Task<HttpResponse> task = UpdateChatroomInfoAsync(chatroomInfo);
             task.Wait();
             return task.Result;
         }
@@ -147,7 +147,7 @@ namespace Jiguang.JMessage.Chatroom
             var url = $"/v1/chatroom/{roomId}";
             var request = new HttpRequestMessage(HttpMethod.Delete, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -160,7 +160,7 @@ namespace Jiguang.JMessage.Chatroom
         /// <param name="roomId">待删除聊天室的 Id</param>
         public HttpResponse DeleteChatroom(long roomId)
         {
-            Task<HttpResponse> task = Task.Run(() => DeleteChatroomAsync(roomId));
+            Task<HttpResponse> task = DeleteChatroomAsync(roomId);
             task.Wait();
             return task.Result;
         }
@@ -169,7 +169,7 @@ namespace Jiguang.JMessage.Chatroom
         {
             var status = isForbidden ? 1 : 0;   // 0：不禁言；1：禁言。
             var url = $"/v1/chatroom/{roomId}/forbidden/{username}?status={status}";
-            HttpContent httpContent = new StringContent("", Encoding.UTF8, "application/json");
+            HttpContent httpContent = new StringContent(string.Empty, Encoding.UTF8, "application/json");
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.PutAsync(url, httpContent).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
@@ -184,7 +184,7 @@ namespace Jiguang.JMessage.Chatroom
         /// <returns>if success, StatusCode: OK 200</returns>
         public HttpResponse UpdateUserForbiddenStatus(long roomId, string username, bool isForbidden)
         {
-            Task<HttpResponse> task = Task.Run(() => UpdateUserForbiddenStatusAsync(roomId, username, isForbidden));
+            Task<HttpResponse> task = UpdateUserForbiddenStatusAsync(roomId, username, isForbidden);
             task.Wait();
             return task.Result;
         }
@@ -194,7 +194,7 @@ namespace Jiguang.JMessage.Chatroom
             var url = $"/v1/chatroom/{roomId}/members?start={start}&count={count}";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -209,7 +209,7 @@ namespace Jiguang.JMessage.Chatroom
         /// <param name="count">待查询数据条数</param>
         public HttpResponse GetMembers(long roomId, int start, int count)
         {
-            Task<HttpResponse> task = Task.Run(() => GetMembersAsync(roomId, start, count));
+            Task<HttpResponse> task = GetMembersAsync(roomId, start, count);
             task.Wait();
             return task.Result;
         }
@@ -235,7 +235,7 @@ namespace Jiguang.JMessage.Chatroom
         /// <returns>if success: No Content 204</returns>
         public HttpResponse AddMembers(long roomId, List<string> usernameList)
         {
-            Task<HttpResponse> task = Task.Run(() => AddMembersAsync(roomId, usernameList));
+            Task<HttpResponse> task = AddMembersAsync(roomId, usernameList);
             task.Wait();
             return task.Result;
         }
@@ -262,7 +262,7 @@ namespace Jiguang.JMessage.Chatroom
         /// <param name="usernameList">待移除用户的用户名列表，一次最多 3000 个</param>
         public HttpResponse RemoveMembers(long roomId, List<string> usernameList)
         {
-            Task<HttpResponse> task = Task.Run(() => RemoveMembersAsync(roomId, usernameList));
+            Task<HttpResponse> task = RemoveMembersAsync(roomId, usernameList);
             task.Wait();
             return task.Result;
         }
