@@ -38,8 +38,6 @@ namespace Test
         [TestMethod]
         public void TestGetGroupInfo()
         {
-            Console.WriteLine(groupId);
-
             var result = JMessageTest.Client.Group.GetGroupInfo(groupId);
             Console.WriteLine(result);
             Assert.AreEqual(result.StatusCode, HttpStatusCode.OK);
