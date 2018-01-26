@@ -36,7 +36,7 @@ namespace Jiguang.JMessage.Group
         /// <param name="members">群成员的用户名列表。</param>
         public HttpResponse CreateGroup(GroupInfo groupInfo, List<string> members)
         {
-            Task<HttpResponse> task = Task.Run(() => CreateGroupAsync(groupInfo, members));
+            Task<HttpResponse> task = CreateGroupAsync(groupInfo, members);
             task.Wait();
             return task.Result;
         }
@@ -49,7 +49,7 @@ namespace Jiguang.JMessage.Group
             var url = $"/v1/groups/{groupId}";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -63,7 +63,7 @@ namespace Jiguang.JMessage.Group
         /// <param name="groupId">群组ID。由创建群组时分配。</param>
         public HttpResponse GetGroupInfo(long groupId)
         {
-            Task<HttpResponse> task = Task.Run(() => GetGroupInfoAsync(groupId));
+            Task<HttpResponse> task = GetGroupInfoAsync(groupId);
             task.Wait();
             return task.Result;
         }
@@ -94,7 +94,7 @@ namespace Jiguang.JMessage.Group
         /// <param name="groupInfo">群组信息对象，可只设置需要修改的属性。</param>
         public HttpResponse UpdateGroupInfo(GroupInfo groupInfo)
         {
-            Task<HttpResponse> task = Task.Run(() => UpdateGroupInfoAsync(groupInfo));
+            Task<HttpResponse> task = UpdateGroupInfoAsync(groupInfo);
             task.Wait();
             return task.Result;
         }
@@ -107,7 +107,7 @@ namespace Jiguang.JMessage.Group
             var url = $"/v1/groups/{groupId}";
             var request = new HttpRequestMessage(HttpMethod.Delete, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -121,7 +121,7 @@ namespace Jiguang.JMessage.Group
         /// <param name="groupId">待删除的群组 Id。</param>
         public HttpResponse DeleteGroup(long groupId)
         {
-            Task<HttpResponse> task = Task.Run(() => DeleteGroupAsync(groupId));
+            Task<HttpResponse> task = DeleteGroupAsync(groupId);
             task.Wait();
             return task.Result;
         }
@@ -149,7 +149,7 @@ namespace Jiguang.JMessage.Group
         /// <returns>204 No Content, if success.</returns>
         public HttpResponse AddMembers(long groupId, List<string> usernameList)
         {
-            Task<HttpResponse> task = Task.Run(() => AddMembersAsync(groupId, usernameList));
+            Task<HttpResponse> task = AddMembersAsync(groupId, usernameList);
             task.Wait();
             return task.Result;
         }
@@ -176,7 +176,7 @@ namespace Jiguang.JMessage.Group
         /// <param name="usernameList">用户名列表。</param>
         public HttpResponse RemoveMembers(long groupId, List<string> usernameList)
         {
-            Task<HttpResponse> task = Task.Run(() => RemoveMembersAsync(groupId, usernameList));
+            Task<HttpResponse> task = RemoveMembersAsync(groupId, usernameList);
             task.Wait();
             return task.Result;
         }
@@ -189,7 +189,7 @@ namespace Jiguang.JMessage.Group
             var url = $"/v1/groups/{groupId}/members";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -204,7 +204,7 @@ namespace Jiguang.JMessage.Group
         /// <param name="groupId">群组 Id。</param>
         public HttpResponse GetMembers(long groupId)
         {
-            Task<HttpResponse> task = Task.Run(() => GetMembersAsync(groupId));
+            Task<HttpResponse> task = GetMembersAsync(groupId);
             task.Wait();
             return task.Result;
         }
@@ -223,7 +223,7 @@ namespace Jiguang.JMessage.Group
             var url = $"/v1/groups/?start={start}&count={count}";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -238,7 +238,7 @@ namespace Jiguang.JMessage.Group
         /// <param name="count">本次读取的记录数量。最大值为 500。</param>
         public HttpResponse GetGroupList(int start, int count)
         {
-            Task<HttpResponse> task = Task.Run(() => GetGroupListAsync(start, count));
+            Task<HttpResponse> task = GetGroupListAsync(start, count);
             task.Wait();
             return task.Result;
         }
@@ -254,7 +254,7 @@ namespace Jiguang.JMessage.Group
             var url = $"/v1/users/{username}/groups";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -268,7 +268,7 @@ namespace Jiguang.JMessage.Group
         /// <param name="username">目标用户的用户名。</param>
         public HttpResponse GetGroupList(string username)
         {
-            Task<HttpResponse> task = Task.Run(() => GetGroupListAsync(username));
+            Task<HttpResponse> task = GetGroupListAsync(username);
             task.Wait();
             return task.Result;
         }
@@ -303,7 +303,7 @@ namespace Jiguang.JMessage.Group
         /// <param name="appKey">待添加用户所属的 AppKey。</param>
         public HttpResponse AddMembersCrossApp(long groupId, List<string> usernameList, string appKey)
         {
-            Task<HttpResponse> task = Task.Run(() => AddMembersCrossAppAsync(groupId, usernameList, appKey));
+            Task<HttpResponse> task = AddMembersCrossAppAsync(groupId, usernameList, appKey);
             task.Wait();
             return task.Result;
         }
@@ -317,7 +317,7 @@ namespace Jiguang.JMessage.Group
 
             JObject body = new JObject
             {
-                { "remove",  JArray.FromObject(usernameList)}
+                { "remove", JArray.FromObject(usernameList)}
             };
             body.Add("appkey", appKey);
 
@@ -336,7 +336,7 @@ namespace Jiguang.JMessage.Group
         /// <param name="appKey">待移除用户所属的 AppKey。</param>
         public HttpResponse RemoveMembersCrossApp(long groupId, List<string> usernameList, string appKey)
         {
-            Task<HttpResponse> task = Task.Run(() => RemoveMembersCrossAppAsync(groupId, usernameList, appKey));
+            Task<HttpResponse> task = RemoveMembersCrossAppAsync(groupId, usernameList, appKey);
             task.Wait();
             return task.Result;
         }
@@ -349,7 +349,7 @@ namespace Jiguang.JMessage.Group
             var url = $"/v1/cross/groups/{groupId}/members";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -363,7 +363,7 @@ namespace Jiguang.JMessage.Group
         /// <param name="groupId">目标群组 Id。</param>
         public HttpResponse GetMembersCrossApp(long groupId)
         {
-            Task<HttpResponse> task = Task.Run(() => GetMembersCrossAppAsync(groupId));
+            Task<HttpResponse> task = GetMembersCrossAppAsync(groupId);
             task.Wait();
             return task.Result;
         }

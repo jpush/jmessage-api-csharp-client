@@ -43,7 +43,7 @@ namespace Jiguang.JMessage.Message
         /// <param name="message"></param>
         public HttpResponse Send(Message message)
         {
-            Task<HttpResponse> task = Task.Run(() => SendAsync(message));
+            Task<HttpResponse> task = SendAsync(message);
             task.Wait();
             return task.Result;
         }
@@ -58,7 +58,7 @@ namespace Jiguang.JMessage.Message
 
             var url = $"/v1/messages/{senderUsername}/{msgId}/retract";
             var request = new HttpRequestMessage(HttpMethod.Post, url) {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -73,7 +73,7 @@ namespace Jiguang.JMessage.Message
         /// <param name="msgId">要撤回的消息 Id。</param>
         public HttpResponse Retract(string senderUsername, long msgId)
         {
-            Task<HttpResponse> task = Task.Run(() => RetractAsync(senderUsername, msgId));
+            Task<HttpResponse> task = RetractAsync(senderUsername, msgId);
             task.Wait();
             return task.Result;
         }
@@ -88,7 +88,7 @@ namespace Jiguang.JMessage.Message
 
             var url = $"/v1/resource?mediaId={mediaId}";
             var request = new HttpRequestMessage(HttpMethod.Get, url) {
-                Content = new StringContent("", Encoding.UTF8, "application/json")
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
 
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -103,7 +103,7 @@ namespace Jiguang.JMessage.Message
         /// <param name="mediaId">资源的 mediaId（包括用户信息中的 avatar 字段）。</param>
         public HttpResponse FileDownload(string mediaId)
         {
-            Task<HttpResponse> task = Task.Run(() => FileDownloadAsync(mediaId));
+            Task<HttpResponse> task = FileDownloadAsync(mediaId);
             task.Wait();
             return task.Result;
         }
@@ -144,7 +144,7 @@ namespace Jiguang.JMessage.Message
         /// <param name="type">文件类型。支持："image", "voice", "file"。</param>
         public HttpResponse FileUpload(string filePath, string type)
         {
-            Task<HttpResponse> task = Task.Run(() => FileUploadAsync(filePath, type));
+            Task<HttpResponse> task = FileUploadAsync(filePath, type);
             task.Wait();
             return task.Result;
         }
