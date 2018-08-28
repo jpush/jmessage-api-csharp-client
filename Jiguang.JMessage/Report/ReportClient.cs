@@ -1,5 +1,6 @@
 ﻿using Jiguang.JMessage.Common;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Jiguang.JMessage.Report
         {
             httpClient = new HttpClient
             {
-                BaseAddress = new Uri("https://report.im.jpush.cn/v2")
+                BaseAddress = new Uri("https://report.im.jpush.cn/v2/")
             };
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -37,11 +38,10 @@ namespace Jiguang.JMessage.Report
             if (string.IsNullOrEmpty(endTime))
                 throw new ArgumentNullException(nameof(endTime));
 
-            var url = $"/messages?count={count}&begin_time={beginTime}&end_time={endTime}";
-            var request = new HttpRequestMessage(HttpMethod.Get, url)
-            {
-                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
-            };
+            beginTime = WebUtility.UrlEncode(beginTime);
+            endTime = WebUtility.UrlEncode(endTime);
+            var url = $"messages?count={count}&begin_time={beginTime}&end_time={endTime}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -67,11 +67,8 @@ namespace Jiguang.JMessage.Report
             if (string.IsNullOrEmpty(cursor))
                 throw new ArgumentNullException(nameof(cursor));
 
-            var url = $"/messages?cursor={cursor}";
-            var request = new HttpRequestMessage(HttpMethod.Get, url)
-            {
-                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
-            };
+            var url = $"messages?cursor={cursor}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -104,12 +101,11 @@ namespace Jiguang.JMessage.Report
             if (string.IsNullOrEmpty(endTime))
                 throw new ArgumentNullException(nameof(endTime));
 
-            var url = $"/users/{username}/messages?count={count}&begin_time={beginTime}&end_time={endTime}";
+            beginTime = WebUtility.UrlEncode(beginTime);
+            endTime = WebUtility.UrlEncode(endTime);
+            var url = $"users/{username}/messages?count={count}&begin_time={beginTime}&end_time={endTime}";
 
-            var request = new HttpRequestMessage(HttpMethod.Get, url)
-            {
-                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
-            };
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -139,12 +135,9 @@ namespace Jiguang.JMessage.Report
             if (string.IsNullOrEmpty(cursor))
                 throw new ArgumentNullException(nameof(cursor));
 
-            var url = $"/users/{username}/messages?cursor={cursor}";
+            var url = $"users/{username}/messages?cursor={cursor}";
 
-            var request = new HttpRequestMessage(HttpMethod.Get, url)
-            {
-                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
-            };
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -178,11 +171,10 @@ namespace Jiguang.JMessage.Report
             if (string.IsNullOrEmpty(endTime))
                 throw new ArgumentNullException(nameof(endTime));
 
-            var url = $"/groups/{groupId}/messages?count={count}&begin_time={beginTime}&end_time={endTime}";
-            var request = new HttpRequestMessage(HttpMethod.Get, url)
-            {
-                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
-            };
+            beginTime = WebUtility.UrlEncode(beginTime);
+            endTime = WebUtility.UrlEncode(endTime);
+            var url = $"groups/{groupId}/messages?count={count}&begin_time={beginTime}&end_time={endTime}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -208,11 +200,8 @@ namespace Jiguang.JMessage.Report
             if (string.IsNullOrEmpty(cursor))
                 throw new ArgumentNullException(nameof(cursor));
 
-            var url = $"/groups/{groupId}/messages?cursor={cursor}";
-            var request = new HttpRequestMessage(HttpMethod.Get, url)
-            {
-                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
-            };
+            var url = $"groups/{groupId}/messages?cursor={cursor}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -243,11 +232,8 @@ namespace Jiguang.JMessage.Report
             if (duration < 0 || duration > 60)
                 throw new ArgumentOutOfRangeException(nameof(duration));
 
-            var url = $"/statistic/users?time_unit=DAY&start={startTime}&duration={duration}";
-            var request = new HttpRequestMessage(HttpMethod.Get, url)
-            {
-                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
-            };
+            var url = $"statistic/users?time_unit=DAY&start={startTime}&duration={duration}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -278,11 +264,8 @@ namespace Jiguang.JMessage.Report
             if (duration < 0 || duration > 60)
                 throw new ArgumentOutOfRangeException(nameof(duration));
 
-            var url = $"/statistic/groups?time_unit=DAY&start={startTime}&duration={duration}";
-            var request = new HttpRequestMessage(HttpMethod.Get, url)
-            {
-                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
-            };
+            var url = $"statistic/groups?time_unit=DAY&start={startTime}&duration={duration}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -313,11 +296,8 @@ namespace Jiguang.JMessage.Report
             if (duration < 0 || duration > 60)
                 throw new ArgumentOutOfRangeException(nameof(duration));
 
-            var url = $"/statistic/messages?time_unit=DAY&start={startTime}&duration={duration}";
-            var request = new HttpRequestMessage(HttpMethod.Get, url)
-            {
-                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
-            };
+            var url = $"statistic/messages?time_unit=DAY&start={startTime}&duration={duration}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
 
             HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
