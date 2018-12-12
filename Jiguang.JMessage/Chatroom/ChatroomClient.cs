@@ -72,11 +72,7 @@ namespace Jiguang.JMessage.Chatroom
                 throw new ArgumentNullException(nameof(username));
 
             var url = $"/v1/users/{username}/chatroom";
-            var request = new HttpRequestMessage(HttpMethod.Get, url)
-            {
-                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
-            };
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -98,11 +94,7 @@ namespace Jiguang.JMessage.Chatroom
                 throw new ArgumentOutOfRangeException(nameof(start));
 
             var url = $"/v1/chatroom?start={start}&count={count}";
-            var request = new HttpRequestMessage(HttpMethod.Get, url)
-            {
-                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
-            };
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
@@ -192,11 +184,7 @@ namespace Jiguang.JMessage.Chatroom
         public async Task<HttpResponse> GetMembersAsync(long roomId, int start, int count)
         {
             var url = $"/v1/chatroom/{roomId}/members?start={start}&count={count}";
-            var request = new HttpRequestMessage(HttpMethod.Get, url)
-            {
-                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
-            };
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }

@@ -47,7 +47,7 @@ namespace Jiguang.JMessage.Message
             task.Wait();
             return task.Result;
         }
-        
+
         /// <summary>
         /// <seealso cref="Retract(string, long)"/>
         /// </summary>
@@ -87,11 +87,7 @@ namespace Jiguang.JMessage.Message
                 throw new ArgumentNullException(nameof(mediaId));
 
             var url = $"/v1/resource?mediaId={mediaId}";
-            var request = new HttpRequestMessage(HttpMethod.Get, url) {
-                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
-            };
-
-            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.GetAsync(url).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse(httpResponseMessage.StatusCode, httpResponseMessage.Headers, httpResponseContent);
         }
