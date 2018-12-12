@@ -74,7 +74,7 @@ namespace Jiguang.JMessage.Chatroom
             var url = $"/v1/users/{username}/chatroom";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
+              //  Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -100,7 +100,7 @@ namespace Jiguang.JMessage.Chatroom
             var url = $"/v1/chatroom?start={start}&count={count}";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
+               // Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -147,7 +147,7 @@ namespace Jiguang.JMessage.Chatroom
             var url = $"/v1/chatroom/{roomId}";
             var request = new HttpRequestMessage(HttpMethod.Delete, url)
             {
-                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
+               Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -194,7 +194,7 @@ namespace Jiguang.JMessage.Chatroom
             var url = $"/v1/chatroom/{roomId}/members?start={start}&count={count}";
             var request = new HttpRequestMessage(HttpMethod.Get, url)
             {
-                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
+               // Content = new StringContent(string.Empty, Encoding.UTF8, "application/json")
             };
             HttpResponseMessage httpResponseMessage = await JMessageClient.HttpClient.SendAsync(request).ConfigureAwait(false);
             string httpResponseContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
