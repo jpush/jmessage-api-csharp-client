@@ -28,6 +28,12 @@ namespace Jiguang.JMessage.Group
         public string Description { get; set; }
 
         /// <summary>
+        /// 群组类型,1 - 私有群（默认）2 - 公开群, 不指定默认为1
+        /// </summary>
+        [JsonProperty("flag", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Flag { get; set; }
+
+        /// <summary>
         /// 群主的用户名。
         /// </summary>
         [JsonProperty("owner_username")]
