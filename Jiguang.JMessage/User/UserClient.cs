@@ -489,7 +489,7 @@ namespace Jiguang.JMessage.User
                 group.Add("remove", JArray.FromObject(targetGroupIdList));
             }
 
-            body.Add("single", group);
+            body.Add("group", group);
 
             string url = $"/v1/users/{username}/nodisturb";
             HttpContent httpContent = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
