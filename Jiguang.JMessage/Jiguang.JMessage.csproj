@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">net45;netstandard1.3;netstandard2.0</TargetFrameworks>
@@ -7,7 +7,7 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://github.com/jpush/jmessage-api-csharp-client</PackageProjectUrl>
     <Description>JMessage library for .NET</Description>
-    <Version>1.0.4</Version>
+    <Version>1.0.6</Version>
     <Company>Jiguang</Company>
     <Product>JMessage</Product>
     <Authors>hevin</Authors>
