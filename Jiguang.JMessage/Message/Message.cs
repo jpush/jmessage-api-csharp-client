@@ -42,10 +42,11 @@ namespace Jiguang.JMessage.Message
         public string TargetName { get; set; }
 
         /// <summary>
-        /// 当前只限 admin 用户，必须先注册 admin 用户。
+        /// 发送消息者的身份，可为“admin”，“user” 
+        ///<para>必填</para>
         /// </summary>
         [JsonProperty("from_type", Required = Required.Always)]
-        public string FromType { get; } = "admin";
+        public string FromType { get;set; } = "admin";
 
         /// <summary>
         /// 发送方的 username。
